@@ -1,0 +1,31 @@
+{
+  "name": "gateviz",
+  "version": "0.3.0",
+  "description": "A web tool for learning about logic circuits",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server \" \"npm run client \" ",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devanfarrell/gateviz-new.git"
+  },
+  "author": "Devan Farrell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/devanfarrell/gateviz-new/issues"
+  },
+  "homepage": "https://github.com/devanfarrell/gateviz-new#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "concurrently": "^3.6.1",
+    "nodemon": "^1.18.3"
+  }
+}
