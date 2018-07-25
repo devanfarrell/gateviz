@@ -1,0 +1,1 @@
+export const FETCH_CIRCUIT = 'fetch_component';
