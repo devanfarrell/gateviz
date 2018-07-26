@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actions from '../actions';
+import { fetchCircuit } from '../actions';
 
 const Header = () => <h2> Header </h2>;
 const Landing = () => <h2> Landing </h2>;
 
 class App extends Component {
 	componentDidMount(){
-		
+		this.props.fetchCircuit();
 	}
 	render() {
 		console.log(this.props);
@@ -27,4 +27,8 @@ class App extends Component {
 	}
 }
 
-export default connect(null, actions)(App);
+function mapStateToProps( {circuit} , ownProps ){
+    return { circuit };
+}
+
+export default connect(mapStateToProps, { fetchCircuit })(App);

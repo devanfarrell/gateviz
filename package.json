@@ -22,7 +22,8 @@
   },
   "homepage": "https://github.com/devanfarrell/gateviz-new#readme",
   "dependencies": {
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "concurrently": "^3.6.1",
