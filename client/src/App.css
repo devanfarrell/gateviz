@@ -47,3 +47,30 @@ body {
 .search-bar input {
     width: 75%;
 }
+tbody :hover {
+  background-color: rgba(90, 212, 238, 0.9);
+}
+
+tr :hover {
+  background-color: rgba(90, 212, 238, 0.0);
+}
+
+.selectedSearchElement{
+  background-color: rgba(90, 212, 238, 0.9);
+  color: white; 
+}
+
+.activeButton{
+  background-color: #5AD4EE;
+  color: white;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.disabledButton {
+  background-color: #ddd;
+  color: #ccc;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
