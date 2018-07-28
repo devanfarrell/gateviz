@@ -5,6 +5,9 @@
   "proxy": {
     "/api/circuit/*": {
       "target": "http://localhost:5000"
+    },
+    "/api/circuit_list": {
+      "target": "http://localhost:5000"
     }
   },
   "dependencies": {

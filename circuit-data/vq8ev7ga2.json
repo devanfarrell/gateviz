@@ -1,6 +1,7 @@
 {
-    "globalID": "vq8ev7ga",
+    "cid": "vq8ev7ga2",
     "name": "thermometer",
+    "description": "A simple three input thermometer circuit",
     "path": "M52.707,0.5l0,47l-52.207,0l0,-47l52.207,0Z",
     "height": 50,
     "width": 50,

@@ -1,0 +1,117 @@
+{
+    "cid": "vq8ev7ga",
+    "name": "thermometer",
+    "description": "A simple three input thermometer circuit",
+    "path": "M52.707,0.5l0,47l-52.207,0l0,-47l52.207,0Z",
+    "height": 50,
+    "width": 50,
+    "input": [
+        {
+            "id": "I1",
+            "label": "A",
+            "coord": [10, 200]
+        },
+        {
+            "id": "I2",
+            "label": "B",
+            "coord": [10, 300]
+        },
+        {
+            "id": "I3",
+            "label": "C",
+            "coord": [10, 400]
+        }
+    ],
+    "internalLogic": [
+        {
+            "_comment": "internal components must be listed in order of evaluation"
+        },
+        {
+            "ID": "G1",
+            "type": "OR",
+            "label": "a + b",
+            "coord": [150, 160],
+            "input": ["I1", "I2"]
+        },
+        {
+            "ID": "G2",
+            "type": "AND",
+            "label": "ab",
+            "coord": [150, 250],
+            "input": ["I1", "I2"]
+        },
+        {
+            "ID": "G3",
+            "type": "OR",
+            "coord": [350, 140],
+            "input": ["G2", "I3"]
+        },
+        {
+            "ID": "G4",
+            "type": "OR",
+            "coord": [350, 200],
+            "input": ["I2", "I3"]
+        },
+        {
+            "ID": "G5",
+            "type": "OR",
+            "coord": [350, 260],
+            "input": ["I2", "I3"]
+        },
+        {
+            "ID": "G6",
+            "type": "AND",
+            "coord": [350, 380],
+            "input": ["G1", "I3"]
+        },
+        {
+            "ID": "G7",
+            "type": "AND",
+            "coord": [350, 440],
+            "input": ["I2", "I3"]
+        },
+        {
+            "ID": "G8",
+            "type": "AND",
+            "coord": [350, 500],
+            "input": ["G2", "I3"]
+        }
+    ],
+    "output": [
+        {
+            "coord": [450, 150],
+            "input": "G3",
+            "label": "O\u2080"
+        },
+        {
+            "coord": [450, 210],
+            "input": "G4",
+            "label": "O\u2081"
+        },
+        {
+            "coord": [450, 270],
+            "input": "G5",
+            "label": "O\u2082"
+        },
+        {
+            "coord": [450, 330],
+            "input": "I3",
+            "label": "O\u2083"
+        },
+        {
+            "coord": [450, 390],
+            "input": "G6",
+            "label": "O\u2084"
+        },
+        {
+            "coord": [450, 450],
+            "input": "G7",
+            "label": "O\u2085"
+        },
+        {
+            "coord": [450, 510],
+            "input": "G8",
+            "label": "O\u2086"
+        }
+    ]
+}

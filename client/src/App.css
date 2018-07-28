@@ -1,0 +1,49 @@
+
+html, body, App {
+    min-height: 100%;
+    margin-top:50px;
+    
+  }
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: linear-gradient(to bottom right, #5AD4EE, #81D677);
+  }
+
+  .hero {
+    color: white;
+    font-size: 2em;
+    height: 400px;
+  }
+  
+  .heroPrimary {
+    color: white;
+    font-size: 4em;
+    margin: 0px;
+  }
+  
+  .heroSecondary {
+    color: white;
+    font-size: 1.5em;
+    margin: 20px;
+  }
+
+  .centerallthethings {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    align-content: center;
+  }
+
+  .search-bar {
+    margin: 20px;
+    text-align:center;
+}
+
+.search-bar input {
+    width: 75%;
+}
