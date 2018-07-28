@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { FormGroup, InputGroup, FormControl, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { changeSearchTerm, fetchCircuit } from '../actions';
+import { changeSearchTerm } from '../actions';
+import { Redirect } from 'react-router-dom';
 
 class SearchBar extends Component {
 	constructor(props) {
@@ -9,15 +10,21 @@ class SearchBar extends Component {
 
 		this.state = {
 			term: '',
-			circuit: ''
+			toRoute: ''
 		};
 	}
 
 	render() {
+		console.log(this.state);
+
+		if (this.state.toRoute.length > 0) {
+			const url = `/circuit/${this.state.toRoute}`;
+			return <Redirect to={url} />;
+		}
 		if (this.props.selectedCircuit) {
 			return (
 				<form>
-					<FormGroup >
+					<FormGroup>
 						<InputGroup>
 							<FormControl
 								type="text"
@@ -26,7 +33,9 @@ class SearchBar extends Component {
 								placeholder=" Search for a circuit"
 							/>
 							<InputGroup.Button>
-								<Button type="submit" className="activeButton" onSubmit={this.onLoadClick()}>Load</Button>
+								<Button type="submit" className="activeButton" onClick={() => this.onLoadClick()}>
+									Load
+								</Button>
 							</InputGroup.Button>
 						</InputGroup>
 					</FormGroup>
@@ -54,21 +63,22 @@ class SearchBar extends Component {
 	}
 
 	onInputChange(term) {
-		this.setState({ term: term });
+		this.setState({ term: term, toRoute: this.state.toRoute });
 		this.props.changeSearchTerm(term);
 	}
 
 	onLoadClick() {
-		const circuit = this.props.selectedCircuit
-		this.props.fetchCircuit(circuit);
+		// const circuit = this.props.selectedCircuit
+		// this.props.redirectCircuit(circuit);
+		this.setState({ term: this.state.term, toRoute: this.props.selectedCircuit });
 	}
 }
 
-function mapStateToProps({ selectedCircuit }, ownProps) {
-	return { selectedCircuit };
+function mapStateToProps({ selectedCircuit, circuit }, ownProps) {
+	return { selectedCircuit, circuit };
 }
 
 export default connect(
 	mapStateToProps,
-	{ changeSearchTerm, fetchCircuit }
+	{ changeSearchTerm }
 )(SearchBar);

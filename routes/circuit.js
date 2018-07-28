@@ -9,17 +9,9 @@ module.exports = app => {
 		(req, res) => {
 			require('url').parse(req.url)
 			var str = req.url;
-			const circuitRequested = str.replace("/api/circuit/", "")
-			console.log(circuitRequested)
+			const circuitRequested = str.replace("/api/load_circuit/", "")
 			res.send(circuitExample);
-		}
-	);
-
-	app.get(
-		'/api/circuit_redirect',
-		(req, res) => {
-			console.log(req);
-			res.redirect('/circuit/yay');
+			res.redirect(`/circuit/${circuitRequested}`);
 		}
 	);
 
