@@ -15,8 +15,6 @@ class SearchBar extends Component {
 	}
 
 	render() {
-		console.log(this.state);
-
 		if (this.state.toRoute.length > 0) {
 			const url = `/circuit/${this.state.toRoute}`;
 			return <Redirect to={url} />;
@@ -68,8 +66,6 @@ class SearchBar extends Component {
 	}
 
 	onLoadClick() {
-		// const circuit = this.props.selectedCircuit
-		// this.props.redirectCircuit(circuit);
 		this.setState({ term: this.state.term, toRoute: this.props.selectedCircuit });
 	}
 }
