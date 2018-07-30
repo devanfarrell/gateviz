@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import svgjs from 'svgjs';
+//import svgjs from 'svgjs';
 import { connect } from 'react-redux';
 import { fetchCircuit } from '../actions';
 import buildCircuit from '../engines/buildEngine';
@@ -26,11 +26,26 @@ class Circuit extends Component {
         this.props.fetchCircuit();
 	}
 
-	render() {
+	onCircuitFetch(){
+		var temp = buildCircuit(this.props.circuit)
+		this.setState({ builtCircuit: temp });
+	}
 
+	render() {
+		// if the circuit has been fetched but not built
 		if (!this.state.builtCircuit && this.props.circuit) {
-			console.log(buildCircuit(this.props.circuit));
+			
+			return <div onClick={this.onCircuitFetch()} > building!!!! </div>
+		} 
+		// if the circuit has not been fetched
+		else if(!this.props.circuit) {
+			return <div> fetching!!!! </div>
 		}
+		// if the circuit has been built
+		else {
+			return <div> Displaying! </div> 
+		}
+
 		return <div ref={ref => (this.canvas = ref)} className="circuitCanvas"/>;
 	}
 }
