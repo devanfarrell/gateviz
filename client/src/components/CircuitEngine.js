@@ -45,7 +45,6 @@ class CircuitEngine extends Component {
                     var input = circuit.internalLogic[i].input[j];
 					var parsedInputID = '';
                     // if the gate's input is a component or a bus the output will need to be selected
-                    console.log(input);
 					var divider = input.indexOf(':');
 					if (divider === -1) {
                         parsedInputID = input;
@@ -71,7 +70,6 @@ class CircuitEngine extends Component {
 		}
 		//deserialize outputs
 		for (i = 0; i < circuit.output.length; i++) {
-            console.log(circuit.output[i]);
 			input = circuit.output[i].input;
             parsedInputID = '';
             
@@ -79,11 +77,13 @@ class CircuitEngine extends Component {
 			divider = input.indexOf(':');
 			if (divider === -1) {
 				parsedInputID = input;
-				circuit.internalLogic[i].input.pin = null;
+				circuit.output[i].input = {};
+				circuit.output[i].input.pin = null;
 			} else {
 				parsedInputID = input.substring(0, divider);
 				// get the string versin of input pin and convert to digit
-				circuit.internalLogic[i].input.pin = parseInt(
+				circuit.output[i].input = {};
+				circuit.output[i].input.pin = parseInt(
 					input.substring(divider + 1, input.length),
 					10
 				);
@@ -118,7 +118,6 @@ class CircuitEngine extends Component {
 		}
 
 		this.deserializeCircuit(tempCircuit);
-		console.log(tempCircuit);
 		tempCircuit.input[0].output = true;
 	}
 
