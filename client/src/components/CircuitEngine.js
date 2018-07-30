@@ -11,8 +11,6 @@ class CircuitEngine extends Component {
 
 	//currently, I am getting reference data though so maybe this is good enough and not too many assumptions should be made
 
-
-
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -21,61 +19,78 @@ class CircuitEngine extends Component {
 		};
 	}
 
-	getRef(circuit, id, pin){
-		// console.log(circuit);
-		// console.log(id);
-		// check circuit inputs, inputs may be a bus
-		for(var i = 0; i < circuit.input.length; i++) {
-			if(circuit.input[i].id === id) {
-				if(pin === null) {
-					return circuit.input[i];
-				} else {
-					return circuit.input.output[pin];
-				}
+	getRef(circuit, id) {
+		for (var i = 0; i < circuit.input.length; i++) {
+			if (circuit.input[i].id === id) {
+				return circuit.input;
 			}
 		}
 		// check circuit internal logic
-		for(i = 0; i < circuit.internalLogic.length; i++) {
-			if(circuit.internalLogic[i].id === id) {
-				if(pin === null) {
-					return circuit.internalLogic.output
-				} else {
-					return circuit.internalLogic.output[pin];
-				}
+		for (i = 0; i < circuit.internalLogic.length; i++) {
+			if (circuit.internalLogic[i].id === id) {
+				return circuit.internalLogic[i];
 			}
 		}
 
-		console.log('something has gone terribly awry')
+		console.log('something has gone terribly awry');
 	}
 
 	deserializeCircuit(circuit) {
-		//deserialize step
+		//deserialize internalLogic
 		for (var i = 0; i < circuit.internalLogic.length; i++) {
 			if (circuit.internalLogic[i].type !== 'circuit') {
 				//get reference for each input of the gate
 				for (var j = 0; j < circuit.internalLogic[i].input.length; j++) {
 					// the input ID
-					var input = circuit.internalLogic[i].input[j];
+                    var input = circuit.internalLogic[i].input[j];
 					var parsedInputID = '';
-					// if the gate's input is a component or a bus the output will need to be selected
-					var parsedInputPin = '';
-					const divider = input.indexOf(':');
-					if(divider === -1) {
-						parsedInputID = input;
-						parsedInputPin = null;
+                    // if the gate's input is a component or a bus the output will need to be selected
+                    console.log(input);
+					var divider = input.indexOf(':');
+					if (divider === -1) {
+                        parsedInputID = input;
+                        circuit.internalLogic[i].input[j] = {};
+						circuit.internalLogic[i].input[j].pin = null;
 					} else {
 						parsedInputID = input.substring(0, divider);
-						// get the string versin of input pin and convert to digit
-						parsedInputPin = parseInt(input.substring(divider + 1, input.length), 10);
+                        // get the string versin of input pin and convert to digit
+                        circuit.internalLogic[i].input[j] = {};
+						circuit.internalLogic[i].input[j].pin = parseInt(
+							input.substring(divider + 1, input.length),
+							10
+						);
 					}
-					circuit.internalLogic[i].input[j] = this.getRef(circuit, parsedInputID, parsedInputPin);
+					circuit.internalLogic[i].input[j].ref = this.getRef(circuit, parsedInputID);
 				}
 			} else {
-				// handle circuits and stuff
+				// get reference for each input of the circuit
+				for (j = 0; j < circuit.internalLogic[i].input.length; j++) {
+					// TODO
+				}
 			}
 		}
+		//deserialize outputs
+		for (i = 0; i < circuit.output.length; i++) {
+            console.log(circuit.output[i]);
+			input = circuit.output[i].input;
+            parsedInputID = '';
+            
+			// if the gate's input is a component or a bus the output will need to be selected
+			divider = input.indexOf(':');
+			if (divider === -1) {
+				parsedInputID = input;
+				circuit.internalLogic[i].input.pin = null;
+			} else {
+				parsedInputID = input.substring(0, divider);
+				// get the string versin of input pin and convert to digit
+				circuit.internalLogic[i].input.pin = parseInt(
+					input.substring(divider + 1, input.length),
+					10
+				);
+			}
+			circuit.output[i].input.ref = this.getRef(circuit, parsedInputID);
+		}
 	}
-
 
 	buildLocalCircuit() {
 		var tempCircuit = {};
@@ -104,6 +119,7 @@ class CircuitEngine extends Component {
 
 		this.deserializeCircuit(tempCircuit);
 		console.log(tempCircuit);
+		tempCircuit.input[0].output = true;
 	}
 
 	componentDidMount() {
@@ -115,11 +131,9 @@ class CircuitEngine extends Component {
 		}
 
 		// if a built circuit is not defined and circuitData has been received
-
 	}
 
 	render() {
-
 		if (!this.state.builtCircuit && this.props.circuitData) {
 			this.buildLocalCircuit();
 		}
