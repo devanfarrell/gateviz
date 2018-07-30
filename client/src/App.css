@@ -74,3 +74,6 @@ tr :hover {
   padding-right: 30px;
 }
 
+.circuitCanvas {
+  background-color: white;
+}
