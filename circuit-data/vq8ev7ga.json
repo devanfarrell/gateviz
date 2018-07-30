@@ -24,54 +24,51 @@
     ],
     "internalLogic": [
         {
-            "_comment": "internal components must be listed in order of evaluation"
-        },
-        {
-            "ID": "G1",
+            "id": "G1",
             "type": "OR",
             "label": "a + b",
             "coord": [150, 160],
             "input": ["I1", "I2"]
         },
         {
-            "ID": "G2",
+            "id": "G2",
             "type": "AND",
             "label": "ab",
             "coord": [150, 250],
             "input": ["I1", "I2"]
         },
         {
-            "ID": "G3",
+            "id": "G3",
             "type": "OR",
             "coord": [350, 140],
             "input": ["G2", "I3"]
         },
         {
-            "ID": "G4",
+            "id": "G4",
             "type": "OR",
             "coord": [350, 200],
             "input": ["I2", "I3"]
         },
         {
-            "ID": "G5",
+            "id": "G5",
             "type": "OR",
             "coord": [350, 260],
             "input": ["I2", "I3"]
         },
         {
-            "ID": "G6",
+            "id": "G6",
             "type": "AND",
             "coord": [350, 380],
             "input": ["G1", "I3"]
         },
         {
-            "ID": "G7",
+            "id": "G7",
             "type": "AND",
             "coord": [350, 440],
             "input": ["I2", "I3"]
         },
         {
-            "ID": "G8",
+            "id": "G8",
             "type": "AND",
             "coord": [350, 500],
             "input": ["G2", "I3"]
