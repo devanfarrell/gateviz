@@ -1,13 +1,15 @@
 import { combineReducers } from 'redux';
 
-import circuitReducer from './circuitReducer';
+import fetchCircuitReducer from './fetchCircuitReducer';
 import listCircuitsReducer from './listCircuitsReducer';
 import searchTermChangeReducer from './searchTermChangeReducer';
 import selectCircuitReducer from './selectCircuitReducer';
+import setBuiltCircuitReducer from './setBuiltCircuitReducer';
 
 export default combineReducers({
-	circuit: 			circuitReducer,
+	circuit: 			fetchCircuitReducer,
 	circuitList: 		listCircuitsReducer,
 	term: 				searchTermChangeReducer,
-	selectedCircuit: 	selectCircuitReducer
+	selectedCircuit: 	selectCircuitReducer,
+	builtCircuit:		setBuiltCircuitReducer
 });
