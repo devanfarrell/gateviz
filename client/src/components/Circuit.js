@@ -10,13 +10,17 @@ class Circuit extends Component {
 	}
 
 	render() {
+
 		// if the circuit has not been fetched
-		if(!this.props.circuit) {
+		if (!this.props.circuit) {
 			return <div> Loading Circuit!!!! </div>
 		}
 		// if the circuit has been built
 		else {
-			return <div ref={ref => (this.canvas = ref)} className="circuitCanvas"/>;
+			//console.log(this.props.circuit.internalLogic[1]);
+			var test = this.props.circuit.internalLogic[1].evaluate([true, true]);
+			console.log(test);
+			return <div ref={ref => (this.canvas = ref)} className="circuitCanvas" />;
 		}
 	}
 }

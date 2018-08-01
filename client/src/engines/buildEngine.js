@@ -1,3 +1,21 @@
+const AND = (input) => {
+    var counter = 0;
+    for(var i = 0; i < input.length; i++){
+        if(input[i]){
+          counter++;
+        }
+    }
+    return counter > 0 && counter === input.length;
+}
+
+const OR = () => {
+    console.log(this);
+}
+
+
+
+
+
 function getRef(circuit, id) {
     for (var i = 0; i < circuit.input.length; i++) {
         if (circuit.input[i].id === id) {
@@ -19,6 +37,18 @@ function deserializeCircuit(circuit) {
     for (var i = 0; i < circuit.internalLogic.length; i++) {
         if (circuit.internalLogic[i].type !== 'circuit') {
             //get reference for each input of the gate
+            var evaluationMethod = () => {};
+            switch(circuit.internalLogic[i].type){
+                case 'AND':
+                    evaluationMethod = AND;
+                    break;
+                case 'OR':
+                    evaluationMethod = OR;
+                    break;
+                default:
+                    console.log('manditory default case hit... somehow...')
+            }
+            circuit.internalLogic[i].evaluate = evaluationMethod;
             for (var j = 0; j < circuit.internalLogic[i].input.length; j++) {
                 // the input ID
                 var input = circuit.internalLogic[i].input[j];
