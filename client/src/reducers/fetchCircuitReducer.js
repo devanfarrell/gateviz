@@ -8,11 +8,7 @@ export default function(state = null, action) {
 		
 		case FETCH_CIRCUIT:
 			var temp = buildCircuit(action.payload);
-			temp.input[0].output = true;
-			temp.input[1].output = true;
-			temp.input[2].output = true;
 			evaluateCircuit(temp);
-			console.log(temp);
 			return temp || false;
 		default:
 			return state;

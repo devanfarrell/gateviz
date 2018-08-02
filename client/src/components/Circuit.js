@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchCircuit } from '../actions';
-
+import renderEngine from '../engines/renderEngine';
 
 class Circuit extends Component {
+	constructor(props) {
+		super(props);
+		this.canvas = React.createRef();
+	}
 
 	componentDidMount() {
 		this.props.fetchCircuit();
@@ -13,12 +17,11 @@ class Circuit extends Component {
 
 		// if the circuit has not been fetched
 		if (!this.props.circuit) {
-			return <div> Loading Circuit!!!! </div>
+			return <div> Loading Circuit!!!! </div>;
 		}
 		// if the circuit has been built
 		else {
-			//console.log(this.props.circuit.internalLogic[1]);
-			return <div ref={ref => (this.canvas = ref)} className="circuitCanvas" />;
+			return <div ref={ref => (renderEngine(ref, this.props.circuit))} />
 		}
 	}
 }
