@@ -18,8 +18,6 @@ class Circuit extends Component {
 		// if the circuit has been built
 		else {
 			//console.log(this.props.circuit.internalLogic[1]);
-			var test = this.props.circuit.internalLogic[1].evaluate([true, true]);
-			console.log(test);
 			return <div ref={ref => (this.canvas = ref)} className="circuitCanvas" />;
 		}
 	}
