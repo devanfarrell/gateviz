@@ -113,7 +113,12 @@ export default (canvas, circuit, clickEvent) => {
 				path.fill(trueColor);
 			} else {
 				path.fill(falseColor);
-            }
+			}
+
+			// TODO: remove next function cal
+			path.click( () => {
+				clickEvent(circuit.internalLogic[i]);
+			 } );
             
 		} else {
             path = svgPanel
