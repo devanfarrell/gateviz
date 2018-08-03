@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_CIRCUIT, FETCH_CIRCUIT_LIST, CHANGE_SEARCH_TERM, SELECT_CIRCUIT } from './types';
+import { FETCH_CIRCUIT, FETCH_CIRCUIT_LIST, CHANGE_SEARCH_TERM, SELECT_CIRCUIT, STEP_INTO_CIRCUIT } from './types';
 
 export const fetchCircuit = cid => async dispatch => {
 	const url = `/api/circuit/${cid}`;
@@ -18,4 +18,8 @@ export const changeSearchTerm = term => dispatch => {
 
 export const selectCircuit = circuitKey => dispatch => {
 	dispatch({ type: SELECT_CIRCUIT, payload: circuitKey });
+};
+
+export const stepIntoCircuit = displayInstructions => dispatch => {
+	dispatch({ type: STEP_INTO_CIRCUIT, payload: displayInstructions });
 };

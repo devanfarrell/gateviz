@@ -48,15 +48,15 @@ const XOR = {
 
 const NOT = {
 	path:
-		'M46.193,23.949c0.028,-2.184 1.809,-3.949 4,-3.949c2.208,0 4,1.792 4,4c0,2.208 -1.792,4 -4,4c-2.191,0 -3.972,-1.765 -4,-3.949l-45.693,23.449l0,-47l45.693,23.449',
+		'M46.193,23.949c0.028,-2.184 1.809,-3.949 4,-3.949c2.208,0 4,1.792 4,4c0,2.208 -1.792,4 -4,4c-2.191,0 -3.972,-1.765 -4,-3.949l-45.693,23.449l0,-47l45.693,23.449Z',
 	height: 30,
 	width: 30
 };
 
-export default (canvas, circuit) => {
+export default (canvas, circuit, clickEvent) => {
 	var svgPanel = svgjs(canvas).size(1000, 1500);
-	//inputs
 
+	//inputs
 	for (var i = 0; i < circuit.input.length; i++) {
 		var path = svgPanel.path(INPUT.path).move(circuit.input[i].coord[0], circuit.input[i].coord[1]);
 		path.stroke({
@@ -73,6 +73,7 @@ export default (canvas, circuit) => {
 		}
 	}
 
+	// internal logic
 	for (i = 0; i < circuit.internalLogic.length; i++) {
 		var gate = '';
 		switch (circuit.internalLogic[i].type) {
@@ -95,26 +96,43 @@ export default (canvas, circuit) => {
 				gate = NOT;
 				break;
 			default:
-				console.log('put some internal circuit logic here');
+				console.log('internal circuits are not being handled by the render engine at this time');
 		}
-
-		path = svgPanel
-			.path(gate.path)
-			.move(circuit.internalLogic[i].coord[0], circuit.internalLogic[i].coord[1]);
-		path.stroke({
-			color: '#000',
-			width: 2,
-			linecap: 'round',
-			linejoin: 'round'
-		});
-		path.size(gate.width, gate.height);
-		if (circuit.internalLogic[i].output) {
-			path.fill(trueColor);
+		if (circuit.internalLogic[i].type !== 'circuit') {
+			path = svgPanel
+				.path(gate.path)
+				.move(circuit.internalLogic[i].coord[0], circuit.internalLogic[i].coord[1]);
+			path.stroke({
+				color: '#000',
+				width: 2,
+				linecap: 'round',
+				linejoin: 'round'
+			});
+			path.size(gate.width, gate.height);
+			if (circuit.internalLogic[i].output) {
+				path.fill(trueColor);
+			} else {
+				path.fill(falseColor);
+            }
+            
 		} else {
-			path.fill(falseColor);
-		}
+            path = svgPanel
+                .path(circuit.internalLogic[i].path)
+                .move(circuit.internalLogic[i].coord[0], circuit.internalLogic[i].coord[1]);
+                path.stroke({
+                    color: '#000',
+                    width: 2,
+                    linecap: 'round',
+                    linejoin: 'round'
+                });
+                path.fill(componentFillColor);
+                path.click( () => {
+                    clickEvent(circuit.internalLogic[i]);
+                 } );
+        }
 	}
 
+	//outputs
 	for (i = 0; i < circuit.output.length; i++) {
 		path = svgPanel.path(INPUT.path).move(circuit.output[i].coord[0], circuit.output[i].coord[1]);
 		path.stroke({
