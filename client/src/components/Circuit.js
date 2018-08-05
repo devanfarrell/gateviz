@@ -3,6 +3,16 @@ import { connect } from 'react-redux';
 import { fetchCircuit, stepIntoCircuit, changeInputs } from '../actions';
 import renderEngine from '../engines/renderEngine';
 
+/*
+* Possible strategy for fixing rerender issues:
+* Have an inialize SVG in the rendering engine which passes back a reference to the SVG canvas.
+* This function should be called before fetch circuitin the componentDidMount.
+* That reference will get passed along with the action fetchCircuit and whenever else the circuit needs to be rendered.
+* Not sure this will work but if it does it'll probably be the cleanest method possible.
+* Rerenders will probably force clear everything from the canvas unless references are able to be maintained
+* and may cause of leak of event listeners.
+*/
+
 class Circuit extends Component {
 	constructor(props) {
 		super(props);
