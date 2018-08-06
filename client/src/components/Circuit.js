@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchCircuit, stepIntoCircuit, changeInputs } from '../actions';
-import renderEngine from '../engines/renderEngine';
+import * as renderEngine from '../engines/renderEngine';
 
 /*
 * Possible strategy for fixing rerender issues:
@@ -16,7 +16,7 @@ import renderEngine from '../engines/renderEngine';
 class Circuit extends Component {
 	constructor(props) {
 		super(props);
-		this.internalCircuitclickEvent = this.internalCircuitclickEvent.bind(this);
+		this.internalCircuitclickEvent = this.internalCircuitclickEvent.bind(this); 
 		this.state = {circuit: {}};
 	}
 
@@ -24,9 +24,13 @@ class Circuit extends Component {
 		this.props.fetchCircuit();
 	}
 
-	internalCircuitclickEvent(data) {
-		
-		
+
+	startRenderEngine(ref) {
+		var canvas = renderEngine.initialize(ref);
+		renderEngine.render(canvas, this.props.circuit);
+	}
+	
+	internalCircuitclickEvent(data) {	
 		var temp = {circuit: this.props.circuit, data}
 		// Temporary test for changeInput action
 		this.props.changeInputs({circuit: this.props.circuit, inputs: [1, 1, 1]});
@@ -41,7 +45,7 @@ class Circuit extends Component {
 		}
 		// if the circuit has been built
 		else {
-			return <div ref={ref => (console.log(this.props), renderEngine(ref, this.props.circuit, this.internalCircuitclickEvent ), console.log('called')) } className="circuitCanvas"/>
+			return <div ref={ref => this.startRenderEngine(ref) } className="circuitCanvas"/>
 		}
 	}
 }

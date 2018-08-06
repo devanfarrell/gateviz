@@ -53,12 +53,16 @@ const NOT = {
 	width: 30
 };
 
-export default (canvas, circuit, clickEvent) => {
-	var svgPanel = svgjs(canvas).size(1000, 1500);
+
+export function initialize(ref) {
+	return svgjs(ref).size(1000, 1000);
+}
+
+export function render(canvas, circuit, clickEvent) {
 
 	//inputs
 	for (var i = 0; i < circuit.input.length; i++) {
-		var path = svgPanel.path(INPUT.path).move(circuit.input[i].coord[0], circuit.input[i].coord[1]);
+		var path = canvas.path(INPUT.path).move(circuit.input[i].coord[0], circuit.input[i].coord[1]);
 		path.stroke({
 			color: '#000',
 			width: 2,
@@ -99,7 +103,7 @@ export default (canvas, circuit, clickEvent) => {
 				console.log('internal circuits are not being handled by the render engine at this time');
 		}
 		if (circuit.internalLogic[i].type !== 'circuit') {
-			path = svgPanel
+			path = canvas
 				.path(gate.path)
 				.move(circuit.internalLogic[i].coord[0], circuit.internalLogic[i].coord[1]);
 			path.stroke({
@@ -116,12 +120,12 @@ export default (canvas, circuit, clickEvent) => {
 			}
 
 			// TODO: remove next function cal
-			path.click( () => {
-				clickEvent(circuit.internalLogic[i]);
-			 } );
+			// path.click( () => {
+			// 	clickEvent(circuit.internalLogic[i]);
+			//  } );
             
 		} else {
-            path = svgPanel
+            path = canvas
                 .path(circuit.internalLogic[i].path)
                 .move(circuit.internalLogic[i].coord[0], circuit.internalLogic[i].coord[1]);
                 path.stroke({
@@ -131,15 +135,15 @@ export default (canvas, circuit, clickEvent) => {
                     linejoin: 'round'
                 });
                 path.fill(componentFillColor);
-                path.click( () => {
-                    clickEvent(circuit.internalLogic[i]);
-                 } );
+                // path.click( () => {
+                //     clickEvent(circuit.internalLogic[i]);
+                //  } );
         }
 	}
 
 	//outputs
 	for (i = 0; i < circuit.output.length; i++) {
-		path = svgPanel.path(INPUT.path).move(circuit.output[i].coord[0], circuit.output[i].coord[1]);
+		path = canvas.path(INPUT.path).move(circuit.output[i].coord[0], circuit.output[i].coord[1]);
 		path.stroke({
 			color: '#000',
 			width: 2,
