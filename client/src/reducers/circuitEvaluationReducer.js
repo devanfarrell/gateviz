@@ -2,21 +2,23 @@ import { FETCH_CIRCUIT, CHANGE_INPUTS } from '../actions/types';
 
 import buildCircuit from '../engines/buildEngine';
 import { evaluateCircuit } from '../engines/computationEngine';
-import { rerender } from '../engines/renderEngine';
 
 export default function (state = null, action) {
 	switch (action.type) {
 		case FETCH_CIRCUIT:
 			var temp = buildCircuit(action.payload);
+			for (var i = 0; i < temp.input.length; i++) {
+				temp.input[i].output = 0;
+			}
 			evaluateCircuit(temp);
 			return temp || false;
+
 		case CHANGE_INPUTS:
 			temp = action.payload.circuit;
-			for(var i = 0; i < action.payload.inputs.length; i++) {
+			for (i = 0; i < action.payload.inputs.length; i++) {
 				temp.input[i].output = action.payload.inputs[i];
 			}
 			evaluateCircuit(temp);
-			rerender( action.payload.canvas, temp );
 			return temp || false;
 		default:
 			return state;

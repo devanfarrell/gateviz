@@ -58,15 +58,9 @@ export function initialize(ref) {
 	return svgjs(ref).size(1000, 1000);
 }
 
-export function rerender(canvas, circuit, clickEvent) {
-
-	canvas.clear();
-	render(canvas, circuit, clickEvent);
-}
-
-
 export function render(canvas, circuit, clickEvent) {
-
+	//clear here saves a redundant function and really doesn't affect performance
+	canvas.clear();
 	//inputs
 	for (var i = 0; i < circuit.input.length; i++) {
 		var path = canvas.path(INPUT.path).move(circuit.input[i].coord[0], circuit.input[i].coord[1]);

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_CIRCUIT, FETCH_CIRCUIT_LIST, CHANGE_SEARCH_TERM, SELECT_CIRCUIT, STEP_INTO_CIRCUIT, CHANGE_INPUTS } from './types';
+import { FETCH_CIRCUIT, FETCH_CIRCUIT_LIST, CHANGE_SEARCH_TERM, SELECT_CIRCUIT, STEP_INTO_CIRCUIT, CHANGE_INPUTS, DISPLAY_CIRCUIT, STEP_BACK_CIRCUIT } from './types';
 
 export const fetchCircuit = cid => async dispatch => {
 	const url = `/api/circuit/${cid}`;
@@ -20,10 +20,21 @@ export const selectCircuit = circuitKey => dispatch => {
 	dispatch({ type: SELECT_CIRCUIT, payload: circuitKey });
 };
 
-export const stepIntoCircuit = displayInstructions => dispatch => {
-	dispatch({ type: STEP_INTO_CIRCUIT, payload: displayInstructions });
+export const displayCircuit = obj => dispatch => {
+	dispatch({ type: DISPLAY_CIRCUIT, payload: obj });
+};
+
+export const stepIntoCircuit = obj => dispatch => {
+	dispatch({ type: STEP_INTO_CIRCUIT, payload: obj });
+	dispatch({ type: DISPLAY_CIRCUIT, payload: obj });
+};
+
+export const stepBackCircuit = obj => dispatch => {
+	dispatch({ type: STEP_BACK_CIRCUIT, payload: obj });
+	dispatch({ type: DISPLAY_CIRCUIT, payload: obj });
 };
 
 export const changeInputs = obj => dispatch => {
 	dispatch({ type: CHANGE_INPUTS, payload: obj });
+	dispatch({ type: DISPLAY_CIRCUIT, payload: obj });
 };
