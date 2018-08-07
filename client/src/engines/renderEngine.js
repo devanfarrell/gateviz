@@ -58,6 +58,13 @@ export function initialize(ref) {
 	return svgjs(ref).size(1000, 1000);
 }
 
+export function rerender(canvas, circuit, clickEvent) {
+
+	canvas.clear();
+	render(canvas, circuit, clickEvent);
+}
+
+
 export function render(canvas, circuit, clickEvent) {
 
 	//inputs
@@ -119,26 +126,21 @@ export function render(canvas, circuit, clickEvent) {
 				path.fill(falseColor);
 			}
 
-			// TODO: remove next function cal
-			// path.click( () => {
-			// 	clickEvent(circuit.internalLogic[i]);
-			//  } );
-            
 		} else {
-            path = canvas
-                .path(circuit.internalLogic[i].path)
-                .move(circuit.internalLogic[i].coord[0], circuit.internalLogic[i].coord[1]);
-                path.stroke({
-                    color: '#000',
-                    width: 2,
-                    linecap: 'round',
-                    linejoin: 'round'
-                });
-                path.fill(componentFillColor);
-                // path.click( () => {
-                //     clickEvent(circuit.internalLogic[i]);
-                //  } );
-        }
+			path = canvas
+				.path(circuit.internalLogic[i].path)
+				.move(circuit.internalLogic[i].coord[0], circuit.internalLogic[i].coord[1]);
+			path.stroke({
+				color: '#000',
+				width: 2,
+				linecap: 'round',
+				linejoin: 'round'
+			});
+			path.fill(componentFillColor);
+			// path.click( () => {
+			//     clickEvent(circuit.internalLogic[i]);
+			//  } );
+		}
 	}
 
 	//outputs
