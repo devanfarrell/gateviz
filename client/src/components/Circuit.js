@@ -17,7 +17,7 @@ class Circuit extends Component {
 	constructor(props) {
 		super(props);
 		this.internalCircuitclickEvent = this.internalCircuitclickEvent.bind(this); 
-		this.state = {circuit: {}};
+		this.canvas = this.refs.ref;
 	}
 
 	componentDidMount() {
@@ -26,15 +26,14 @@ class Circuit extends Component {
 
 
 	startRenderEngine(ref) {
-		var canvas = renderEngine.initialize(ref);
-		renderEngine.render(canvas, this.props.circuit);
+		this.canvas = renderEngine.initialize(ref);
+		renderEngine.render(this.canvas, this.props.circuit, this.internalCircuitclickEvent);
 	}
 	
 	internalCircuitclickEvent(data) {	
 		var temp = {circuit: this.props.circuit, data}
 		// Temporary test for changeInput action
-		this.props.changeInputs({circuit: this.props.circuit, inputs: [1, 1, 1]});
-		this.setState({circuit: this.props.circuit});
+		this.props.changeInputs({circuit: this.props.circuit, inputs: [1, 1, 1], canvas: this.canvas});
 		//this.props.stepIntoCircuit(temp);
 	}
 	render() {

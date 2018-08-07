@@ -125,6 +125,9 @@ export function render(canvas, circuit, clickEvent) {
 			} else {
 				path.fill(falseColor);
 			}
+			path.click( () => {
+			    clickEvent(circuit.internalLogic[i]);
+			 } );
 
 		} else {
 			path = canvas

@@ -2,6 +2,7 @@ import { FETCH_CIRCUIT, CHANGE_INPUTS } from '../actions/types';
 
 import buildCircuit from '../engines/buildEngine';
 import { evaluateCircuit } from '../engines/computationEngine';
+import { rerender } from '../engines/renderEngine';
 
 export default function (state = null, action) {
 	switch (action.type) {
@@ -15,6 +16,7 @@ export default function (state = null, action) {
 				temp.input[i].output = action.payload.inputs[i];
 			}
 			evaluateCircuit(temp);
+			rerender( action.payload.canvas, temp );
 			return temp || false;
 		default:
 			return state;
