@@ -1,0 +1,31 @@
+{
+    "list": [
+        {
+            "name": "All The Things",
+            "cid": "asdf",
+            "description": "Test Circuit"
+
+        },
+        {
+            "name": "Thermometer",
+            "cid": "vq8ev7ga",
+            "description": "A simple three input thermometer circuit"
+
+        },
+        {
+            "name": "Single Bit ALU",
+            "cid": "fdaa",
+            "description": "Arithmatic Logic Unit"
+        },
+        {
+            "name": "32 Bit Adder",
+            "cid": "32alu",
+            "description": "Ugly but effective"
+        },
+        {
+            "name": "Gates Demo",
+            "cid": "asdfasdfasdf",
+            "description": "Small example of gate functionality"
+        }
+    ]
+}

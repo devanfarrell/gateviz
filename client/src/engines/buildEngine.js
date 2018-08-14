@@ -62,66 +62,118 @@ function getRef(circuit, id) {
 			return circuit.internalLogic[i];
 		}
 	}
-
 	console.log('something has gone terribly awry');
 }
+
+function solderInputPins(board, circuit) {
+	if (board.input.length !== circuit.input.length) {
+
+		console.log('circuit input is not soldered properly: ', circuit);
+	}
+	for (var i = 0; i < board.input.length; i++) {
+		circuit.input[i] = board.input[i];
+	}
+}
+
+function solderOutputPins(board, circuit) {
+	for (var i = 0; i < circuit.output.length; i++) {
+		board.output[i] = circuit.output[i];
+	}
+}
+
+function initCircuit(circuitData) {
+	var tempCircuit = {};
+	//build step
+	tempCircuit.input = [];
+	for (var i = 0; i < circuitData.input.length; i++) {
+		tempCircuit.input[i] = circuitData.input[i];
+		tempCircuit.input[i].output = false;
+	}
+
+	tempCircuit.internalLogic = [];
+	for (i = 0; i < circuitData.internalLogic.length; i++) {
+		tempCircuit.internalLogic[i] = circuitData.internalLogic[i];
+
+		if (tempCircuit.internalLogic[i].type !== 'CIRCUIT') {
+			//TODO:default state should also be definable for dependant logic
+			tempCircuit.internalLogic[i].output = false;
+		} else {
+			tempCircuit.internalLogic[i].output = new Array();
+			for (var j = 0; j < circuitData.output.length; j++) {
+				tempCircuit.internalLogic[i].output[j] = {};
+				tempCircuit.internalLogic[i].output[j].output = false;
+			}
+		}
+	}
+
+	tempCircuit.output = [];
+
+	for (i = 0; i < circuitData.output.length; i++) {
+		tempCircuit.output[i] = circuitData.output[i];
+		// yes the naming is stupid but... naming convention
+		tempCircuit.output[i].output = false;
+	}
+	deserializeCircuit(tempCircuit);
+	return tempCircuit;
+}
+
 
 function deserializeCircuit(circuit) {
 	//deserialize internalLogic
 	for (var i = 0; i < circuit.internalLogic.length; i++) {
-		if (circuit.internalLogic[i].type !== 'circuit') {
-			//get reference for each input of the gate
-			var evaluationMethod = () => {};
-			switch (circuit.internalLogic[i].type) {
-				case 'AND':
-					evaluationMethod = AND;
-					break;
-				case 'NAND':
-					evaluationMethod = NAND;
-					break;
-				case 'OR':
-					evaluationMethod = OR;
-					break;
-				case 'NOR':
-					evaluationMethod = NOR;
-					break;
-				case 'XOR':
-					evaluationMethod = XOR;
-					break;
-				case 'NOT':
-					evaluationMethod = NOT;
-					break;
-				default:
-					console.log('manditory default case hit... somehow...');
+		//get reference for each input
+
+		for (var j = 0; j < circuit.internalLogic[i].input.length; j++) {
+			// the input ID
+			var input = circuit.internalLogic[i].input[j];
+			var parsedInputID = '';
+			// if the gate's input is a component or a bus the output will need to be selected
+			var divider = input.indexOf(':');
+			if (divider === -1) {
+				parsedInputID = input;
+				circuit.internalLogic[i].input[j] = {};
+				circuit.internalLogic[i].input[j].pin = null;
+			} else {
+				parsedInputID = input.substring(0, divider);
+				// get the string version of input pin and convert to digit
+				circuit.internalLogic[i].input[j] = {};
+				circuit.internalLogic[i].input[j].pin = parseInt(
+					input.substring(divider + 1, input.length),
+					10
+				);
 			}
-			circuit.internalLogic[i].evaluate = evaluationMethod;
-			for (var j = 0; j < circuit.internalLogic[i].input.length; j++) {
-				// the input ID
-				var input = circuit.internalLogic[i].input[j];
-				var parsedInputID = '';
-				// if the gate's input is a component or a bus the output will need to be selected
-				var divider = input.indexOf(':');
-				if (divider === -1) {
-					parsedInputID = input;
-					circuit.internalLogic[i].input[j] = {};
-					circuit.internalLogic[i].input[j].pin = null;
-				} else {
-					parsedInputID = input.substring(0, divider);
-					// get the string versin of input pin and convert to digit
-					circuit.internalLogic[i].input[j] = {};
-					circuit.internalLogic[i].input[j].pin = parseInt(
-						input.substring(divider + 1, input.length),
-						10
-					);
-				}
-				circuit.internalLogic[i].input[j].ref = getRef(circuit, parsedInputID);
-			}
-		} else {
-			// get reference for each input of the circuit
-			for (j = 0; j < circuit.internalLogic[i].input.length; j++) {
-				// TODO
-			}
+			circuit.internalLogic[i].input[j].ref = getRef(circuit, parsedInputID);
 		}
+		var evaluationMethod = () => { };
+		switch (circuit.internalLogic[i].type) {
+			case 'AND':
+				evaluationMethod = AND;
+				break;
+			case 'NAND':
+				evaluationMethod = NAND;
+				break;
+			case 'OR':
+				evaluationMethod = OR;
+				break;
+			case 'NOR':
+				evaluationMethod = NOR;
+				break;
+			case 'XOR':
+				evaluationMethod = XOR;
+				break;
+			case 'NOT':
+				evaluationMethod = NOT;
+				break;
+			case 'CIRCUIT':
+				solderInputPins(circuit.internalLogic[i], circuit.internalLogic[i].circuit);
+				circuit.internalLogic[i].circuit = initCircuit(circuit.internalLogic[i].circuit);
+				solderOutputPins(circuit.internalLogic[i], circuit.internalLogic[i].circuit);
+				evaluationMethod = () => console.log('Need to best figure out when to assign the evaluation method');
+				break;
+			default:
+				console.log('something has done broke');
+		}
+		circuit.internalLogic[i].evaluate = evaluationMethod;
 	}
 	//deserialize outputs
 	for (i = 0; i < circuit.output.length; i++) {
@@ -146,31 +198,6 @@ function deserializeCircuit(circuit) {
 }
 
 export default circuitData => {
-	var tempCircuit = {};
-	//build step
-	tempCircuit.input = [];
-	for (var i = 0; i < circuitData.input.length; i++) {
-		tempCircuit.input[i] = circuitData.input[i];
-		tempCircuit.input[i].output = false;
-	}
-
-	tempCircuit.internalLogic = [];
-	for (i = 0; i < circuitData.internalLogic.length; i++) {
-		tempCircuit.internalLogic[i] = circuitData.internalLogic[i];
-
-		if (tempCircuit.internalLogic[i].type !== 'circuit') {
-			//TODO:default state should also be definable for dependant logic
-			tempCircuit.internalLogic[i].output = false;
-		}
-	}
-
-	tempCircuit.output = [];
-	
-	for (i = 0; i < circuitData.output.length; i++) {
-		tempCircuit.output[i] = circuitData.output[i];
-		// yes the naming is stupid but... naming convention
-		tempCircuit.output[i].output = false;
-	}
-	deserializeCircuit(tempCircuit);
-	return tempCircuit;
+	var temp = initCircuit(circuitData)
+	return temp;
 };

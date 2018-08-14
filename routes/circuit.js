@@ -15,8 +15,12 @@ module.exports = app => {
 		(req, res) => {
 			require('url').parse(req.url)
 			var str = req.url;
-			const circuitRequested = str.replace("/api/circuit/", "")
-			res.send(circuitExample);
+			const circuitRequested = str.replace("/api/circuit/", "");
+			if(require(`../circuit-data/${circuitRequested}.json`)) {
+				res.send(require(`../circuit-data/${circuitRequested}.json`));
+			} else {
+				res.send(404);
+			}
 		}
 	);
 
