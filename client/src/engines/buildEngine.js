@@ -62,7 +62,7 @@ function getRef(circuit, id) {
 			return circuit.internalLogic[i];
 		}
 	}
-	console.log('something has gone terribly awry');
+	console.log('Printing broken refs in getRef(): ', circuit, id);
 }
 
 function solderInputPins(board, circuit) {
@@ -98,7 +98,7 @@ function initCircuit(circuitData) {
 			//TODO:default state should also be definable for dependant logic
 			tempCircuit.internalLogic[i].output = false;
 		} else {
-			tempCircuit.internalLogic[i].output = new Array();
+			tempCircuit.internalLogic[i].output = [];
 			for (var j = 0; j < circuitData.output.length; j++) {
 				tempCircuit.internalLogic[i].output[j] = {};
 				tempCircuit.internalLogic[i].output[j].output = false;
@@ -166,8 +166,15 @@ function deserializeCircuit(circuit) {
 				break;
 			case 'CIRCUIT':
 				solderInputPins(circuit.internalLogic[i], circuit.internalLogic[i].circuit);
+				circuit.internalLogic[i].cid = circuit.internalLogic[i].circuit.cid;
+				circuit.internalLogic[i].name = circuit.internalLogic[i].circuit.name;
+				circuit.internalLogic[i].description = circuit.internalLogic[i].circuit.description;
+				circuit.internalLogic[i].path = circuit.internalLogic[i].circuit.path;
+				circuit.internalLogic[i].height = circuit.internalLogic[i].circuit.height;
+				circuit.internalLogic[i].height = circuit.internalLogic[i].circuit.height;
 				circuit.internalLogic[i].circuit = initCircuit(circuit.internalLogic[i].circuit);
 				solderOutputPins(circuit.internalLogic[i], circuit.internalLogic[i].circuit);
+				console.log(circuit.internalLogic[i]);
 				evaluationMethod = () => console.log('Need to best figure out when to assign the evaluation method');
 				break;
 			default:

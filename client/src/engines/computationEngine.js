@@ -36,7 +36,6 @@ export function evaluateCircuit(circuit) {
 		if (pin === null) {
 			circuit.output[i].output = circuit.output[i].input.ref.output;
 		} else {
-			console.log('caller: ', circuit.output[i].input, 'ref: ',circuit.output[i].input.ref)
 			circuit.output[i].output = circuit.output[i].input.ref.output[pin].output;
 		}
 	}

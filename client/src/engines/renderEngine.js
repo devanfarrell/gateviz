@@ -80,63 +80,56 @@ export function render(canvas, circuit, clickEvent) {
 
 	// internal logic
 	for (i = 0; i < circuit.internalLogic.length; i++) {
-		var gate = '';
+		var renderSpecs = {};
 		switch (circuit.internalLogic[i].type) {
 			case 'AND':
-				gate = AND;
+				renderSpecs = AND;
 				break;
 			case 'NAND':
-				gate = NAND;
+				renderSpecs = NAND;
 				break;
 			case 'OR':
-				gate = OR;
+				renderSpecs = OR;
 				break;
 			case 'NOR':
-				gate = NOR;
+				renderSpecs = NOR;
 				break;
 			case 'XOR':
-				gate = XOR;
+				renderSpecs = XOR;
 				break;
 			case 'NOT':
-				gate = NOT;
+				renderSpecs = NOT;
 				break;
 			default:
-				console.log('internal circuits are not being handled by the render engine at this time');
+				renderSpecs.path = circuit.internalLogic[i].path;
+				renderSpecs.height = circuit.internalLogic[i].height;
+				renderSpecs.width = circuit.internalLogic[i].width;
 		}
-		if (circuit.internalLogic[i].type !== 'circuit') {
-			path = canvas
-				.path(gate.path)
-				.move(circuit.internalLogic[i].coord[0], circuit.internalLogic[i].coord[1]);
-			path.stroke({
-				color: '#000',
-				width: 2,
-				linecap: 'round',
-				linejoin: 'round'
-			});
-			path.size(gate.width, gate.height);
+
+		path = canvas
+			.path(renderSpecs.path)
+			.move(circuit.internalLogic[i].coord[0], circuit.internalLogic[i].coord[1]);
+		path.stroke({
+			color: '#000',
+			width: 2,
+			linecap: 'round',
+			linejoin: 'round'
+		});
+		path.size(renderSpecs.width, renderSpecs.height);
+
+		if (circuit.internalLogic[i].type !== 'CIRCUIT') {
+
 			if (circuit.internalLogic[i].output) {
 				path.fill(trueColor);
 			} else {
 				path.fill(falseColor);
 			}
-			path.click( () => {
-			    clickEvent(circuit.internalLogic[i]);
-			 } );
 
 		} else {
-			path = canvas
-				.path(circuit.internalLogic[i].path)
-				.move(circuit.internalLogic[i].coord[0], circuit.internalLogic[i].coord[1]);
-			path.stroke({
-				color: '#000',
-				width: 2,
-				linecap: 'round',
-				linejoin: 'round'
-			});
 			path.fill(componentFillColor);
-			// path.click( () => {
-			//     clickEvent(circuit.internalLogic[i]);
-			//  } );
+			path.click(() => {
+				clickEvent(circuit.internalLogic[i]);
+			});
 		}
 	}
 

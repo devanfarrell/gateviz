@@ -26,7 +26,7 @@
         {
             "id": "C1",
             "label": "thermometer",
-            "coord": [10, 200],
+            "coord": [200, 300],
             "type": "CIRCUIT",
             "input": ["I1", "I2", "I3"],
             "circuit": {
