@@ -12,7 +12,6 @@ class Circuit extends Component {
 	}
 
 	componentDidMount() {
-		console.log(this);
 		var uid = this.props.location.pathname
 		this.props.fetchCircuit(uid.replace("/circuit/", ""));
 	}
@@ -21,7 +20,8 @@ class Circuit extends Component {
 	startRenderEngine(ref) {
 		this.canvas = renderEngine.initialize(ref);
 		renderEngine.render(this.canvas, this.props.circuit, this.internalCircuitclickEvent);
-		//this.props.changeInputs({circuit: this.props.circuit, inputs: [1, 1, 1], canvas: this.canvas});
+		this.props.changeInputs({circuit: this.props.circuit, inputs: [1, 1, 1], canvas: this.canvas});
+		console.log(this.props.circuit);
 	}
 	
 	internalCircuitclickEvent(data) {	
@@ -30,7 +30,6 @@ class Circuit extends Component {
 	}
 
 	render() {
-		console.log(this.props.circuit)
 		// if the circuit has not been fetched
 		if (!this.props.circuit) {
 			return <div> Loading Circuit!!!! </div>;

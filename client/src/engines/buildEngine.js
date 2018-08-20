@@ -53,13 +53,19 @@ const XOR = input => {
 function getRef(circuit, id) {
 	for (var i = 0; i < circuit.input.length; i++) {
 		if (circuit.input[i].id === id) {
+			// TODO: Add bus logic similar to circuit. 
 			return circuit.input[i];
+
 		}
 	}
 	// check circuit internal logic
 	for (i = 0; i < circuit.internalLogic.length; i++) {
 		if (circuit.internalLogic[i].id === id) {
-			return circuit.internalLogic[i];
+			if(circuit.internalLogic[i].type === 'CIRCUIT') {
+				return circuit.internalLogic[i].circuit
+			} else {
+				return circuit.internalLogic[i];
+			}
 		}
 	}
 	console.log('Printing broken refs in getRef(): ', circuit, id);
@@ -71,7 +77,7 @@ function solderInputPins(board, circuit) {
 		console.log('circuit input is not soldered properly: ', circuit);
 	}
 	for (var i = 0; i < board.input.length; i++) {
-		circuit.input[i] = board.input[i];
+		circuit.input[i].ref = board.input[i].ref;
 	}
 }
 
@@ -85,6 +91,7 @@ function initCircuit(circuitData) {
 	var tempCircuit = {};
 	//build step
 	tempCircuit.input = [];
+	if(!circuitData.input[0].hasOwnProperty('id')) {console.log('WHERE HAS THE ID GONE?!?: ', circuitData)}
 	for (var i = 0; i < circuitData.input.length; i++) {
 		tempCircuit.input[i] = circuitData.input[i];
 		tempCircuit.input[i].output = false;
@@ -165,7 +172,6 @@ function deserializeCircuit(circuit) {
 				evaluationMethod = NOT;
 				break;
 			case 'CIRCUIT':
-				solderInputPins(circuit.internalLogic[i], circuit.internalLogic[i].circuit);
 				circuit.internalLogic[i].cid = circuit.internalLogic[i].circuit.cid;
 				circuit.internalLogic[i].name = circuit.internalLogic[i].circuit.name;
 				circuit.internalLogic[i].description = circuit.internalLogic[i].circuit.description;
@@ -174,8 +180,8 @@ function deserializeCircuit(circuit) {
 				circuit.internalLogic[i].height = circuit.internalLogic[i].circuit.height;
 				circuit.internalLogic[i].circuit = initCircuit(circuit.internalLogic[i].circuit);
 				solderOutputPins(circuit.internalLogic[i], circuit.internalLogic[i].circuit);
-				console.log(circuit.internalLogic[i]);
-				evaluationMethod = () => console.log('Need to best figure out when to assign the evaluation method');
+				solderInputPins(circuit.internalLogic[i], circuit.internalLogic[i].circuit);
+				evaluationMethod = () => console.log('Need to overwrite the evaluation method');
 				break;
 			default:
 				console.log('something has done broke');
