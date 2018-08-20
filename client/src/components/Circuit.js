@@ -20,8 +20,7 @@ class Circuit extends Component {
 	startRenderEngine(ref) {
 		this.canvas = renderEngine.initialize(ref);
 		renderEngine.render(this.canvas, this.props.circuit, this.internalCircuitclickEvent);
-		this.props.changeInputs({circuit: this.props.circuit, inputs: [1, 1, 1], canvas: this.canvas});
-		console.log(this.props.circuit);
+		this.props.changeInputs({circuit: this.props.circuit, inputs: [1, 0, 1], canvas: this.canvas});
 	}
 	
 	internalCircuitclickEvent(data) {	

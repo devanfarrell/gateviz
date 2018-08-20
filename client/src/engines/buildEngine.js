@@ -91,7 +91,6 @@ function initCircuit(circuitData) {
 	var tempCircuit = {};
 	//build step
 	tempCircuit.input = [];
-	if(!circuitData.input[0].hasOwnProperty('id')) {console.log('WHERE HAS THE ID GONE?!?: ', circuitData)}
 	for (var i = 0; i < circuitData.input.length; i++) {
 		tempCircuit.input[i] = circuitData.input[i];
 		tempCircuit.input[i].output = false;
@@ -181,7 +180,7 @@ function deserializeCircuit(circuit) {
 				circuit.internalLogic[i].circuit = initCircuit(circuit.internalLogic[i].circuit);
 				solderOutputPins(circuit.internalLogic[i], circuit.internalLogic[i].circuit);
 				solderInputPins(circuit.internalLogic[i], circuit.internalLogic[i].circuit);
-				evaluationMethod = () => console.log('Need to overwrite the evaluation method');
+				evaluationMethod = () => console.log('evaluate called on a circuit, type must be declared in uppercase: CIRCUIT');
 				break;
 			default:
 				console.log('something has done broke');
