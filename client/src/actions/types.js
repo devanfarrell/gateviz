@@ -6,3 +6,6 @@ export const STEP_INTO_CIRCUIT = 'step_into_circuit';
 export const CHANGE_INPUTS = 'change_inputs';
 export const DISPLAY_CIRCUIT = 'display_circuit';
 export const STEP_BACK_CIRCUIT = 'step_back_circuit';
+export const INIT_BREADCRUMB = 'init_breadcrumb';
+export const INIT_RENDER_ENGINE = 'init_render_engine';
+export const USE_RENDER_ENGINE = 'use_render_engine';

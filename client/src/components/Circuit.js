@@ -20,7 +20,8 @@ class Circuit extends Component {
 	startRenderEngine(ref) {
 		this.canvas = renderEngine.initialize(ref);
 		renderEngine.render(this.canvas, this.props.circuit, this.internalCircuitclickEvent);
-		this.props.changeInputs({circuit: this.props.circuit, inputs: [1, 0, 1], canvas: this.canvas});
+		this.props.changeInputs({circuit: this.props.circuit, inputs: [1, 1, 1], canvas: this.canvas});
+		renderEngine.render(this.canvas, this.props.circuit, this.internalCircuitclickEvent);
 	}
 	
 	internalCircuitclickEvent(data) {	
@@ -40,8 +41,8 @@ class Circuit extends Component {
 	}
 }
 
-function mapStateToProps({ circuit, builtCircuit }, ownprops) {
-	return { circuit, builtCircuit };
+function mapStateToProps({ circuit, breadCrumb }, ownprops) {
+	return { circuit, breadCrumb };
 }
 
 export default connect(
