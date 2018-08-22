@@ -1,8 +1,16 @@
 import svgjs from 'svgjs';
+import { stepIntoCircuit } from '../actions/';
+import { store } from '../';
 
-var trueColor = '#00FF87';
-var falseColor = '#464646';
-var componentFillColor = '#D1D2D4';
+const trueColor = '#00FF87';
+const falseColor = '#464646';
+const componentFillColor = '#D1D2D4';
+
+function internalCircuitclickEvent(obj, id, name) {
+	obj.click(() => {
+		store.dispatch(stepIntoCircuit({id, name}));
+	});
+}
 
 const INPUT = {
 	path: 'M52.707,0.5l45.793,23.5l-45.793,23.5l-52.207,0l0,-47l52.207,0Z',
@@ -117,6 +125,8 @@ export function render(canvas, circuit, clickEvent) {
 		});
 		path.size(renderSpecs.width, renderSpecs.height);
 
+
+
 		if (circuit.internalLogic[i].type !== 'CIRCUIT') {
 
 			if (circuit.internalLogic[i].output) {
@@ -126,10 +136,9 @@ export function render(canvas, circuit, clickEvent) {
 			}
 
 		} else {
+			circuit.internalLogic[i].localRef = path;
+			internalCircuitclickEvent(circuit.internalLogic[i].localRef, circuit.internalLogic[i].id, circuit.internalLogic[i].name)
 			path.fill(componentFillColor);
-			path.click(() => {
-				clickEvent(circuit.internalLogic[i]);
-			});
 		}
 	}
 
