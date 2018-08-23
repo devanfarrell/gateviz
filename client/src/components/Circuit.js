@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CircuitUI from './CircuitUI';
 import { connect } from 'react-redux';
 import { fetchCircuit, changeInputs } from '../actions';
 import * as renderEngine from '../engines/renderEngine';
@@ -18,7 +19,7 @@ class Circuit extends Component {
 	startRenderEngine(ref) {
 		this.canvas = renderEngine.initialize(ref);
 		renderEngine.render(this.canvas, this.props.circuit);
-		this.props.changeInputs({circuit: this.props.circuit, inputs: [1, 1, 1], canvas: this.canvas});
+		this.props.changeInputs({ circuit: this.props.circuit, inputs: [1, 1, 1], canvas: this.canvas });
 		renderEngine.render(this.canvas, this.props.circuit, this.internalCircuitclickEvent);
 	}
 
@@ -30,7 +31,12 @@ class Circuit extends Component {
 		}
 		// if the circuit has been built
 		else {
-			return <div ref={ref => this.startRenderEngine(ref) } className="circuitCanvas"/>
+			return (
+				<div>
+					<CircuitUI />
+					<div ref={ref => this.startRenderEngine(ref)} className="circuitCanvas" />
+				</div>
+			)
 		}
 	}
 }

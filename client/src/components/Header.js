@@ -4,7 +4,6 @@ import { Navbar, Nav, NavItem } from 'react-bootstrap';
 class Header extends Component {
 	render() {
 		return (
-			<div>
 				<Navbar fixedTop collapseOnSelect>
 					<Navbar.Header>
 						<Navbar.Brand>
@@ -18,7 +17,6 @@ class Header extends Component {
 						</Nav>
 					</Navbar.Collapse>
 				</Navbar>
-			</div>
 		);
 	}
 }
