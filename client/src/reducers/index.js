@@ -11,5 +11,5 @@ export default combineReducers({
 	circuitList: 		listCircuitsReducer,
 	selectedCircuit: 	selectCircuitReducer,
 	term: 				searchTermChangeReducer,
-	breadCrumb: 		breadCrumbReducer
+	breadcrumbs: 		breadCrumbReducer
 });

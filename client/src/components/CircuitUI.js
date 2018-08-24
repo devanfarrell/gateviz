@@ -1,37 +1,53 @@
 import React, { Component } from 'react';
-import { Breadcrumb, Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Breadcrumb, Navbar, FormGroup, FormControl, Button } from 'react-bootstrap';
+import { initBreadcrumb, stepIntoCircuit } from '../actions';
 import { connect } from 'react-redux';
 
 class CircuitUI extends Component {
 
+    componentDidMount() {
+        this.props.initBreadcrumb(this.props.name);
+    }
+
+    renderCrumbs() {
+        //If the breadcrumbs object has been fetched
+        console.log('renderCrumbs call: ', this.props.breadcrumbs);
+        if (this.props.breadcrumbs) {
+            //Access each element of the array
+            const breadcrumbs = this.props.breadcrumbs.map(breadcrumb => {
+                //Display it if a search term hasn't been defined or if the name of the circuit contains a substring of the term or if it is the selected circuit
+                return (
+                    <Breadcrumb.Item key={breadcrumb.id}>{breadcrumb.name}</Breadcrumb.Item>
+                );
+            });
+
+            console.log('Yo crumb, why so glum', breadcrumbs);
+            return breadcrumbs;
+        } else {
+            return null;
+        }
+    }
+
     render() {
+        console.log(this.props)
         return (
             <Navbar fixedBottom inverse>
-                <Navbar.Header>
-                    <Breadcrumb>
-                        <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
-                        <Breadcrumb.Item href="http://getbootstrap.com/components/#breadcrumbs">
-                            Library
-                </Breadcrumb.Item>
-                        <Breadcrumb.Item active>Data</Breadcrumb.Item>
-                    </Breadcrumb>
-                    <Navbar.Toggle />
-                </Navbar.Header>
-                <Navbar.Collapse>
-                    <Nav pullRight>
-                        <NavItem href="/" />
-                    </Nav>
-                </Navbar.Collapse>
+                <Navbar.Form style={{ paddingLeft: 0, width: '100%' }}>
+                    <Button type="submit">Evaluate</Button>
+                    <FormGroup>
+                        <FormControl type="text" placeholder="Input" style={{ width: 'auto' }} />
+                    </FormGroup>{' '}
+                </Navbar.Form>
+                <Breadcrumb>
+                    {this.renderCrumbs()}
+                </Breadcrumb>
             </Navbar>
-
-
-
         );
     }
 }
 
-function mapStateToProps({ breadCrumb }, ownProps) {
-    return { breadCrumb };
+function mapStateToProps({ breadcrumbs }, ownProps) {
+    return { breadcrumbs };
 }
 
-export default connect(mapStateToProps, null)(CircuitUI);
+export default connect(mapStateToProps, { initBreadcrumb, stepIntoCircuit })(CircuitUI);

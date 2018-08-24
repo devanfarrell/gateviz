@@ -4,13 +4,10 @@ import { INIT_BREADCRUMB, STEP_INTO_CIRCUIT } from '../actions/types';
 export default function (state = null, action) {
     switch (action.type) {
         case INIT_BREADCRUMB:
-            console.log({name: [action.payload.name], id: []})
-            return state;
+            var breadcrumb = [{ name: action.payload, id: 'top' }];
+            return breadcrumb;
         case STEP_INTO_CIRCUIT:
-            // This is going to change what circuit is displayed from all available internal circuits
-            // it could be really interesting to make a breadcrumb style navigation based on this.
-            console.log('clicked ID: ', action.payload);
-            console.log('propigated state: ', state);
+            state.push(action.payload);
             return state;
         default:
             return state;

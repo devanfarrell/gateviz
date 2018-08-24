@@ -10,7 +10,6 @@ export const fetchCircuit = cid => async dispatch => {
 	const url = `/api/circuit/${cid}`;
 	const res = await axios.get(url);
 	dispatch({ type: FETCH_CIRCUIT, payload: res.data });
-	dispatch({ type: INIT_BREADCRUMB, payload: res.data.name });
 };
 
 export const changeSearchTerm = term => dispatch => {
@@ -37,8 +36,8 @@ export const initRenderEngine = obj => dispatch => {
 	dispatch({ type: INIT_RENDER_ENGINE, payload: obj });
 };
 
-export const initBreadcrumb = obj => dispatch => {
-	dispatch({ type: INIT_BREADCRUMB, payload: obj });
+export const initBreadcrumb = name => dispatch => {
+	dispatch({ type: INIT_BREADCRUMB, payload: name });
 }
 
 export const renderCircuit = obj => dispatch => {

@@ -211,5 +211,6 @@ function deserializeCircuit(circuit) {
 
 export default circuitData => {
 	var temp = initCircuit(circuitData)
+	temp.name = circuitData.name;
 	return temp;
 };

@@ -31,9 +31,10 @@ class Circuit extends Component {
 		}
 		// if the circuit has been built
 		else {
+			console.log(this.props.circuit.name)
 			return (
 				<div>
-					<CircuitUI />
+					<CircuitUI name={this.props.circuit.name}/>
 					<div ref={ref => this.startRenderEngine(ref)} className="circuitCanvas" />
 				</div>
 			)
@@ -41,8 +42,8 @@ class Circuit extends Component {
 	}
 }
 
-function mapStateToProps({ circuit, breadCrumb }, ownprops) {
-	return { circuit, breadCrumb };
+function mapStateToProps({ circuit }, ownprops) {
+	return { circuit };
 }
 
 export default connect(
