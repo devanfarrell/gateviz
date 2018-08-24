@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Breadcrumb, Navbar, FormGroup, FormControl, Button } from 'react-bootstrap';
-import { initBreadcrumb, stepIntoCircuit } from '../actions';
+import { initBreadcrumb } from '../actions';
 import { connect } from 'react-redux';
 
 class CircuitUI extends Component {
@@ -50,4 +50,4 @@ function mapStateToProps({ breadcrumbs }, ownProps) {
     return { breadcrumbs };
 }
 
-export default connect(mapStateToProps, { initBreadcrumb, stepIntoCircuit })(CircuitUI);
+export default connect(mapStateToProps, { initBreadcrumb })(CircuitUI);
