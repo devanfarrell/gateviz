@@ -8,7 +8,6 @@ import App from "./components/App";
 
 import reducers from './reducers';
 export const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
-console.log('um...', store);
 
 ReactDOM.render(
   <Provider store={store}>

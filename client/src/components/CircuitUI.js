@@ -11,7 +11,6 @@ class CircuitUI extends Component {
 
     renderCrumbs() {
         //If the breadcrumbs object has been fetched
-        console.log('renderCrumbs call: ', this.props.breadcrumbs);
         if (this.props.breadcrumbs) {
             //Access each element of the array
             const breadcrumbs = this.props.breadcrumbs.map(breadcrumb => {
@@ -20,8 +19,6 @@ class CircuitUI extends Component {
                     <Breadcrumb.Item key={breadcrumb.id}>{breadcrumb.name}</Breadcrumb.Item>
                 );
             });
-
-            console.log('Yo crumb, why so glum', breadcrumbs);
             return breadcrumbs;
         } else {
             return null;
@@ -29,7 +26,6 @@ class CircuitUI extends Component {
     }
 
     render() {
-        console.log(this.props)
         return (
             <Navbar fixedBottom inverse>
                 <Navbar.Form style={{ paddingLeft: 0, width: '100%' }}>

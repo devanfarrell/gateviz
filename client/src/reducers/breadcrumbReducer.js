@@ -10,8 +10,6 @@ export default function (state = null, action) {
         case STEP_INTO_CIRCUIT:
             const breadcrumb_in = List([{ name: action.payload.name, id: action.payload.id }])
             const breadcrumb_out = state.concat(breadcrumb_in);
-
-            console.log('boop', breadcrumb_out)
             return breadcrumb_out;
         default:
             return state;
