@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import CircuitUI from './CircuitUI';
+import Canvas from './Canvas';
 import { connect } from 'react-redux';
 import { fetchCircuit, changeInputs } from '../actions';
-import * as renderEngine from '../engines/renderEngine';
+
 
 
 class Circuit extends Component {
@@ -15,14 +16,15 @@ class Circuit extends Component {
 		var uid = this.props.location.pathname
 		this.props.fetchCircuit(uid.replace("/circuit/", ""));
 	}
-
-	startRenderEngine(ref) {
-		this.canvas = renderEngine.initialize(ref);
-		renderEngine.render(this.canvas, this.props.circuit);
-		this.props.changeInputs({ circuit: this.props.circuit, inputs: [1, 1, 1], canvas: this.canvas });
-		renderEngine.render(this.canvas, this.props.circuit, this.internalCircuitclickEvent);
+	
+	
+	renderCanvas() {
+		if(this.props.canvas) {
+				return this.props.canvas;
+        }else{
+            return null;
+        }
 	}
-
 
 	render() {
 		// if the circuit has not been fetched
@@ -31,10 +33,11 @@ class Circuit extends Component {
 		}
 		// if the circuit has been built
 		else {
+			console.log(this.props)
 			return (
 				<div>
 					<CircuitUI name={this.props.circuit.name}/>
-					<div ref={ref => this.startRenderEngine(ref)} className="circuitCanvas" />
+					{this.renderCanvas()}
 				</div>
 			)
 		}
@@ -42,7 +45,11 @@ class Circuit extends Component {
 }
 
 function mapStateToProps({ circuit }, ownprops) {
-	return { circuit };
+	var div = null
+	if(circuit){
+		div = <Canvas circuit={{circuit}}/>;
+	}
+	return { circuit, canvas: div };
 }
 
 export default connect(
