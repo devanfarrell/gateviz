@@ -62,13 +62,10 @@ const NOT = {
 };
 
 
-export function initialize(ref) {
-	return svgjs(ref).size(1000, 1000);
-}
-
-export function render(canvas, circuit, clickEvent) {
+export default function render(div, circuit) {
 	//clear here saves a redundant function and really doesn't affect performance
-	canvas.clear();
+	var canvas = svgjs(div).size(1000, 1000);
+	console.log('Called ever?')
 	//inputs
 	for (var i = 0; i < circuit.input.length; i++) {
 		var path = canvas.path(INPUT.path).move(circuit.input[i].coord[0], circuit.input[i].coord[1]);
