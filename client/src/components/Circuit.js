@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CircuitUI from './CircuitUI';
 import { connect } from 'react-redux';
 import { fetchCircuit, changeInputs } from '../actions';
-import renderEngine from '../engines/renderEngine';
+import * as renderEngine from '../engines/renderEngine';
 
 
 
@@ -18,7 +18,7 @@ class Circuit extends Component {
 	}
 
 	startRenderEngine(ref) {
-		this.props.renderCircuit(ref, this.props.circuit);
+		//this.props.renderCircuit(ref, this.props.circuit);
 		//this.props.changeInputs({ circuit: this.props.circuit, inputs: [1, 1, 1], canvas: this.canvas });
 		
 	}
@@ -45,7 +45,7 @@ class Circuit extends Component {
 			return (
 				<div>
 					<CircuitUI name={this.props.circuit.name}/>
-					<div ref={ref => this.startRenderEngine(ref)} className="circuitCanvas" />
+					<div className="circuitCanvas" />
 				</div>
 			)
 		}
@@ -53,11 +53,13 @@ class Circuit extends Component {
 }
 
 function mapStateToProps({ circuit }, ownprops) {
-	var renderCircuit = null;
+	var canvas = null;
 	if(circuit){
-		renderCircuit = (div, circuit) => renderEngine(div, circuit);
+		var div = document.createElement("div");
+		canvas = renderEngine.initCanvas(div);
+		renderEngine.renderCircuit(canvas, circuit);
 	}
-	return { circuit, renderCircuit };
+	return { circuit };
 }
 
 export default connect(
