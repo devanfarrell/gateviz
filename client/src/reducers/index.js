@@ -1,15 +1,15 @@
 import { combineReducers } from 'redux';
 
-import circuitEvaluationReducer from './circuitEvaluationReducer';
-import listCircuitsReducer from './listCircuitsReducer';
-import searchTermChangeReducer from './searchTermChangeReducer';
+import circuitReducer from './circuitReducer';
+import circuitListReducer from './circuitListReducer';
+import searchTermReducer from './searchTermReducer';
 import selectCircuitReducer from './selectCircuitReducer';
-import breadCrumbReducer from './breadcrumbReducer';
+import breadcrumbReducer from './breadcrumbReducer';
 
 export default combineReducers({
-	circuit: 			circuitEvaluationReducer,
-	circuitList: 		listCircuitsReducer,
+	circuit: 			circuitReducer,
+	circuitList: 		circuitListReducer,
 	selectedCircuit: 	selectCircuitReducer,
-	term: 				searchTermChangeReducer,
-	breadcrumbs: 		breadCrumbReducer
+	term: 				searchTermReducer,
+	breadcrumbs: 		breadcrumbReducer
 });
