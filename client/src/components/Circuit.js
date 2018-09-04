@@ -33,7 +33,6 @@ class Circuit extends Component {
 		}
 		// if the circuit has been built
 		else {
-			console.log(this.props)
 			return (
 				<div>
 					<CircuitUI name={this.props.circuit.name}/>

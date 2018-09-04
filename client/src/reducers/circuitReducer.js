@@ -14,7 +14,6 @@ export default function (state = null, action) {
 			return temp || false;
 
 		case CHANGE_INPUTS:
-			console.log('hello evaluate button!')
 			temp = action.payload.circuit;
 			for (i = 0; i < action.payload.input.length; i++) {
 				temp.input[i].output = action.payload.input[i];

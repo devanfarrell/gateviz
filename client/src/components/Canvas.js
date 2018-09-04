@@ -21,6 +21,7 @@ export default class Canvas extends Component {
 		}
 		// if the circuit has been built
 		else {
+			console.log('call to render circuit')
 			return (
 				<div>
 					<div ref={ref => this.startRenderEngine(ref)} className="circuitCanvas" />

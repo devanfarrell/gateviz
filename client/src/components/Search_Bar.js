@@ -14,12 +14,20 @@ class SearchBar extends Component {
 		};
 	}
 
+	onInputChange(term) {
+		this.setState({ term: term, toRoute: this.state.toRoute });
+		this.props.changeSearchTerm(term);
+	}
+
+	onLoadClick() {
+		this.setState({ term: this.state.term, toRoute: this.props.selectedCircuit });
+	}
+
 	render() {
 		if (this.state.toRoute.length > 0) {
 			const url = `/circuit/${this.state.toRoute}`;
 			return <Redirect to={url} />;
-		}
-		if (this.props.selectedCircuit) {
+		} else if (this.props.selectedCircuit) {
 			return (
 				<form>
 					<FormGroup>
@@ -60,14 +68,7 @@ class SearchBar extends Component {
 		}
 	}
 
-	onInputChange(term) {
-		this.setState({ term: term, toRoute: this.state.toRoute });
-		this.props.changeSearchTerm(term);
-	}
 
-	onLoadClick() {
-		this.setState({ term: this.state.term, toRoute: this.props.selectedCircuit });
-	}
 }
 
 function mapStateToProps({ selectedCircuit, circuit }, ownProps) {
