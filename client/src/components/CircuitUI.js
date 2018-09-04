@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
 import { Breadcrumb, Navbar, FormGroup, FormControl, Button } from 'react-bootstrap';
-import { initBreadcrumb } from '../actions';
+import { initBreadcrumb, changeInputs } from '../actions';
 import { connect } from 'react-redux';
 
 class CircuitUI extends Component {
 
+    constructor(props) {
+		super(props);
+
+		this.state = {
+			input: ''
+		};
+	}
+
     componentDidMount() {
         this.props.initBreadcrumb(this.props.name);
+        // initialize this.state.input here
     }
 
     renderCrumbs() {
@@ -29,10 +38,16 @@ class CircuitUI extends Component {
         return (
             <Navbar fixedBottom inverse>
                 <Navbar.Form style={{ paddingLeft: 0, width: '100%' }}>
-                    <Button type="submit">Evaluate</Button>
+                    <Button onClick={() => this.props.changeInputs({circuit: this.props.circuit, input: this.state.input}) }type="submit">Evaluate</Button>
                     <FormGroup>
-                        <FormControl type="text" placeholder="Input" style={{ width: 'auto' }} />
-                    </FormGroup>{' '}
+                        <FormControl
+                            type="text"
+                            placeholder="Input"
+                            value={this.state.input}
+                            onChange={event => this.onInputChange(event.target.value)}
+                            style={{ width: 'auto' }}
+                        />
+                    </FormGroup>
                 </Navbar.Form>
                 <Breadcrumb>
                     {this.renderCrumbs()}
@@ -46,4 +61,4 @@ function mapStateToProps({ breadcrumbs }, ownProps) {
     return { breadcrumbs };
 }
 
-export default connect(mapStateToProps, { initBreadcrumb })(CircuitUI);
+export default connect(mapStateToProps, { initBreadcrumb, changeInputs })(CircuitUI);
