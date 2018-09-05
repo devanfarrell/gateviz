@@ -12,7 +12,7 @@ export default function (state = null, action) {
 				temp.input[i].output = 0;
 			}
 			evaluateCircuit(temp);
-			const fetchedCircuit = Map({input: temp.input, internalLogic: temp.internalLogic, output: temp.output, name: temp.name});
+			const fetchedCircuit = Map({input: temp.input, inputLength: temp.input.length, internalLogic: temp.internalLogic, output: temp.output, name: temp.name});
 			return fetchedCircuit.toObject() || false;
 
 		case CHANGE_INPUTS:
@@ -21,7 +21,7 @@ export default function (state = null, action) {
 				temp.input[i].output = action.payload.input[i];
 			}
 			evaluateCircuit(temp);
-			const changedCircuit = Map({input: temp.input, internalLogic: temp.internalLogic, output: temp.output, name: temp.name});
+			const changedCircuit = Map({input: temp.input, inputLength: temp.input.length, internalLogic: temp.internalLogic, output: temp.output, name: temp.name});
 			return changedCircuit.toObject() || false;
 		default:
 			return state;

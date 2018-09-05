@@ -10,14 +10,19 @@ class CircuitUI extends Component {
 
         this.state = {
             input: '',
-            numInputs: 3,
+            numInputs: 0,
             hex: false
         };
     }
 
     componentDidMount() {
         this.props.initBreadcrumb(this.props.name);
-        // initialize this.state.input here
+        var txt = "";
+        for (var i = 0; i < this.props.circuit.inputLength; i++) {
+        txt += '0';
+        }
+
+        this.setState({ input: txt, hex: this.state.hex, numInputs: this.props.circuit.inputLength });
     }
 
     renderCrumbs() {
