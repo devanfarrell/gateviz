@@ -6,7 +6,7 @@ import {
 
 	FETCH_CIRCUIT,
 	CHANGE_INPUTS,
-	
+
 	INIT_BREADCRUMB,
 	STEP_INTO_CIRCUIT,
 	STEP_BACK_BREADCRUMB } from './types';
@@ -45,6 +45,6 @@ export const stepIntoCircuit = obj => dispatch => {
 	dispatch({ type: STEP_INTO_CIRCUIT, payload: obj });
 };
 
-export const stepBackBreadcrumb = obj => dispatch => {
-	dispatch({ type: STEP_BACK_BREADCRUMB, payload: obj });
+export const stepBackBreadcrumb = clickedBreadcrumb => dispatch => {
+	dispatch({ type: STEP_BACK_BREADCRUMB, payload: clickedBreadcrumb });
 };

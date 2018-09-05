@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Breadcrumb, Navbar, FormGroup, FormControl, Button, InputGroup } from 'react-bootstrap';
-import { initBreadcrumb, changeInputs } from '../actions';
+import { initBreadcrumb, changeInputs, stepBackBreadcrumb } from '../actions';
 import { connect } from 'react-redux';
 
 class CircuitUI extends Component {
@@ -32,7 +32,7 @@ class CircuitUI extends Component {
             const breadcrumbs = this.props.breadcrumbs.map(breadcrumb => {
                 //Display it if a search term hasn't been defined or if the name of the circuit contains a substring of the term or if it is the selected circuit
                 return (
-                    <Breadcrumb.Item key={breadcrumb.id}>{breadcrumb.name}</Breadcrumb.Item>
+                    <Breadcrumb.Item key={`${breadcrumb.id}--${breadcrumb.depth}`} onClick={ ()=> this.props.stepBackBreadcrumb(breadcrumb) }>{breadcrumb.name}</Breadcrumb.Item>
                 );
             });
             return breadcrumbs;
@@ -112,4 +112,4 @@ function mapStateToProps({ breadcrumbs, circuit }, ownProps) {
     return { breadcrumbs, circuit };
 }
 
-export default connect(mapStateToProps, { initBreadcrumb, changeInputs })(CircuitUI);
+export default connect(mapStateToProps, { initBreadcrumb, changeInputs, stepBackBreadcrumb })(CircuitUI);
