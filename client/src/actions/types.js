@@ -1,11 +1,13 @@
-export const FETCH_CIRCUIT = 'fetch_component';
+//Landing reducers
 export const FETCH_CIRCUIT_LIST = 'fetch_circuit_list';
 export const CHANGE_SEARCH_TERM = 'change_search_term';
 export const SELECT_CIRCUIT = 'select_circuit';
-export const STEP_INTO_CIRCUIT = 'step_into_circuit';
+
+//circuitReducer
+export const FETCH_CIRCUIT = 'fetch_component';
 export const CHANGE_INPUTS = 'change_inputs';
-export const DISPLAY_CIRCUIT = 'display_circuit';
-export const STEP_BACK_CIRCUIT = 'step_back_circuit';
+
+//breadcrumbReducer
 export const INIT_BREADCRUMB = 'init_breadcrumb';
-export const INIT_RENDER_ENGINE = 'init_render_engine';
-export const USE_RENDER_ENGINE = 'use_render_engine';
+export const STEP_INTO_CIRCUIT = 'step_into_circuit';
+export const STEP_BACK_BREADCRUMB = 'step_back_circuit';
