@@ -4,6 +4,12 @@ import { store } from '../';
 
 const trueColor = '#00FF87';
 const falseColor = '#464646';
+
+function colorHelper(state) {
+	if (state) return trueColor;
+	else return falseColor;
+}
+
 const componentFillColor = '#D1D2D4';
 
 function internalCircuitclickEvent(obj, id, name) {
@@ -61,14 +67,38 @@ const NOT = {
 	width: 30
 };
 
+function getTypeData(type) {
+	switch (type) {
+		case 'INPUT': return INPUT;
+		case 'OUTPUT': return INPUT;
+		case 'AND': return AND;
+		case 'NAND': return NAND;
+		case 'OR': return OR;
+		case 'NOR': return NOR;
+		case 'XOR': return XOR;
+		case 'NOT': return NOT;
+		default: return { meh: 'meh' };
+	}
+}
+
+function staggerInput(length, position, width){
+	console.log('width', width)
+	var span = width;
+	var segment = span / length;
+	var multiplier = position * segment;
+	var variation = multiplier - span/4;
+	console.log(variation);
+	return variation;
+}
+
 
 export function initialize(ref) {
 	return svgjs(ref).size(1000, 1000);
 }
 
 function traverseCircuit(id, circuit) {
-	for(var i = 0; i < circuit.internalLogic.length; i++){
-		if(id === circuit.internalLogic[i].id) {
+	for (var i = 0; i < circuit.internalLogic.length; i++) {
+		if (id === circuit.internalLogic[i].id) {
 			return circuit.internalLogic[i].circuit
 		}
 	}
@@ -80,7 +110,7 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 
 	var circuit = fullCircuit
 	const preparedBreadcrumbs = breadcrumbs.shift().toJS();
-	for(var i = 0; i < preparedBreadcrumbs.length; i++) {
+	for (var i = 0; i < preparedBreadcrumbs.length; i++) {
 		circuit = traverseCircuit(preparedBreadcrumbs[i].id, circuit);
 	}
 
@@ -140,9 +170,8 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 			linecap: 'round',
 			linejoin: 'round'
 		});
+
 		path.size(renderSpecs.width, renderSpecs.height);
-
-
 
 		if (circuit.internalLogic[i].type !== 'CIRCUIT') {
 
@@ -173,6 +202,93 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 			path.fill(trueColor);
 		} else {
 			path.fill(falseColor);
+		}
+	}
+
+	//display edges here
+
+	/* __________________________________________________
+	|Draw edges connected to outputs
+	|___________________________________________________
+	|
+	|
+	*/
+
+	for (i = 0; i < circuit.output.length; i++) {
+		var origin_x = null;
+		var origin_y = null;
+		var destination_x = null;
+		var destination_y = null;
+		var FUTURE_PIVOT_VAR = 0.5
+
+		// CASE 1: ALL - OUTPUT
+		if (circuit.output[i].type === 'OUTPUT') {
+			destination_x = circuit.output[i].coord[0];
+			destination_y = circuit.output[i].coord[1] + getTypeData(circuit.output[i].type).height / 2;
+
+			//CASE 1.1 SIMPLE - OUTPUT
+			if (circuit.output[i].input.pin == null) {
+				origin_x = circuit.output[i].input.ref.coord[0] + getTypeData(circuit.output[i].input.ref.type).width;
+				origin_y = circuit.output[i].input.ref.coord[1] + getTypeData(circuit.output[i].input.ref.type).height / 2;
+
+				//CASE 1.2 COMPLEX - OUTPUT
+			} else {
+				origin_x = circuit.output[i].input.ref.coord[0] + circuit.output[i].input.ref.width;
+				origin_y = circuit.output[i].input.ref.coord[1] + circuit.output[i].input.ref.height / 2;
+
+			}
+			path = canvas.polyline(
+				`${origin_x},${origin_y} ${origin_x + (destination_x - origin_x) * FUTURE_PIVOT_VAR},${origin_y} ${origin_x + (destination_x - origin_x) * FUTURE_PIVOT_VAR},${destination_y}  ${destination_x},${destination_y}`
+			).fill('none').stroke({ width: 2, color: colorHelper(circuit.output[i].output) });
+			//TODO
+			// CASE 2: ALL - OUTPUT_BUS 
+		} else {
+			//stuffs
+		}
+	}
+
+	/* __________________________________________________
+	|Draw edges from internal logic
+	|___________________________________________________
+	|
+	|
+	*/
+
+	for (i = 0; i < circuit.internalLogic.length; i++) {
+		origin_x = null;
+		origin_y = null;
+		destination_x = null;
+		destination_y = null;
+		FUTURE_PIVOT_VAR = 0.5
+		// CASE 1: ALL - SIMPLE
+		if (circuit.internalLogic[i].type !== 'CIRCUIT') {
+			console.log('___________________________________________');
+			for (var j = 0; j < circuit.internalLogic[i].input.length; j++) {
+				destination_x = circuit.internalLogic[i].coord[0];
+				destination_y = circuit.internalLogic[i].coord[1] + getTypeData(circuit.internalLogic[i].type).height / 2;
+				var outputState = null;
+				//CASE 1.1 SIMPLE - SIMPLE
+				if (circuit.internalLogic[i].input.pin == null) {
+					console.log('old y', destination_y);
+					destination_y = destination_y + staggerInput(circuit.internalLogic[i].input.length, j, getTypeData(circuit.internalLogic[i].type).height);
+					origin_x = circuit.internalLogic[i].input[j].ref.coord[0] + getTypeData(circuit.internalLogic[i].input[j].ref.type).width;
+					origin_y = circuit.internalLogic[i].input[j].ref.coord[1] + getTypeData(circuit.internalLogic[i].input[j].ref.type).height / 2;
+					outputState = circuit.internalLogic[i].input[j].ref.output;
+					console.log('new y', destination_y);
+
+				//CASE 1.2 COMPLEX - SIMPLE
+				} else {
+					origin_x = circuit.internalLogic[i].input[j].ref.coord[0] + circuit.output[i].input[j].ref.width;
+					origin_y = circuit.internalLogic[i].input[j].ref.coord[1] + circuit.output[i].input[j].ref.height / 2;
+					var pin = circuit.internalLogic[i].input[j].pin
+					outputState = circuit.output[i].input.ref.output[pin].output
+
+				}
+				path = canvas.polyline(
+					`${origin_x},${origin_y} ${origin_x + (destination_x - origin_x) * FUTURE_PIVOT_VAR},${origin_y} ${origin_x + (destination_x - origin_x) * FUTURE_PIVOT_VAR},${destination_y}  ${destination_x},${destination_y}`
+				).fill('none').stroke({ width: 2, color: colorHelper(outputState) });
+			}
+
 		}
 	}
 };

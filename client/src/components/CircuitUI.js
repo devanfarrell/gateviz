@@ -13,6 +13,7 @@ class CircuitUI extends Component {
             numInputs: 0,
             hex: false
         };
+        this.onInputChange = this.onInputChange.bind(this)
     }
 
     componentDidMount() {

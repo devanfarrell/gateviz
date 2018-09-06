@@ -53,19 +53,13 @@ const XOR = input => {
 function getRef(circuit, id) {
 	for (var i = 0; i < circuit.input.length; i++) {
 		if (circuit.input[i].id === id) {
-			// TODO: Add bus logic similar to circuit. 
 			return circuit.input[i];
-
 		}
 	}
 	// check circuit internal logic
 	for (i = 0; i < circuit.internalLogic.length; i++) {
 		if (circuit.internalLogic[i].id === id) {
-			if(circuit.internalLogic[i].type === 'CIRCUIT') {
-				return circuit.internalLogic[i].circuit
-			} else {
-				return circuit.internalLogic[i];
-			}
+			return circuit.internalLogic[i]
 		}
 	}
 	console.log('Printing broken refs in getRef(): ', circuit, id);
@@ -94,6 +88,7 @@ function initCircuit(circuitData) {
 	for (var i = 0; i < circuitData.input.length; i++) {
 		tempCircuit.input[i] = circuitData.input[i];
 		tempCircuit.input[i].output = false;
+		tempCircuit.input[i].type = circuitData.input[i].type;
 	}
 
 	tempCircuit.internalLogic = [];
@@ -117,6 +112,7 @@ function initCircuit(circuitData) {
 	for (i = 0; i < circuitData.output.length; i++) {
 		tempCircuit.output[i] = circuitData.output[i];
 		// yes the naming is stupid but... naming convention
+		tempCircuit.output[i].type = circuitData.output[i].type;
 		tempCircuit.output[i].output = false;
 	}
 	deserializeCircuit(tempCircuit);
@@ -176,7 +172,7 @@ function deserializeCircuit(circuit) {
 				circuit.internalLogic[i].description = circuit.internalLogic[i].circuit.description;
 				circuit.internalLogic[i].path = circuit.internalLogic[i].circuit.path;
 				circuit.internalLogic[i].height = circuit.internalLogic[i].circuit.height;
-				circuit.internalLogic[i].height = circuit.internalLogic[i].circuit.height;
+				circuit.internalLogic[i].width = circuit.internalLogic[i].circuit.width;
 				circuit.internalLogic[i].circuit = initCircuit(circuit.internalLogic[i].circuit);
 				solderOutputPins(circuit.internalLogic[i], circuit.internalLogic[i].circuit);
 				solderInputPins(circuit.internalLogic[i], circuit.internalLogic[i].circuit);

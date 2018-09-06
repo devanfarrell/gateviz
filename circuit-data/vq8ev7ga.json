@@ -9,16 +9,19 @@
         {
             "id": "I1",
             "label": "A",
+            "type": "INPUT",
             "coord": [10, 200]
         },
         {
             "id": "I2",
             "label": "B",
+            "type": "INPUT",
             "coord": [10, 300]
         },
         {
             "id": "I3",
             "label": "C",
+            "type": "INPUT",
             "coord": [10, 400]
         }
     ],
@@ -78,36 +81,43 @@
         {
             "coord": [450, 150],
             "input": "G3",
+            "type": "OUTPUT",
             "label": "O\u2080"
         },
         {
             "coord": [450, 210],
             "input": "G4",
+            "type": "OUTPUT",
             "label": "O\u2081"
         },
         {
             "coord": [450, 270],
             "input": "G5",
+            "type": "OUTPUT",
             "label": "O\u2082"
         },
         {
             "coord": [450, 330],
             "input": "I3",
+            "type": "OUTPUT",
             "label": "O\u2083"
         },
         {
             "coord": [450, 390],
             "input": "G6",
+            "type": "OUTPUT",
             "label": "O\u2084"
         },
         {
             "coord": [450, 450],
             "input": "G7",
+            "type": "OUTPUT",
             "label": "O\u2085"
         },
         {
             "coord": [450, 510],
             "input": "G8",
+            "type": "OUTPUT",
             "label": "O\u2086"
         }
     ]

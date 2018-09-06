@@ -4,7 +4,8 @@ import * as renderEngine from '../engines/renderEngine';
 export default class Canvas extends Component {
     constructor(props) {
 		super(props);
-        this.canvas = this.refs.ref;
+		this.canvas = this.refs.ref;
+		this.startRenderEngine = this.startRenderEngine.bind(this)
 	}
     
     startRenderEngine(ref) {
