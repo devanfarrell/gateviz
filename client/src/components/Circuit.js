@@ -43,10 +43,10 @@ class Circuit extends Component {
 	}
 }
 
-function mapStateToProps({ circuit }, ownprops) {
+function mapStateToProps({ circuit, breadcrumbs }, ownprops) {
 	var div = null
 	if(circuit){
-		div = <Canvas circuit={{circuit}}/>;
+		div = <Canvas circuit={circuit} breadcrumbs={breadcrumbs}/>;
 	}
 	return { circuit, canvas: div };
 }

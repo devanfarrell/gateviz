@@ -10,13 +10,13 @@ export default class Canvas extends Component {
     startRenderEngine(ref) {
         if(!this.canvas) {
             this.canvas = renderEngine.initialize(ref);
-        }
-		renderEngine.render(this.canvas, this.props.circuit.circuit);
+		}
+		renderEngine.render(this.canvas, this.props.circuit, this.props.breadcrumbs);
 	}
 
     render() {
 		// if the circuit has not been fetched
-		if (!this.props.circuit.circuit) {
+		if (!this.props.circuit || !this.props.breadcrumbs) {
 			return <div> Loading Circuit!!!! </div>;
 		}
 		// if the circuit has been built

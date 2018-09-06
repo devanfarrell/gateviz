@@ -8,7 +8,7 @@ const componentFillColor = '#D1D2D4';
 
 function internalCircuitclickEvent(obj, id, name) {
 	obj.click(() => {
-		store.dispatch(stepIntoCircuit({id, name}));
+		store.dispatch(stepIntoCircuit({ id, name }));
 	});
 }
 
@@ -66,11 +66,28 @@ export function initialize(ref) {
 	return svgjs(ref).size(1000, 1000);
 }
 
-export function render(canvas, circuit, clickEvent) {
+function traverseCircuit(id, circuit) {
+	for(var i = 0; i < circuit.internalLogic.length; i++){
+		if(id === circuit.internalLogic[i].id) {
+			return circuit.internalLogic[i].circuit
+		}
+	}
+	console.log('Something is borked. Couldn\'t find ID from breadcrumb in render engine');
+	return circuit
+}
+
+export function render(canvas, fullCircuit, breadcrumbs) {
+
+	var circuit = fullCircuit
+	const preparedBreadcrumbs = breadcrumbs.shift().toJS();
+	for(var i = 0; i < preparedBreadcrumbs.length; i++) {
+		circuit = traverseCircuit(preparedBreadcrumbs[i].id, circuit);
+	}
+
 	//clear here saves a redundant function and really doesn't affect performance
 	canvas.clear();
 	//inputs
-	for (var i = 0; i < circuit.input.length; i++) {
+	for (i = 0; i < circuit.input.length; i++) {
 		var path = canvas.path(INPUT.path).move(circuit.input[i].coord[0], circuit.input[i].coord[1]);
 		path.stroke({
 			color: '#000',
