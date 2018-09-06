@@ -81,13 +81,13 @@ function getTypeData(type) {
 	}
 }
 
-function staggerInput(length, position, width){
-	console.log('width', width)
-	var span = width;
-	var segment = span / length;
-	var multiplier = position * segment;
-	var variation = multiplier - span/4;
-	console.log(variation);
+function staggerInput(numPorts, position, heightOfObject) {
+	
+	var midpoint = heightOfObject / 2;
+	var segment = heightOfObject / numPorts
+	var unmodPosition = segment * (position);
+	var moddedPosition = unmodPosition + segment/2
+	var variation = moddedPosition - midpoint
 	return variation;
 }
 
@@ -235,6 +235,8 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 			} else {
 				origin_x = circuit.output[i].input.ref.coord[0] + circuit.output[i].input.ref.width;
 				origin_y = circuit.output[i].input.ref.coord[1] + circuit.output[i].input.ref.height / 2;
+				var pin = circuit.output[i].input.pin
+				origin_y = origin_y + staggerInput(circuit.output[i].input.ref.output.length, pin, circuit.output[i].input.ref.height)
 
 			}
 			path = canvas.polyline(
@@ -262,33 +264,52 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 		FUTURE_PIVOT_VAR = 0.5
 		// CASE 1: ALL - SIMPLE
 		if (circuit.internalLogic[i].type !== 'CIRCUIT') {
-			console.log('___________________________________________');
 			for (var j = 0; j < circuit.internalLogic[i].input.length; j++) {
 				destination_x = circuit.internalLogic[i].coord[0];
 				destination_y = circuit.internalLogic[i].coord[1] + getTypeData(circuit.internalLogic[i].type).height / 2;
 				var outputState = null;
+
 				//CASE 1.1 SIMPLE - SIMPLE
 				if (circuit.internalLogic[i].input.pin == null) {
-					console.log('old y', destination_y);
 					destination_y = destination_y + staggerInput(circuit.internalLogic[i].input.length, j, getTypeData(circuit.internalLogic[i].type).height);
 					origin_x = circuit.internalLogic[i].input[j].ref.coord[0] + getTypeData(circuit.internalLogic[i].input[j].ref.type).width;
 					origin_y = circuit.internalLogic[i].input[j].ref.coord[1] + getTypeData(circuit.internalLogic[i].input[j].ref.type).height / 2;
 					outputState = circuit.internalLogic[i].input[j].ref.output;
-					console.log('new y', destination_y);
 
-				//CASE 1.2 COMPLEX - SIMPLE
+					//CASE 1.2 COMPLEX - SIMPLE
 				} else {
 					origin_x = circuit.internalLogic[i].input[j].ref.coord[0] + circuit.output[i].input[j].ref.width;
 					origin_y = circuit.internalLogic[i].input[j].ref.coord[1] + circuit.output[i].input[j].ref.height / 2;
-					var pin = circuit.internalLogic[i].input[j].pin
+					pin = circuit.internalLogic[i].input[j].pin
+					origin_y = origin_y + staggerInput(circuit.internalLogic[i].input[j].ref.output.length, pin, circuit.internalLogic[i].input[j].ref.height)
 					outputState = circuit.output[i].input.ref.output[pin].output
-
 				}
 				path = canvas.polyline(
 					`${origin_x},${origin_y} ${origin_x + (destination_x - origin_x) * FUTURE_PIVOT_VAR},${origin_y} ${origin_x + (destination_x - origin_x) * FUTURE_PIVOT_VAR},${destination_y}  ${destination_x},${destination_y}`
 				).fill('none').stroke({ width: 2, color: colorHelper(outputState) });
 			}
+			// CASE 2: ALL - COMPLEX
+		} else {
+			for (j = 0; j < circuit.internalLogic[i].input.length; j++) {
+				outputState = null;
+				destination_x = circuit.internalLogic[i].coord[0];
+				destination_y = circuit.internalLogic[i].coord[1] + circuit.internalLogic[i].height / 2;
+				//CASE 2.1 SIMPLE - COMPLEX
+				if (circuit.internalLogic[i].input.pin == null) {
+					destination_y = destination_y + staggerInput(circuit.internalLogic[i].input.length, j, circuit.internalLogic[i].height);
+					origin_x = circuit.internalLogic[i].input[j].ref.coord[0] + getTypeData(circuit.internalLogic[i].input[j].ref.type).width;
+					origin_y = circuit.internalLogic[i].input[j].ref.coord[1] + getTypeData(circuit.internalLogic[i].input[j].ref.type).height / 2;
+					outputState = circuit.internalLogic[i].input[j].ref.output;
+					
 
+					//CASE 2.1 COMPLEX - COMPLEX
+				} else {
+					//TODO
+				}
+				path = canvas.polyline(
+					`${origin_x},${origin_y} ${origin_x + (destination_x - origin_x) * FUTURE_PIVOT_VAR},${origin_y} ${origin_x + (destination_x - origin_x) * FUTURE_PIVOT_VAR},${destination_y}  ${destination_x},${destination_y}`
+				).fill('none').stroke({ width: 2, color: colorHelper(outputState) });
+			}
 		}
 	}
 };
