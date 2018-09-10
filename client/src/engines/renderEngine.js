@@ -219,7 +219,8 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 		var origin_y = null;
 		var destination_x = null;
 		var destination_y = null;
-		var FUTURE_PIVOT_VAR = 0.5
+		var axis = circuit.output[i].axis;
+		console.log(circuit.output[i]);
 
 		// CASE 1: ALL - OUTPUT
 		if (circuit.output[i].type === 'OUTPUT') {
@@ -240,7 +241,7 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 
 			}
 			path = canvas.polyline(
-				`${origin_x},${origin_y} ${origin_x + (destination_x - origin_x) * FUTURE_PIVOT_VAR},${origin_y} ${origin_x + (destination_x - origin_x) * FUTURE_PIVOT_VAR},${destination_y}  ${destination_x},${destination_y}`
+				`${origin_x},${origin_y} ${origin_x + (destination_x - origin_x) * axis},${origin_y} ${origin_x + (destination_x - origin_x) * axis},${destination_y}  ${destination_x},${destination_y}`
 			).fill('none').stroke({ width: 2, color: colorHelper(circuit.output[i].output) });
 			//TODO
 			// CASE 2: ALL - OUTPUT_BUS 
@@ -261,7 +262,7 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 		origin_y = null;
 		destination_x = null;
 		destination_y = null;
-		FUTURE_PIVOT_VAR = 0.5
+		var FUTURE_PIVOT_VAR = 0.5
 		// CASE 1: ALL - SIMPLE
 		if (circuit.internalLogic[i].type !== 'CIRCUIT') {
 			for (var j = 0; j < circuit.internalLogic[i].input.length; j++) {

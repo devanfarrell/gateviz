@@ -111,8 +111,12 @@ function initCircuit(circuitData) {
 
 	for (i = 0; i < circuitData.output.length; i++) {
 		tempCircuit.output[i] = circuitData.output[i];
-		// yes the naming is stupid but... naming convention
 		tempCircuit.output[i].type = circuitData.output[i].type;
+		if (circuitData.output[i].hasOwnProperty('axis')) {
+			tempCircuit.output[i].axis = circuitData.output[i].axis;
+		} else {
+			tempCircuit.output[i].axis = 0.5;
+		}
 		tempCircuit.output[i].output = false;
 	}
 	deserializeCircuit(tempCircuit);

@@ -10,19 +10,19 @@
             "id": "I1",
             "label": "A",
             "type": "INPUT",
-            "coord": [10, 200]
+            "coord": [50, 250]
         },
         {
             "id": "I2",
             "label": "B",
             "type": "INPUT",
-            "coord": [10, 300]
+            "coord": [50, 317.5]
         },
         {
             "id": "I3",
             "label": "C",
             "type": "INPUT",
-            "coord": [10, 400]
+            "coord": [50, 385]
         }
     ],
     "internalLogic": [
@@ -160,45 +160,51 @@
     ],
     "output": [
         {
-            "coord": [450, 150],
+            "coord": [350, 167.5],
             "input": "C1:0",
             "type": "OUTPUT",
+            "axis": 0.2,
             "label": "O\u2080"
         },
         {
-            "coord": [450, 210],
+            "coord": [350, 217.5],
             "input": "C1:1",
             "type": "OUTPUT",
+            "axis": 0.3,
             "label": "O\u2081"
         },
         {
-            "coord": [450, 270],
+            "coord": [350, 267.5],
             "input": "C1:2",
             "type": "OUTPUT",
+            "axis": 0.4,
             "label": "O\u2082"
         },
         {
-            "coord": [450, 330],
+            "coord": [350, 317.5],
             "input": "C1:3",
             "type": "OUTPUT",
             "label": "O\u2083"
         },
         {
-            "coord": [450, 390],
+            "coord": [350, 367.5],
             "input": "C1:4",
             "type": "OUTPUT",
+            "axis": 0.4,
             "label": "O\u2084"
         },
         {
-            "coord": [450, 450],
+            "coord": [350, 417.5],
             "input": "C1:5",
             "type": "OUTPUT",
+            "axis": 0.3,
             "label": "O\u2085"
         },
         {
-            "coord": [450, 510],
+            "coord": [350, 467.5],
             "input": "C1:6",
             "type": "OUTPUT",
+            "axis": 0.2,
             "label": "O\u2086"
         }
     ]
