@@ -1,0 +1,119 @@
+{
+    "cid": "vq8ev7ga",
+    "name": "Gates Demo",
+    "description": "An example of gate functionality",
+    "path": "M52.707,0.5l0,47l-52.207,0l0,-47l52.207,0Z",
+    "height": 50,
+    "width": 50,
+    "input": [
+        {
+            "id": "I1",
+            "label": "A",
+            "type": "INPUT",
+            "coord": [50, 100]
+        },
+        {
+            "id": "I2",
+            "label": "B",
+            "type": "INPUT",
+            "coord": [50, 250]
+        },
+        {
+            "id": "I3",
+            "label": "C",
+            "type": "INPUT",
+            "coord": [50, 550]
+        }
+    ],
+    "internalLogic": [
+        {
+            "id": "G1",
+            "type": "AND",
+            "label": "and gate",
+            "coord": [250, 100],
+            "input": ["I1", "I2"]
+        },
+        {
+            "id": "G2",
+            "type": "OR",
+            "label": "or gate",
+            "coord": [250, 200],
+            "input": ["I1", "I2"]
+        },
+        {
+            "id": "G3",
+            "type": "NAND",
+            "label": "nand gate",
+            "coord": [250, 300],
+            "input": ["I1", "I2"]
+        },
+        {
+            "id": "G4",
+            "type": "NOR",
+            "coord": [250, 400],
+            "input": ["I1", "I2"]
+        },
+        {
+            "id": "G5",
+            "type": "NOT",
+            "coord": [250, 500],
+            "input": ["I3"]
+        },
+        {
+            "id": "G6",
+            "type": "AND",
+            "coord": [250, 600],
+            "input": ["I1", "I2", "I3"]
+        },
+        {
+            "id": "G7",
+            "type": "OR",
+            "coord": [250, 700],
+            "input": ["I1", "I2", "I3"]
+        }
+    ],
+    "output": [
+        {
+            "coord": [350, 100],
+            "input": "G1",
+            "type": "OUTPUT",
+            "label": "O\u2080"
+        },
+        {
+            "coord": [350, 200],
+            "input": "G2",
+            "type": "OUTPUT",
+            "label": "O\u2081"
+        },
+        {
+            "coord": [350, 300],
+            "input": "G3",
+            "type": "OUTPUT",
+            "label": "O\u2082"
+        },
+        {
+            "coord": [350, 400],
+            "input": "G4",
+            "type": "OUTPUT",
+            "label": "O\u2083"
+        },
+        {
+            "coord": [350, 500],
+            "input": "G5",
+            "type": "OUTPUT",
+            "label": "O\u2084"
+        },
+        {
+            "coord": [350, 600],
+            "input": "G6",
+            "type": "OUTPUT",
+            "label": "O\u2085"
+        },
+        {
+            "coord": [350, 700],
+            "input": "G7",
+            "type": "OUTPUT",
+            "label": "O\u2086"
+        }
+    ]
+}

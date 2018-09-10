@@ -10,7 +10,11 @@
             "name": "Thermometer abstracted",
             "cid": "vq8ev7ga2",
             "description": "A simple three input thermometer circuit"
-
+        },
+        {
+            "name": "Gates Demo",
+            "cid": "asdfasdfasdf",
+            "description": "An example of gate functionality"
         }
     ]
 }
