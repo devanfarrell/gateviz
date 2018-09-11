@@ -135,6 +135,7 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 
 	// internal logic
 	for (i = 0; i < circuit.internalLogic.length; i++) {
+		console.log(circuit.internalLogic[i]);
 		var renderSpecs = {};
 		switch (circuit.internalLogic[i].type) {
 			case 'AND':
@@ -220,7 +221,6 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 		var destination_x = null;
 		var destination_y = null;
 		var axis = circuit.output[i].axis;
-		console.log(circuit.output[i]);
 
 		// CASE 1: ALL - OUTPUT
 		if (circuit.output[i].type === 'OUTPUT') {

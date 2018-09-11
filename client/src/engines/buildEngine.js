@@ -1,3 +1,5 @@
+const DEFAULT_AXIS = 0.5;
+
 const AND = input => {
 	// TODO: Error handling if there is no input
 	var counter = 0;
@@ -105,6 +107,34 @@ function initCircuit(circuitData) {
 				tempCircuit.internalLogic[i].output[j].output = false;
 			}
 		}
+
+		if (circuitData.internalLogic[i].hasOwnProperty('axis')) {
+			if (Array.isArray(circuitData.internalLogic[i].axis)) {
+				if (circuitData.internalLogic[i].axis.length === circuitData.internalLogic[i].input.length) {
+					tempCircuit.internalLogic[i].axis = circuitData.internalLogic[i].axis;
+				} else {
+					// axis is an array but not of the correct length
+					tempCircuit.internalLogic[i].axis = circuitData.internalLogic[i].axis;
+					for (j = tempCircuit.internalLogic[i].axis.length; j < circuitData.internalLogic[i].input.length; j++) {
+						tempCircuit.internalLogic[i].axis.push(DEFAULT_AXIS);
+					}
+				}
+			} else {
+				// axis exists but isn't an array
+				const carriedPivotPoint = circuitData.internalLogic[i].axis;
+				tempCircuit.internalLogic[i].axis = [];
+				tempCircuit.internalLogic[i].axis[0] = carriedPivotPoint;
+				for (j = 1; j < circuitData.internalLogic[i].input.length; j++) {
+					tempCircuit.internalLogic[i].axis.push(DEFAULT_AXIS);
+				}
+			}
+
+		} else {
+			tempCircuit.internalLogic[i].axis = [];
+			for (j = 0; j < circuitData.internalLogic[i].input.length; j++) {
+				tempCircuit.internalLogic[i].axis.push(DEFAULT_AXIS);
+			}
+		}
 	}
 
 	tempCircuit.output = [];
@@ -115,7 +145,7 @@ function initCircuit(circuitData) {
 		if (circuitData.output[i].hasOwnProperty('axis')) {
 			tempCircuit.output[i].axis = circuitData.output[i].axis;
 		} else {
-			tempCircuit.output[i].axis = 0.5;
+			tempCircuit.output[i].axis = DEFAULT_AXIS;
 		}
 		tempCircuit.output[i].output = false;
 	}

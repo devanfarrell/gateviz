@@ -31,45 +31,52 @@
             "type": "AND",
             "label": "and gate",
             "coord": [250, 100],
-            "input": ["I1", "I2"]
+            "input": ["I1", "I2"],
+            "axis": [0.33, 0.5]
         },
         {
             "id": "G2",
             "type": "OR",
             "label": "or gate",
             "coord": [250, 200],
-            "input": ["I1", "I2"]
+            "input": ["I1", "I2"],
+            "axis": [0.33, 0.5]
         },
         {
             "id": "G3",
             "type": "NAND",
             "label": "nand gate",
             "coord": [250, 300],
-            "input": ["I1", "I2"]
+            "input": ["I1", "I2"],
+            "axis": [0.33, 0.5]
         },
         {
             "id": "G4",
             "type": "NOR",
             "coord": [250, 400],
-            "input": ["I1", "I2"]
+            "input": ["I1", "I2"],
+            "axis": [0.33, 0.5]
         },
         {
             "id": "G5",
             "type": "NOT",
             "coord": [250, 500],
-            "input": ["I3"]
+            "input": ["I3"],
+            "axis": [0.66]
         },
         {
             "id": "G6",
             "type": "AND",
             "coord": [250, 600],
-            "input": ["I1", "I2", "I3"]
+            "input": ["I1", "I2", "I3"],
+            "axis": [0.33, 0.5, 0.66]
         },
         {
             "id": "G7",
             "type": "OR",
             "coord": [250, 700],
-            "input": ["I1", "I2", "I3"]
+            "input": ["I1", "I2", "I3"],
+            "axis": [0.33, 0.5, 0.66]
         }
     ],
     "output": [
