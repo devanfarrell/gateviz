@@ -135,7 +135,6 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 
 	// internal logic
 	for (i = 0; i < circuit.internalLogic.length; i++) {
-		console.log(circuit.internalLogic[i]);
 		var renderSpecs = {};
 		switch (circuit.internalLogic[i].type) {
 			case 'AND':
@@ -262,7 +261,7 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 		origin_y = null;
 		destination_x = null;
 		destination_y = null;
-		var FUTURE_PIVOT_VAR = 0.5
+		axis = circuit.internalLogic[i].axis;
 		// CASE 1: ALL - SIMPLE
 		if (circuit.internalLogic[i].type !== 'CIRCUIT') {
 			for (var j = 0; j < circuit.internalLogic[i].input.length; j++) {
@@ -286,7 +285,7 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 					outputState = circuit.output[i].input.ref.output[pin].output
 				}
 				path = canvas.polyline(
-					`${origin_x},${origin_y} ${origin_x + (destination_x - origin_x) * FUTURE_PIVOT_VAR},${origin_y} ${origin_x + (destination_x - origin_x) * FUTURE_PIVOT_VAR},${destination_y}  ${destination_x},${destination_y}`
+					`${origin_x},${origin_y} ${origin_x + (destination_x - origin_x) * axis[j]},${origin_y} ${origin_x + (destination_x - origin_x) * axis[j]},${destination_y}  ${destination_x},${destination_y}`
 				).fill('none').stroke({ width: 2, color: colorHelper(outputState) });
 			}
 			// CASE 2: ALL - COMPLEX
@@ -308,7 +307,7 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 					//TODO
 				}
 				path = canvas.polyline(
-					`${origin_x},${origin_y} ${origin_x + (destination_x - origin_x) * FUTURE_PIVOT_VAR},${origin_y} ${origin_x + (destination_x - origin_x) * FUTURE_PIVOT_VAR},${destination_y}  ${destination_x},${destination_y}`
+					`${origin_x},${origin_y} ${origin_x + (destination_x - origin_x) * axis[j]},${origin_y} ${origin_x + (destination_x - origin_x) * axis[j]},${destination_y}  ${destination_x},${destination_y}`
 				).fill('none').stroke({ width: 2, color: colorHelper(outputState) });
 			}
 		}

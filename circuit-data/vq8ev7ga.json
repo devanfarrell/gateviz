@@ -31,44 +31,51 @@
             "type": "OR",
             "label": "a + b",
             "coord": [150, 160],
-            "input": ["I1", "I2"]
+            "input": ["I1", "I2"],
+            "axis": [0.5, 0.7]
         },
         {
             "id": "G2",
             "type": "AND",
             "label": "ab",
-            "coord": [150, 250],
-            "input": ["I1", "I2"]
+            "coord": [150, 247.5],
+            "input": ["I1", "I2"],
+            "axis": [0.5, 0.7]
         },
         {
             "id": "G3",
             "type": "OR",
             "coord": [350, 140],
-            "input": ["G1", "I3"]
+            "input": ["G1", "I3"],
+            "axis": [0.66, 0.9]
         },
         {
             "id": "G4",
             "type": "OR",
             "coord": [350, 200],
-            "input": ["I2", "I3"]
+            "input": ["I2", "I3"],
+            "axis": [0.66, 0.9]
         },
         {
             "id": "G5",
             "type": "OR",
             "coord": [350, 260],
-            "input": ["G2", "I3"]
+            "input": ["G2", "I3"],
+            "axis": [0.66, 0.9]
         },
         {
             "id": "G6",
             "type": "AND",
             "coord": [350, 380],
-            "input": ["G1", "I3"]
+            "input": ["G1", "I3"],
+            "axis": [0.66, 0.9]
         },
         {
             "id": "G7",
             "type": "AND",
             "coord": [350, 440],
-            "input": ["I2", "I3"]
+            "input": ["I2", "I3"],
+            "axis": [0.66, 0.9]
         },
         {
             "id": "G8",
@@ -79,43 +86,44 @@
     ],
     "output": [
         {
-            "coord": [450, 150],
+            "coord": [450, 157.5],
             "input": "G3",
             "type": "OUTPUT",
             "label": "O\u2080"
         },
         {
-            "coord": [450, 210],
+            "coord": [450, 217.5],
             "input": "G4",
             "type": "OUTPUT",
             "label": "O\u2081"
         },
         {
-            "coord": [450, 270],
+            "coord": [450, 277.5],
             "input": "G5",
             "type": "OUTPUT",
             "label": "O\u2082"
         },
         {
-            "coord": [450, 330],
+            "coord": [450, 337.5],
             "input": "I3",
             "type": "OUTPUT",
-            "label": "O\u2083"
+            "label": "O\u2083",
+            "axis": 0.678
         },
         {
-            "coord": [450, 390],
+            "coord": [450, 397.5],
             "input": "G6",
             "type": "OUTPUT",
             "label": "O\u2084"
         },
         {
-            "coord": [450, 450],
+            "coord": [450, 457.5],
             "input": "G7",
             "type": "OUTPUT",
             "label": "O\u2085"
         },
         {
-            "coord": [450, 510],
+            "coord": [450, 517.5],
             "input": "G8",
             "type": "OUTPUT",
             "label": "O\u2086"
