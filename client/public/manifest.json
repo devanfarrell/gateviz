@@ -1,6 +1,6 @@
 {
-  "short_name": "GateViz",
-  "name": "Gate: Combinational Logic Simulation",
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
     {
       "src": "favicon.ico",
