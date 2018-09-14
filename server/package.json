@@ -1,0 +1,26 @@
+{
+  "name": "gateviz-server",
+  "version": "0.3.0",
+  "description": "A web tool for learning about logic circuits",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devanfarrell/gateviz.git"
+  },
+  "author": "Devan Farrell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/devanfarrell/gateviz/issues"
+  },
+  "homepage": "https://github.com/devanfarrell/gateviz#readme",
+  "dependencies": {
+    "@types/express": "^4.16.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "express-openapi": "^2.0.4"
+  }
+}
