@@ -22,7 +22,9 @@
   },
   "homepage": "https://github.com/devanfarrell/gateviz-new#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "express-openapi": "^2.0.4",
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {

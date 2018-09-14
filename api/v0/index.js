@@ -1,5 +1,5 @@
-const circuitExample = require('../circuit-data/vq8ev7ga.json');
-const circuitList = require('../circuit-data/list.json');
+const circuitExample = require('../../circuit-data/vq8ev7ga.json');
+const circuitList = require('../../circuit-data/list.json');
 
 /*
 * There will need to eventually be a serialize circuit function.
@@ -16,13 +16,13 @@ module.exports = app => {
 			require('url').parse(req.url)
 			var str = req.url;
 			const circuitRequested = str.replace("/api/circuit/", "");
-			if(require(`../circuit-data/${circuitRequested}.json`)) {
-				res.send(require(`../circuit-data/${circuitRequested}.json`));
+			if(require(`../../circuit-data/${circuitRequested}.json`)) {
+				res.send(require(`../../circuit-data/${circuitRequested}.json`));
 			} else {
 				res.send(404);
 			}
 		}
-	);
+	); 
 
 	app.get(
 		'/api/circuit_list',
