@@ -9,9 +9,9 @@ class CircuitUI extends Component {
         super(props);
 
         this.state = {
+            hex: false,
             input: '',
-            numInputs: 0,
-            hex: false
+            numInputs: 0
         };
         this.onInputChange = this.onInputChange.bind(this)
     }

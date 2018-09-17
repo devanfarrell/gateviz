@@ -7,9 +7,9 @@ import selectCircuitReducer from './selectCircuitReducer';
 import breadcrumbReducer from './breadcrumbReducer';
 
 export default combineReducers({
+	breadcrumbs: 		breadcrumbReducer,
 	circuit: 			circuitReducer,
 	circuitList: 		circuitListReducer,
 	selectedCircuit: 	selectCircuitReducer,
 	term: 				searchTermReducer,
-	breadcrumbs: 		breadcrumbReducer
 });

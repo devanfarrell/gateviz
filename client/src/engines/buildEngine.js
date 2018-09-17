@@ -180,7 +180,7 @@ function deserializeCircuit(circuit) {
 			}
 			circuit.internalLogic[i].input[j].ref = getRef(circuit, parsedInputID);
 		}
-		var evaluationMethod = () => { };
+		var evaluationMethod = null;
 		switch (circuit.internalLogic[i].type) {
 			case 'AND':
 				evaluationMethod = AND;
