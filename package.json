@@ -22,10 +22,7 @@
     "url": "https://github.com/devanfarrell/gateviz-new/issues"
   },
   "homepage": "https://github.com/devanfarrell/gateviz-new#readme",
-  "dependencies": {
-
-    "typescript": "^3.0.3"
-  },
+  "dependencies": {},
   "devDependencies": {
     "concurrently": "^3.6.1",
     "nodemon": "^1.18.3"
