@@ -1,4 +1,3 @@
-const circuitExample = require('../../circuit-data/vq8ev7ga.json');
 const circuitList = require('../../circuit-data/list.json');
 
 /*

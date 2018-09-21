@@ -1,21 +1,39 @@
+import express from 'express';
 import circuitList from '../../circuit-data/list.json';
-import circuitExample from '../../circuit-data/vq8ev7ga.json'
+import circuitExample from '../../circuit-data/vq8ev7ga.json';
 
-export const getOneCircuit = (req, res) => {
+export const getOneCircuit = (req:express.Request, res:express.Response) => {
     res.send(circuitExample);
 }
 
-export const getByCircuitId = function (req, res, next, id) {
-    // Circuit.findOne({_id: id}, function (err, user) {
-    //   if (err) {
-    //     next(err);
-    //   } else {
-    //     req.user = user;
-    //     next();
-    //   }
-    // });
+export const getByCircuitId = function (req:express.Request, res:express.Response, next:Function, id:String) {
+  (req:express.Request, res:express.Response) => {
+
+    
+    // if(require(`../../circuit-data/${circuitRequested}.json`)) {
+    //   res.send(require(`../../circuit-data/${circuitRequested}.json`));
+    // } else {
+    //   res.send(404);
+    // }
+  }
 };
 
-export const getCircuitList = (req, res) => {
+// Eventual database call
+// export const getByCircuitId = function (req:express.Request, res:express.Response, next:Function, id:String) {
+//     Circuit.findOne({_id: id}, (err, circuit:JSON) {
+//       if (err) {
+//         next(err);
+//       } else {
+//         req.user = user;
+//         next();
+//       }
+//     });
+// };
+
+export const getCircuitList = (req:any, res:any) => {
     res.send(circuitList);
+}
+
+export const getCircuitExample = (req:any, res:any) => {
+  res.send(circuitExample);
 }
