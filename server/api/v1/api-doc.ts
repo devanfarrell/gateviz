@@ -1,3 +1,4 @@
+//https://www.npmjs.com/package/express-openapi#getting-started
 const apiDoc = {
     swagger: '2.0',
     basePath: '/v1',
