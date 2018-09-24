@@ -13,7 +13,7 @@ import {
 
 //Landing reducers
 export const fetchCircuitList = () => async dispatch => {
-	const res = await axios.get('/api/circuit_list');
+	const res = await axios.get('/v1/circuits');
 	dispatch({ type: FETCH_CIRCUIT_LIST, payload: res.data.list });
 };
 
@@ -27,7 +27,7 @@ export const selectCircuit = circuitKey => dispatch => {
 
 //circuitReducer
 export const fetchCircuit = cid => async dispatch => {
-	const url = `/api/circuit/${cid}`;
+	const url = `/v1/circuit/${cid}`;
 	const res = await axios.get(url);
 	dispatch({ type: FETCH_CIRCUIT, payload: res.data });
 };

@@ -64,3 +64,4 @@ server/index.js
 server/expresstypeshelper.js
 server/api/v1/index.js
 server/api/v1/index.js
+server/api/index.js
