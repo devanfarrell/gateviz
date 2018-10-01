@@ -65,3 +65,5 @@ server/expresstypeshelper.js
 server/api/v1/index.js
 server/api/v1/index.js
 server/api/index.js
+server/api/v1/api-doc.js
+server/api/v1/paths/circuits.js

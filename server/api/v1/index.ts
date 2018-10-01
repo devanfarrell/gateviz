@@ -1,4 +1,4 @@
-var express = require('express')
+import express = require('express')
 var router = express.Router()
 
 import { getByCircuitId, getOneCircuit, getCircuitList, getCircuitExample } from './controllers';
