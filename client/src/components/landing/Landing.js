@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CircuitList from './Circuit_List';
 import SearchBar from './Search_Bar';
 import { connect } from 'react-redux';
-import { fetchCircuitList } from '../redux/actions';
+import { fetchCircuitList } from '../../redux/actions';
 
 class Landing extends Component {
 	componentDidMount(){

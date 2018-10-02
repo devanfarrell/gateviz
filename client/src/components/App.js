@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Circuit from './Circuit';
 import Header from './Header';
-import Landing from './Landing';
+import Landing from './landing/Landing';
 import '../index.css'
 
 class App extends Component {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as renderEngine from '../engines/renderEngine';
+import * as renderEngine from './renderEngine';
 
 export default class Canvas extends Component {
     constructor(props) {
