@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FormGroup, InputGroup, FormControl, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { changeSearchTerm } from '../actions';
+import { changeSearchTerm } from '../redux/actions';
 import { Redirect } from 'react-router-dom';
 
 class SearchBar extends Component {

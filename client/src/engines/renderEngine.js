@@ -1,5 +1,5 @@
 import svgjs from 'svgjs';
-import { stepIntoCircuit } from '../actions/';
+import { stepIntoCircuit } from '../redux/actions';
 import { store } from '../';
 
 const trueColor = '#00FF87';

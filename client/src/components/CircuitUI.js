@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Breadcrumb, Navbar, FormGroup, FormControl, Button, InputGroup } from 'react-bootstrap';
-import { initBreadcrumb, changeInputs, stepBackBreadcrumb } from '../actions';
+import { initBreadcrumb, changeInputs, stepBackBreadcrumb } from '../redux/actions';
 import { connect } from 'react-redux';
 
 class CircuitUI extends Component {

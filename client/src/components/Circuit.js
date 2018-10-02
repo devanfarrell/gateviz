@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CircuitUI from './CircuitUI';
 import Canvas from './Canvas';
 import { connect } from 'react-redux';
-import { fetchCircuit, changeInputs } from '../actions';
+import { fetchCircuit, changeInputs } from '../redux/actions';
 
 
 

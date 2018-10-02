@@ -1,8 +1,8 @@
-import { FETCH_CIRCUIT, CHANGE_INPUTS } from '../actions/types';
+import { FETCH_CIRCUIT, CHANGE_INPUTS } from '../types';
 import { Map } from 'immutable';
 
-import buildCircuit from '../engines/buildEngine';
-import { evaluateCircuit } from '../engines/computationEngine';
+import buildCircuit from '../../engines/buildEngine';
+import { evaluateCircuit } from '../../engines/computationEngine';
 
 export default function (state = null, action) {
 	switch (action.type) {

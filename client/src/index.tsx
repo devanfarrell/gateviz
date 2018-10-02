@@ -5,7 +5,7 @@ import { applyMiddleware, createStore } from "redux";
 import reduxThunk from 'redux-thunk';
 
 import App from "./components/App";
-import reducers from './reducers';
+import reducers from './redux/reducers';
 
 export const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
