@@ -3,13 +3,20 @@ import ReactToggle from 'react-toggle'
 
 import './toggle.css';
 
-const Toggle = (props) => {
+interface IToggle {
+    checked: boolean;
+    id: string;
+    lable: string;
+    handleToggle(event: any): void;
+}
+
+const Toggle = (props: IToggle) => {
     return (
         <>
             <ReactToggle
                 id={props.id}
-                // defaultChecked={props.cheeseIsReady}
-                // onChange={this.handleToggle}
+                defaultChecked={props.checked}
+                onChange={props.handleToggle(props.id)}
                 icons={{
                     checked: <div style={{color: "rgb(255, 255, 255)", fontSize: "1.2em", position: "absolute", top: "0.3em"}} >1</div>,
                     unchecked: <div style={{color: "rgb(255, 255, 255)", fontSize: "1.2em", position: "absolute", top: "0.3em"}}>0</div>,

@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { Button, FormControl, FormGroup, InputGroup } from 'react-bootstrap';
+import { FormControl, FormGroup, InputGroup } from 'react-bootstrap';
 
-// Lambdas used because cost is negligable and more readable
+// Lambda used because cost is negligable and more readable
 /* tslint:disable:jsx-no-lambda */
 
 interface IBusInput {
+    lable: string;
     numInputs: number;
     onInputChange(event: any): void;
 }
