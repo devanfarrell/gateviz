@@ -7,7 +7,7 @@ const Toggle = (props) => {
     return (
         <>
             <ReactToggle
-                id='cheese-status'
+                id={props.id}
                 // defaultChecked={props.cheeseIsReady}
                 // onChange={this.handleToggle}
                 icons={{
@@ -15,7 +15,7 @@ const Toggle = (props) => {
                     unchecked: <div style={{color: "rgb(255, 255, 255)", fontSize: "1.2em", position: "absolute", top: "0.3em"}}>0</div>,
                   }}
             />
-            <label htmlFor='cheese-status'>Adjacent label tag</label>
+            <label htmlFor={props.id}>{props.lable}}</label>
         </>
     )
 };

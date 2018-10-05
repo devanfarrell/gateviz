@@ -100,7 +100,6 @@ class CircuitUI extends Component {
                             placeholder="Input"
                             style={{ width: 'auto' }}
                         />
-                        <Toggle id='h'/>
                     </InputGroup>
                 </FormGroup>
                 <Breadcrumb>
