@@ -10,7 +10,7 @@ interface IBusInput {
     onInputChange(event: any): void;
 }
 
-class BusInput extends React.Component<IBusInput, any> {
+class BusInput extends React.Component<IBusInput> {
 
     constructor(props: IBusInput) {
         super(props);
