@@ -6,7 +6,7 @@ import { getByCircuitId, getOneCircuit, getCircuitList, getCircuitExample } from
 const API_VERSION: String = '/v1';
 
 // define what to do with parameter
-router.get(`${API_VERSION}/circuit/:circuitId`, getOneCircuit)
+router.get(`${API_VERSION}/circuit/:circuitId`, getByCircuitId)
 router.get(`${API_VERSION}/test`, getCircuitExample)
 router.get(`${API_VERSION}/circuits`, getCircuitList)
 

@@ -6,16 +6,12 @@ export const getOneCircuit = (req:express.Request, res:express.Response) => {
     res.send(circuitExample);
 }
 
-export const getByCircuitId = function (req:express.Request, res:express.Response, next:Function, id:String) {
-  (req:express.Request, res:express.Response) => {
-
-    
-    // if(require(`../../circuit-data/${circuitRequested}.json`)) {
-    //   res.send(require(`../../circuit-data/${circuitRequested}.json`));
-    // } else {
-    //   res.send(404);
-    // }
-  }
+export const getByCircuitId = (req:express.Request, res:express.Response) => {
+    if(require(`../../circuit-data/${req.params.circuitId}.json`)) {
+      res.send(require(`../../circuit-data/${req.params.circuitId}.json`));
+    } else {
+      res.send(404);
+    }
 };
 
 // Eventual database call

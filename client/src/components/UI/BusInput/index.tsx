@@ -4,15 +4,20 @@ import { FormControl, FormGroup, InputGroup } from 'react-bootstrap';
 // Lambda used because cost is negligable and more readable
 /* tslint:disable:jsx-no-lambda */
 
-interface IBusInput {
+interface IBusProps {
     lable: string;
     numInputs: number;
     onInputChange(event: any): void;
 }
 
-class BusInput extends React.Component<IBusInput> {
+interface IBusState {
+    hex: boolean;
+    input: string;
+}
 
-    constructor(props: IBusInput) {
+export default class BusInput extends React.Component<IBusProps, IBusState> {
+
+    constructor(props: IBusProps) {
         super(props);
 
         this.state = {
@@ -64,5 +69,3 @@ class BusInput extends React.Component<IBusInput> {
         }
     }
 }
-
-export default BusInput;
