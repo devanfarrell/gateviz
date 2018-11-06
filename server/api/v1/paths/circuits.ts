@@ -1,3 +1,4 @@
+/*
 export default function(worldsService) {
     let operations = {
       GET
@@ -40,3 +41,5 @@ export default function(worldsService) {
    
     return operations;
   }
+  */
+ 

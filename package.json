@@ -10,7 +10,7 @@
     "client:start": "npm run start --prefix client",
     "server:start": "npm run start --prefix server",
     "server:dev": "nodemon index.js --prefix server",
-    "server:compile": "echo tsc -p ./server/tsconfig.json",
+    "server:compile": "tsc -p ./server/tsconfig.json",
     "installs": "npm install && npm install --prefix server && npm install --prefix client"
   },
   "repository": {

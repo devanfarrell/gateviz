@@ -8,9 +8,7 @@ GateViz is a logic circuit visualization tool. It is designed to help students b
 - Nodemon globally installed to run dev script
 
 ### Quick Start
-    $npm run installs
-    $tsc -p ./server/tsconfig.json
-    $npm start
+    $npm run quick
 
-##### For Development
+#### For Development
     Start worker to compile TS
