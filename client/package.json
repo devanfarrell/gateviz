@@ -2,27 +2,17 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": {
-    "/v1/circuit/*": {
-      "target": "http://localhost:5000"
-    },
-    "/v1/circuits": {
-      "target": "http://localhost:5000"
-    },
-    "/v1/*": {
-      "target": "http://localhost:5000"
-    }
-  },
   "dependencies": {
     "ajv": "^6.5.3",
     "axios": "^0.18.0",
+    "http-proxy-middleware": "^0.19.1",
     "immutable": "^3.8.2",
     "react": "^16.5.1",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.5.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
-    "react-scripts-ts": "2.17.0",
+    "react-scripts-ts": "^4.0.8",
     "react-toggle": "^4.0.2",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
@@ -43,5 +33,11 @@
     "@types/react-redux": "^6.0.9",
     "@types/react-router-dom": "^4.3.1",
     "typescript": "^3.0.3"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
