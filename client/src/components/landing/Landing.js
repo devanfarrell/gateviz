@@ -11,7 +11,7 @@ class Landing extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="landing container">
 				<div className="hero centerallthethings">
 					<h1 className="heroPrimary"> GateViz </h1>
 					<h2 className="heroSecondary"> a combinational logic education tool </h2>

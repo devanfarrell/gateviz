@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Breadcrumb, Navbar, FormGroup, FormControl, Button, InputGroup } from 'react-bootstrap';
 import { initBreadcrumb, changeInputs, stepBackBreadcrumb } from '../../redux/actions';
 import { connect } from 'react-redux';
+import Sidebar from './sidebar';
 
 class CircuitUI extends Component {
 
@@ -86,25 +87,20 @@ class CircuitUI extends Component {
     }
 
     render() {
-
         return (
-            <Navbar fixedBottom inverse>
-                <FormGroup>
-                    <InputGroup>
-                        <Button onClick={() => this.onEvaluateClick()} type="submit">Evaluate</Button>
-                        <FormControl
-                            type="text"
-                            value={this.state.input}
-                            onChange={event => this.onInputChange(event.target.value)}
-                            placeholder="Input"
-                            style={{ width: 'auto' }}
-                        />
-                    </InputGroup>
-                </FormGroup>
-                <Breadcrumb>
-                    {this.renderCrumbs()}
-                </Breadcrumb>
-            </Navbar>
+            <>
+                <div className="UiTopbar">
+                    <Breadcrumb>
+                        {this.renderCrumbs()}
+                    </Breadcrumb>
+                </div>
+                <div className="UisideBar">
+                    <Sidebar
+                        circuit={this.props.circuit}
+                        canAutoEval={true}
+                    />
+                </div>
+            </>
         );
     }
 }

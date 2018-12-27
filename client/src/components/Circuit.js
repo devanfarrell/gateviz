@@ -34,9 +34,11 @@ class Circuit extends Component {
 		// if the circuit has been built
 		else {
 			return (
-				<div>
+				<div className="UI">
 					<CircuitUI name={this.props.circuit.name}/>
-					{this.renderCanvas()}
+					<div className="canvas">
+						{this.renderCanvas()}
+					</div>
 				</div>
 			)
 		}
