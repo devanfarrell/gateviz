@@ -3,18 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "ajv": "^6.5.3",
+    "ajv": "^6.6.2",
     "axios": "^0.18.0",
     "http-proxy-middleware": "^0.19.1",
     "immutable": "^3.8.2",
-    "react": "^16.5.1",
+    "react": "^16.7.0",
     "react-bootstrap": "^0.32.1",
-    "react-dom": "^16.5.1",
-    "react-redux": "^5.0.7",
+    "react-dom": "^16.7.0",
+    "react-redux": "^5.1.1",
     "react-router-dom": "^4.3.1",
     "react-scripts-ts": "^4.0.8",
     "react-toggle": "^4.0.2",
-    "redux": "^4.0.0",
+    "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "svgjs": "^2.6.2"
   },
@@ -25,14 +25,14 @@
     "eject": "react-scripts-ts eject"
   },
   "devDependencies": {
-    "@types/jest": "^23.3.2",
-    "@types/node": "^10.9.4",
-    "@types/react": "^16.4.14",
-    "@types/react-bootstrap": "^0.32.13",
-    "@types/react-dom": "^16.0.7",
-    "@types/react-redux": "^6.0.9",
+    "@types/jest": "^23.3.10",
+    "@types/node": "^10.12.18",
+    "@types/react": "^16.7.18",
+    "@types/react-bootstrap": "^0.32.15",
+    "@types/react-dom": "^16.0.11",
+    "@types/react-redux": "^6.0.11",
     "@types/react-router-dom": "^4.3.1",
-    "typescript": "^3.0.3"
+    "typescript": "^3.2.2"
   },
   "browserslist": [
     ">0.2%",
