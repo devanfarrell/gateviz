@@ -4,8 +4,6 @@ GateViz is a logic circuit visualization tool. It is designed to help students b
 
 ### Prerequisite
 - [node and npm](https://nodejs.org/en/download/) must be installed
-- [tsc compiler](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html) must be installed globally
-- Nodemon globally installed to run dev script
 
 ### Quick Start
     $npm run quick
