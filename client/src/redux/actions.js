@@ -33,7 +33,6 @@ export const fetchCircuit = cid => async dispatch => {
 };
 
 export const changeInputs = obj => dispatch => {
-	console.log(obj);
 	dispatch({ type: CHANGE_INPUTS, payload: obj });
 };
 

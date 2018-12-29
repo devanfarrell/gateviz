@@ -134,6 +134,13 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 		} else {
 			path.fill(falseColor);
 		}
+		if(circuit.input[i].hasOwnProperty('label')) {
+			var label = canvas.text(circuit.input[i].label);
+			label.move(circuit.input[i].coord[0], circuit.input[i].coord[1] - 20).font({
+				family: 'Helvetica',
+				fill: '#000',
+			});
+		  }
 	}
 
 	// internal logic
