@@ -1,14 +1,12 @@
 import express = require('express');
 import bodyParser = require('body-parser');
 import openapi from 'express-openapi';
+require('dotenv').config();
 // const swaggerUi = require('swagger-ui-express');
 // const swaggerDocument = require('./swagger.json');
 
-
-const PORT = 5000;
-
 const app:express.Express = express();
-const router = express.Router()
+// const router = express.Router()
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
@@ -21,7 +19,7 @@ app.use(bodyParser.urlencoded({
 app.use(require('./api'));
 
 if (process.env.NODE_ENV === 'production') {
-	app.use(express.static('client/build'));
+	app.use(express.static('build'));
 	const path = require('path');
 
 	app.get('*', (req, res) => {
@@ -29,4 +27,4 @@ if (process.env.NODE_ENV === 'production') {
 	});
 }
 
-app.listen(PORT);
+app.listen(process.env.PORT);
