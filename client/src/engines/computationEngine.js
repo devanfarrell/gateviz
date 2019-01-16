@@ -7,21 +7,21 @@ export function evaluateCircuit(circuit) {
 		}
 	}
 
-	for (i = 0; i < circuit.internalLogic.length; i++) {
-		if (circuit.internalLogic[i].type !== 'CIRCUIT') {
+	for (i = 0; i < circuit.parts.length; i++) {
+		if (circuit.parts[i].type !== 'CIRCUIT') {
 			var inputValues = [];
-			for (var j = 0; j < circuit.internalLogic[i].input.length; j++) {
-				var pin = circuit.internalLogic[i].input[j].pin;
+			for (var j = 0; j < circuit.parts[i].input.length; j++) {
+				var pin = circuit.parts[i].input[j].pin;
 				if (pin === null) {
-					inputValues[j] = circuit.internalLogic[i].input[j].ref.output;
+					inputValues[j] = circuit.parts[i].input[j].ref.output;
 				} else {
 					//busses and circuits as input
-					inputValues[j] = circuit.internalLogic[i].input[j].output[pin].output;
+					inputValues[j] = circuit.parts[i].input[j].output[pin].output;
 				}
 			}
-			circuit.internalLogic[i].output = circuit.internalLogic[i].evaluate(inputValues);
+			circuit.parts[i].output = circuit.parts[i].evaluate(inputValues);
 		} else {
-			evaluateCircuit(circuit.internalLogic[i].circuit)
+			evaluateCircuit(circuit.parts[i].circuit)
 		}
 	}
 	// evauate outputs

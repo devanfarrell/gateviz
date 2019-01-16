@@ -8,20 +8,20 @@ import Toggle from '../toggle';
 // Lambda used because cost is negligable and more readable
 /* tslint:disable:jsx-no-lambda */
 
-interface ISidebarProps {
+interface SidebarProps {
     // eventually, there will be a prop that defines whether or not a circuit can be automatically evaluated which will remove the option from the UI
     changeInputs: any
     circuit: any
     canAutoEval: boolean
 }
 
-interface ISidebarState {
+interface SidebarState {
     // eventually, there will be a prop that defines whether or not a circuit can be automatically evaluated which will remove the option from the UI
     autoEval: any
     localInputs: boolean[]
 }
 
-class Sidebar extends React.Component<ISidebarProps, ISidebarState> {
+class Sidebar extends React.Component<SidebarProps, SidebarState> {
 
     public constructor(props) {
         super(props);
@@ -98,7 +98,7 @@ class Sidebar extends React.Component<ISidebarProps, ISidebarState> {
         let iterator = -1;
         return this.props.circuit.input.map( input => {
             iterator++;
-            if(input.type === "INPUT") {
+            if(input.type === "SINGLE_INPUT") {
                 return (
                     <div key={input.id} className="toggle">
                         <Toggle
@@ -110,7 +110,7 @@ class Sidebar extends React.Component<ISidebarProps, ISidebarState> {
                     </div>
                 )
             } else {
-                console.log("WHY WAS THAT NOT AN INPUT?!?!?!?!?!?!?!");
+                console.log("This is probably a multi-input error");
                 return (<div> something bad happened </div> );
             }
         })

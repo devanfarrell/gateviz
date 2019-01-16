@@ -1,9 +1,7 @@
 import svgjs from 'svgjs';
 import { stepIntoCircuit } from '../../redux/actions';
 import { store } from '../../';
-
-const trueColor = '#00FF87';
-const falseColor = '#464646';
+import { trueColor, falseColor, componentFillColor, getTypeData } from './constants';
 
 function colorHelper(state) {
 	if (state) {
@@ -13,75 +11,10 @@ function colorHelper(state) {
 	}
 }
 
-const componentFillColor = '#D1D2D4';
-
 function internalCircuitclickEvent(obj, id, name) {
 	obj.click(() => {
 		store.dispatch(stepIntoCircuit({ id, name }));
 	});
-}
-
-const INPUT = {
-	height: 15,
-	path: 'M52.707,0.5l45.793,23.5l-45.793,23.5l-52.207,0l0,-47l52.207,0Z',
-	width: 35
-};
-
-const AND = {
-	height: 50,
-	path:
-		'M0.5,0.5l40,0l0.259,0.001c21.957,0.139 39.741,18.009 39.741,39.999c0,22.077 -17.923,40 -40,40l-40,0l0,-80Z',
-	width: 40
-};
-
-const NAND = {
-	height: 50,
-	path:
-		'M40.5,80.5l-40,0l0,-80l40.023,0.001c21.882,0.139 39.855,18.112 39.976,39.999c0.118,-2.103 1.862,-4 3.994,-4c2.208,0 4,1.792 4,4c0,2.208 -1.792,4 -4,4c-2.132,0 -3.876,-1.897 -3.994,-4c-0.122,21.973 -17.998,40 -39.999,40Z',
-	width: 45
-};
-
-const OR = {
-	height: 50,
-	path:
-		'M0.5,1.035c30.388,-3.915 65.492,14.114 76.793,39.465c-11.301,25.351 -46.405,43.38 -76.793,39.465l0.129,-0.018c16.963,-21.401 16.963,-57.493 0,-78.894l-0.129,-0.018Z',
-	width: 38.4
-};
-
-const NOR = {
-	height: 50,
-	path:
-		'M77.158,40.799c-11.443,25.194 -46.389,43.066 -76.658,39.166l0.129,-0.018c16.963,-21.401 16.963,-57.493 0,-78.894l-0.129,-0.018c30.269,-3.9 65.215,13.972 76.658,39.166c0.153,-2.068 1.882,-3.701 3.989,-3.701c2.208,0 4,1.792 4,4c0,2.208 -1.792,4 -4,4c-2.107,0 -3.836,-1.633 -3.989,-3.701Z',
-	width: 42.3
-};
-
-// XOR path is yet to be defined
-const XOR = {
-	height: 50,
-	path:
-		'M0.5,1.035c30.388,-3.915 65.492,14.114 76.793,39.465c-11.301,25.351 -46.405,43.38 -76.793,39.465l0.129,-0.018c16.963,-21.401 16.963,-90.493 0,-78.894l-0.129,-0.018Z',
-	width: 40
-};
-
-const NOT = {
-	height: 30,
-	path:
-		'M46.193,23.949c0.028,-2.184 1.809,-3.949 4,-3.949c2.208,0 4,1.792 4,4c0,2.208 -1.792,4 -4,4c-2.191,0 -3.972,-1.765 -4,-3.949l-45.693,23.449l0,-47l45.693,23.449Z',
-	width: 30
-};
-
-function getTypeData(type) {
-	switch (type) {
-		case 'INPUT': return INPUT;
-		case 'OUTPUT': return INPUT;
-		case 'AND': return AND;
-		case 'NAND': return NAND;
-		case 'OR': return OR;
-		case 'NOR': return NOR;
-		case 'XOR': return XOR;
-		case 'NOT': return NOT;
-		default: return { meh: 'meh' };
-	}
 }
 
 function staggerInput(numPorts, position, heightOfObject) {
@@ -100,9 +33,9 @@ export function initialize(ref) {
 }
 
 function traverseCircuit(id, circuit) {
-	for (var i = 0; i < circuit.internalLogic.length; i++) {
-		if (id === circuit.internalLogic[i].id) {
-			return circuit.internalLogic[i].circuit
+	for (var i = 0; i < circuit.parts.length; i++) {
+		if (id === circuit.parts[i].id) {
+			return circuit.parts[i].circuit
 		}
 	}
 	console.log('Something is borked. Couldn\'t find ID from breadcrumb in render engine');
@@ -121,32 +54,33 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 	canvas.clear();
 	//inputs
 	for (i = 0; i < circuit.input.length; i++) {
-		var path = canvas.path(INPUT.path).move(circuit.input[i].coord[0], circuit.input[i].coord[1]);
+		var partDrawing = getTypeData(circuit.input[i].type);
+		var path = canvas.path(partDrawing.path).move(circuit.input[i].coord[0], circuit.input[i].coord[1]);
 		path.stroke({
 			color: '#000',
 			linecap: 'round',
 			linejoin: 'round',
 			width: 2
 		});
-		path.size(INPUT.width, INPUT.height);
+		path.size(partDrawing.width, partDrawing.height);
 		if (circuit.input[i].output) {
 			path.fill(trueColor);
 		} else {
 			path.fill(falseColor);
 		}
-		if(circuit.input[i].hasOwnProperty('label')) {
+		if (circuit.input[i].hasOwnProperty('label')) {
 			var label = canvas.text(circuit.input[i].label);
 			label.move(circuit.input[i].coord[0], circuit.input[i].coord[1] - 20).font({
 				family: 'Helvetica',
 				fill: '#000',
 			});
-		  }
+		}
 	}
 
 	// internal logic
-	for (i = 0; i < circuit.internalLogic.length; i++) {
+	for (i = 0; i < circuit.parts.length; i++) {
 		var renderSpecs = {};
-		switch (circuit.internalLogic[i].type) {
+		switch (circuit.parts[i].type) {
 			case 'AND':
 				renderSpecs = AND;
 				break;
@@ -166,14 +100,14 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 				renderSpecs = NOT;
 				break;
 			default:
-				renderSpecs.path = circuit.internalLogic[i].path;
-				renderSpecs.height = circuit.internalLogic[i].height;
-				renderSpecs.width = circuit.internalLogic[i].width;
+				renderSpecs.path = circuit.parts[i].path;
+				renderSpecs.height = circuit.parts[i].height;
+				renderSpecs.width = circuit.parts[i].width;
 		}
 
 		path = canvas
 			.path(renderSpecs.path)
-			.move(circuit.internalLogic[i].coord[0], circuit.internalLogic[i].coord[1]);
+			.move(circuit.parts[i].coord[0], circuit.parts[i].coord[1]);
 		path.stroke({
 			color: '#000',
 			linecap: 'round',
@@ -183,31 +117,32 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 
 		path.size(renderSpecs.width, renderSpecs.height);
 
-		if (circuit.internalLogic[i].type !== 'CIRCUIT') {
+		if (circuit.parts[i].type !== 'CIRCUIT') {
 
-			if (circuit.internalLogic[i].output) {
+			if (circuit.parts[i].output) {
 				path.fill(trueColor);
 			} else {
 				path.fill(falseColor);
 			}
 
 		} else {
-			circuit.internalLogic[i].localRef = path;
-			internalCircuitclickEvent(circuit.internalLogic[i].localRef, circuit.internalLogic[i].id, circuit.internalLogic[i].name)
+			circuit.parts[i].localRef = path;
+			internalCircuitclickEvent(circuit.parts[i].localRef, circuit.parts[i].id, circuit.parts[i].name)
 			path.fill(componentFillColor);
 		}
 	}
 
 	//outputs
 	for (i = 0; i < circuit.output.length; i++) {
-		path = canvas.path(INPUT.path).move(circuit.output[i].coord[0], circuit.output[i].coord[1]);
+		partDrawing = getTypeData(circuit.output[i].type);
+		path = canvas.path(partDrawing.path).move(circuit.output[i].coord[0], circuit.output[i].coord[1]);
 		path.stroke({
 			color: '#000',
 			linecap: 'round',
 			linejoin: 'round',
 			width: 2
 		});
-		path.size(INPUT.width, INPUT.height);
+		path.size(partDrawing.width, partDrawing.height);
 		if (circuit.output[i].output) {
 			path.fill(trueColor);
 		} else {
@@ -266,32 +201,32 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 	|
 	*/
 
-	for (i = 0; i < circuit.internalLogic.length; i++) {
+	for (i = 0; i < circuit.parts.length; i++) {
 		originX = null;
 		originY = null;
 		destinationX = null;
 		destinationY = null;
-		axis = circuit.internalLogic[i].axis;
+		axis = circuit.parts[i].axis;
 		// CASE 1: ALL - SIMPLE
-		if (circuit.internalLogic[i].type !== 'CIRCUIT') {
-			for (var j = 0; j < circuit.internalLogic[i].input.length; j++) {
-				destinationX = circuit.internalLogic[i].coord[0];
-				destinationY = circuit.internalLogic[i].coord[1] + getTypeData(circuit.internalLogic[i].type).height / 2;
+		if (circuit.parts[i].type !== 'CIRCUIT') {
+			for (var j = 0; j < circuit.parts[i].input.length; j++) {
+				destinationX = circuit.parts[i].coord[0];
+				destinationY = circuit.parts[i].coord[1] + getTypeData(circuit.parts[i].type).height / 2;
 				var outputState = null;
 
 				//CASE 1.1 SIMPLE - SIMPLE
-				if (circuit.internalLogic[i].input.pin == null) {
-					destinationY = destinationY + staggerInput(circuit.internalLogic[i].input.length, j, getTypeData(circuit.internalLogic[i].type).height);
-					originX = circuit.internalLogic[i].input[j].ref.coord[0] + getTypeData(circuit.internalLogic[i].input[j].ref.type).width;
-					originY = circuit.internalLogic[i].input[j].ref.coord[1] + getTypeData(circuit.internalLogic[i].input[j].ref.type).height / 2;
-					outputState = circuit.internalLogic[i].input[j].ref.output;
+				if (circuit.parts[i].input.pin == null) {
+					destinationY = destinationY + staggerInput(circuit.parts[i].input.length, j, getTypeData(circuit.parts[i].type).height);
+					originX = circuit.parts[i].input[j].ref.coord[0] + getTypeData(circuit.parts[i].input[j].ref.type).width;
+					originY = circuit.parts[i].input[j].ref.coord[1] + getTypeData(circuit.parts[i].input[j].ref.type).height / 2;
+					outputState = circuit.parts[i].input[j].ref.output;
 
 					//CASE 1.2 COMPLEX - SIMPLE
 				} else {
-					originX = circuit.internalLogic[i].input[j].ref.coord[0] + circuit.output[i].input[j].ref.width;
-					originY = circuit.internalLogic[i].input[j].ref.coord[1] + circuit.output[i].input[j].ref.height / 2;
-					pin = circuit.internalLogic[i].input[j].pin
-					originY = originY + staggerInput(circuit.internalLogic[i].input[j].ref.output.length, pin, circuit.internalLogic[i].input[j].ref.height)
+					originX = circuit.parts[i].input[j].ref.coord[0] + circuit.output[i].input[j].ref.width;
+					originY = circuit.parts[i].input[j].ref.coord[1] + circuit.output[i].input[j].ref.height / 2;
+					pin = circuit.parts[i].input[j].pin
+					originY = originY + staggerInput(circuit.parts[i].input[j].ref.output.length, pin, circuit.parts[i].input[j].ref.height)
 					outputState = circuit.output[i].input.ref.output[pin].output
 				}
 				path = canvas.polyline(
@@ -300,16 +235,16 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 			}
 			// CASE 2: ALL - COMPLEX
 		} else {
-			for (j = 0; j < circuit.internalLogic[i].input.length; j++) {
+			for (j = 0; j < circuit.parts[i].input.length; j++) {
 				outputState = null;
-				destinationX = circuit.internalLogic[i].coord[0];
-				destinationY = circuit.internalLogic[i].coord[1] + circuit.internalLogic[i].height / 2;
+				destinationX = circuit.parts[i].coord[0];
+				destinationY = circuit.parts[i].coord[1] + circuit.parts[i].height / 2;
 				//CASE 2.1 SIMPLE - COMPLEX
-				if (circuit.internalLogic[i].input.pin == null) {
-					destinationY = destinationY + staggerInput(circuit.internalLogic[i].input.length, j, circuit.internalLogic[i].height);
-					originX = circuit.internalLogic[i].input[j].ref.coord[0] + getTypeData(circuit.internalLogic[i].input[j].ref.type).width;
-					originY = circuit.internalLogic[i].input[j].ref.coord[1] + getTypeData(circuit.internalLogic[i].input[j].ref.type).height / 2;
-					outputState = circuit.internalLogic[i].input[j].ref.output;
+				if (circuit.parts[i].input.pin == null) {
+					destinationY = destinationY + staggerInput(circuit.parts[i].input.length, j, circuit.parts[i].height);
+					originX = circuit.parts[i].input[j].ref.coord[0] + getTypeData(circuit.parts[i].input[j].ref.type).width;
+					originY = circuit.parts[i].input[j].ref.coord[1] + getTypeData(circuit.parts[i].input[j].ref.type).height / 2;
+					outputState = circuit.parts[i].input[j].ref.output;
 
 
 					//CASE 2.1 COMPLEX - COMPLEX

@@ -9,23 +9,23 @@
         {
             "id": "I1",
             "label": "A",
-            "type": "INPUT",
+            "type": "SINGLE_INPUT",
             "coord": [50, 250]
         },
         {
             "id": "I2",
             "label": "B",
-            "type": "INPUT",
+            "type": "SINGLE_INPUT",
             "coord": [50, 317.5]
         },
         {
             "id": "I3",
             "label": "C",
-            "type": "INPUT",
+            "type": "SINGLE_INPUT",
             "coord": [50, 385]
         }
     ],
-    "internalLogic": [
+    "parts": [
         {
             "id": "C1",
             "label": "thermometer",
@@ -43,23 +43,23 @@
                     {
                         "id": "I1",
                         "label": "A",
-                        "type": "INPUT",
+                        "type": "SINGLE_INPUT",
                         "coord": [10, 200]
                     },
                     {
                         "id": "I2",
                         "label": "B",
-                        "type": "INPUT",
+                        "type": "SINGLE_INPUT",
                         "coord": [10, 300]
                     },
                     {
                         "id": "I3",
                         "label": "C",
-                        "type": "INPUT",
+                        "type": "SINGLE_INPUT",
                         "coord": [10, 400]
                     }
                 ],
-                "internalLogic": [
+                "parts": [
                     {
                         "id": "G1",
                         "type": "OR",

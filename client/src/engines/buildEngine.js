@@ -59,9 +59,9 @@ function getRef(circuit, id) {
 		}
 	}
 	// check circuit internal logic
-	for (i = 0; i < circuit.internalLogic.length; i++) {
-		if (circuit.internalLogic[i].id === id) {
-			return circuit.internalLogic[i]
+	for (i = 0; i < circuit.parts.length; i++) {
+		if (circuit.parts[i].id === id) {
+			return circuit.parts[i]
 		}
 	}
 	console.log('Printing broken refs in getRef(): ', circuit, id);
@@ -93,46 +93,46 @@ function initCircuit(circuitData) {
 		tempCircuit.input[i].type = circuitData.input[i].type;
 	}
 
-	tempCircuit.internalLogic = [];
-	for (i = 0; i < circuitData.internalLogic.length; i++) {
-		tempCircuit.internalLogic[i] = circuitData.internalLogic[i];
+	tempCircuit.parts = [];
+	for (i = 0; i < circuitData.parts.length; i++) {
+		tempCircuit.parts[i] = circuitData.parts[i];
 
-		if (tempCircuit.internalLogic[i].type !== 'CIRCUIT') {
+		if (tempCircuit.parts[i].type !== 'CIRCUIT') {
 			//TODO:default state should also be definable for dependant logic
-			tempCircuit.internalLogic[i].output = false;
+			tempCircuit.parts[i].output = false;
 		} else {
-			tempCircuit.internalLogic[i].output = [];
+			tempCircuit.parts[i].output = [];
 			for (var j = 0; j < circuitData.output.length; j++) {
-				tempCircuit.internalLogic[i].output[j] = {};
-				tempCircuit.internalLogic[i].output[j].output = false;
+				tempCircuit.parts[i].output[j] = {};
+				tempCircuit.parts[i].output[j].output = false;
 			}
 		}
 
-		if (circuitData.internalLogic[i].hasOwnProperty('axis')) {
-			if (Array.isArray(circuitData.internalLogic[i].axis)) {
-				if (circuitData.internalLogic[i].axis.length === circuitData.internalLogic[i].input.length) {
-					tempCircuit.internalLogic[i].axis = circuitData.internalLogic[i].axis;
+		if (circuitData.parts[i].hasOwnProperty('axis')) {
+			if (Array.isArray(circuitData.parts[i].axis)) {
+				if (circuitData.parts[i].axis.length === circuitData.parts[i].input.length) {
+					tempCircuit.parts[i].axis = circuitData.parts[i].axis;
 				} else {
 					// axis is an array but not of the correct length
-					tempCircuit.internalLogic[i].axis = circuitData.internalLogic[i].axis;
-					for (j = tempCircuit.internalLogic[i].axis.length; j < circuitData.internalLogic[i].input.length; j++) {
-						tempCircuit.internalLogic[i].axis.push(DEFAULT_AXIS);
+					tempCircuit.parts[i].axis = circuitData.parts[i].axis;
+					for (j = tempCircuit.parts[i].axis.length; j < circuitData.parts[i].input.length; j++) {
+						tempCircuit.parts[i].axis.push(DEFAULT_AXIS);
 					}
 				}
 			} else {
 				// axis exists but isn't an array
-				const carriedPivotPoint = circuitData.internalLogic[i].axis;
-				tempCircuit.internalLogic[i].axis = [];
-				tempCircuit.internalLogic[i].axis[0] = carriedPivotPoint;
-				for (j = 1; j < circuitData.internalLogic[i].input.length; j++) {
-					tempCircuit.internalLogic[i].axis.push(DEFAULT_AXIS);
+				const carriedPivotPoint = circuitData.parts[i].axis;
+				tempCircuit.parts[i].axis = [];
+				tempCircuit.parts[i].axis[0] = carriedPivotPoint;
+				for (j = 1; j < circuitData.parts[i].input.length; j++) {
+					tempCircuit.parts[i].axis.push(DEFAULT_AXIS);
 				}
 			}
 
 		} else {
-			tempCircuit.internalLogic[i].axis = [];
-			for (j = 0; j < circuitData.internalLogic[i].input.length; j++) {
-				tempCircuit.internalLogic[i].axis.push(DEFAULT_AXIS);
+			tempCircuit.parts[i].axis = [];
+			for (j = 0; j < circuitData.parts[i].input.length; j++) {
+				tempCircuit.parts[i].axis.push(DEFAULT_AXIS);
 			}
 		}
 	}
@@ -155,33 +155,33 @@ function initCircuit(circuitData) {
 
 
 function deserializeCircuit(circuit) {
-	//deserialize internalLogic
-	for (var i = 0; i < circuit.internalLogic.length; i++) {
+	//deserialize parts
+	for (var i = 0; i < circuit.parts.length; i++) {
 		//get reference for each input
 
-		for (var j = 0; j < circuit.internalLogic[i].input.length; j++) {
+		for (var j = 0; j < circuit.parts[i].input.length; j++) {
 			// the input ID
-			var input = circuit.internalLogic[i].input[j];
+			var input = circuit.parts[i].input[j];
 			var parsedInputID = '';
 			// if the gate's input is a component or a bus the output will need to be selected
 			var divider = input.indexOf(':');
 			if (divider === -1) {
 				parsedInputID = input;
-				circuit.internalLogic[i].input[j] = {};
-				circuit.internalLogic[i].input[j].pin = null;
+				circuit.parts[i].input[j] = {};
+				circuit.parts[i].input[j].pin = null;
 			} else {
 				parsedInputID = input.substring(0, divider);
 				// get the string version of input pin and convert to digit
-				circuit.internalLogic[i].input[j] = {};
-				circuit.internalLogic[i].input[j].pin = parseInt(
+				circuit.parts[i].input[j] = {};
+				circuit.parts[i].input[j].pin = parseInt(
 					input.substring(divider + 1, input.length),
 					10
 				);
 			}
-			circuit.internalLogic[i].input[j].ref = getRef(circuit, parsedInputID);
+			circuit.parts[i].input[j].ref = getRef(circuit, parsedInputID);
 		}
 		var evaluationMethod = null;
-		switch (circuit.internalLogic[i].type) {
+		switch (circuit.parts[i].type) {
 			case 'AND':
 				evaluationMethod = AND;
 				break;
@@ -201,21 +201,21 @@ function deserializeCircuit(circuit) {
 				evaluationMethod = NOT;
 				break;
 			case 'CIRCUIT':
-				circuit.internalLogic[i].cid = circuit.internalLogic[i].circuit.cid;
-				circuit.internalLogic[i].name = circuit.internalLogic[i].circuit.name;
-				circuit.internalLogic[i].description = circuit.internalLogic[i].circuit.description;
-				circuit.internalLogic[i].path = circuit.internalLogic[i].circuit.path;
-				circuit.internalLogic[i].height = circuit.internalLogic[i].circuit.height;
-				circuit.internalLogic[i].width = circuit.internalLogic[i].circuit.width;
-				circuit.internalLogic[i].circuit = initCircuit(circuit.internalLogic[i].circuit);
-				solderOutputPins(circuit.internalLogic[i], circuit.internalLogic[i].circuit);
-				solderInputPins(circuit.internalLogic[i], circuit.internalLogic[i].circuit);
+				circuit.parts[i].cid = circuit.parts[i].circuit.cid;
+				circuit.parts[i].name = circuit.parts[i].circuit.name;
+				circuit.parts[i].description = circuit.parts[i].circuit.description;
+				circuit.parts[i].path = circuit.parts[i].circuit.path;
+				circuit.parts[i].height = circuit.parts[i].circuit.height;
+				circuit.parts[i].width = circuit.parts[i].circuit.width;
+				circuit.parts[i].circuit = initCircuit(circuit.parts[i].circuit);
+				solderOutputPins(circuit.parts[i], circuit.parts[i].circuit);
+				solderInputPins(circuit.parts[i], circuit.parts[i].circuit);
 				evaluationMethod = () => console.log('evaluate called on a circuit, type must be declared in uppercase: CIRCUIT');
 				break;
 			default:
 				console.log('something has done broke');
 		}
-		circuit.internalLogic[i].evaluate = evaluationMethod;
+		circuit.parts[i].evaluate = evaluationMethod;
 	}
 	//deserialize outputs
 	for (i = 0; i < circuit.output.length; i++) {
