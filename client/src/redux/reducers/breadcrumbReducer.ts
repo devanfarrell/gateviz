@@ -1,8 +1,8 @@
 // This reducer will keep track of where we are in the circuit by a push breadcrumb style
 import { List } from 'immutable';
-import { INIT_BREADCRUMB, STEP_INTO_CIRCUIT, STEP_BACK_BREADCRUMB } from '../types';
+import { INIT_BREADCRUMB, STEP_BACK_BREADCRUMB, STEP_INTO_CIRCUIT, } from '../types';
 
-export default function (state = null, action) {
+export default (state: any = null, action) => {
     switch (action.type) {
         case INIT_BREADCRUMB:
             const breadcrumbInit = List([{ name: action.payload, id: 'top', depth: 0 }]);

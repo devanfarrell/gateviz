@@ -1,6 +1,6 @@
 import { CHANGE_SEARCH_TERM  } from '../types';
 
-export default function(state = null, action) {
+export default (state = null, action) => {
 	switch (action.type) {
 		
 		case CHANGE_SEARCH_TERM:

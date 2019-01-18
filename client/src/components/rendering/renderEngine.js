@@ -54,15 +54,15 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 	canvas.clear();
 	//inputs
 	for (i = 0; i < circuit.input.length; i++) {
-		var partDrawing = getTypeData(circuit.input[i].type);
-		var path = canvas.path(partDrawing.path).move(circuit.input[i].coord[0], circuit.input[i].coord[1]);
+		var partDrawingInput = getTypeData(circuit.input[i].type);
+		var path = canvas.path(partDrawingInput.path).move(circuit.input[i].coord[0], circuit.input[i].coord[1]);
 		path.stroke({
 			color: '#000',
 			linecap: 'round',
 			linejoin: 'round',
 			width: 2
 		});
-		path.size(partDrawing.width, partDrawing.height);
+		path.size(partDrawingInput.width, partDrawingInput.height);
 		if (circuit.input[i].output) {
 			path.fill(trueColor);
 		} else {
@@ -82,22 +82,12 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 		var renderSpecs = {};
 		switch (circuit.parts[i].type) {
 			case 'AND':
-				renderSpecs = AND;
-				break;
 			case 'NAND':
-				renderSpecs = NAND;
-				break;
 			case 'OR':
-				renderSpecs = OR;
-				break;
 			case 'NOR':
-				renderSpecs = NOR;
-				break;
 			case 'XOR':
-				renderSpecs = XOR;
-				break;
 			case 'NOT':
-				renderSpecs = NOT;
+				renderSpecs = getTypeData(circuit.parts[i].type)
 				break;
 			default:
 				renderSpecs.path = circuit.parts[i].path;
@@ -134,15 +124,15 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 
 	//outputs
 	for (i = 0; i < circuit.output.length; i++) {
-		partDrawing = getTypeData(circuit.output[i].type);
-		path = canvas.path(partDrawing.path).move(circuit.output[i].coord[0], circuit.output[i].coord[1]);
+		var partDrawingOutput = getTypeData(circuit.output[i].type);
+		path = canvas.path(partDrawingOutput.path).move(circuit.output[i].coord[0], circuit.output[i].coord[1]);
 		path.stroke({
 			color: '#000',
 			linecap: 'round',
 			linejoin: 'round',
 			width: 2
 		});
-		path.size(partDrawing.width, partDrawing.height);
+		path.size(partDrawingOutput.width, partDrawingOutput.height);
 		if (circuit.output[i].output) {
 			path.fill(trueColor);
 		} else {

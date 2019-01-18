@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 
-import circuitReducer from './circuitReducer';
+import breadcrumbReducer from './breadcrumbReducer';
 import circuitListReducer from './circuitListReducer';
+import circuitReducer from './circuitReducer';
 import searchTermReducer from './searchTermReducer';
 import selectCircuitReducer from './selectCircuitReducer';
-import breadcrumbReducer from './breadcrumbReducer';
 
 export default combineReducers({
 	breadcrumbs: 		breadcrumbReducer,

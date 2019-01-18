@@ -1,27 +1,34 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import * as renderEngine from './renderEngine';
 
-export default class Canvas extends Component {
+interface CanvasProps {
+    breadcrumbs: any
+    circuit: any
+};
+
+export default class Canvas extends React.PureComponent<CanvasProps>{
+	private canvas: any;
     constructor(props) {
 		super(props);
 		this.canvas = this.refs.ref;
 		this.startRenderEngine = this.startRenderEngine.bind(this)
 	}
     
-    startRenderEngine(ref) {
+    public startRenderEngine(ref) {
         if(!this.canvas) {
             this.canvas = renderEngine.initialize(ref);
 		}
 		renderEngine.render(this.canvas, this.props.circuit, this.props.breadcrumbs);
 	}
 
-    render() {
+    public render() {
 		// if the circuit has not been fetched
 		if (!this.props.circuit || !this.props.breadcrumbs) {
-			return <div> Loading Circuit!!!! </div>;
+			return (<div> Loading Circuit!!!! </div>);
 		}
 		// if the circuit has been built
 		else {
+			console.log(this.props.breadcrumbs)
 			return (
 				<div>
 					<div ref={ref => this.startRenderEngine(ref)} className="circuitCanvas" />

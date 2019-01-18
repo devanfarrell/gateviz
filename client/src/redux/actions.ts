@@ -1,17 +1,16 @@
 import axios from 'axios';
 import {
-	FETCH_CIRCUIT_LIST,
-	CHANGE_SEARCH_TERM,
-	SELECT_CIRCUIT,
-
-	FETCH_CIRCUIT,
 	CHANGE_INPUTS,
-
+	CHANGE_SEARCH_TERM,
+	FETCH_CIRCUIT,
+	FETCH_CIRCUIT_LIST,
 	INIT_BREADCRUMB,
-	STEP_INTO_CIRCUIT,
-	STEP_BACK_BREADCRUMB } from './types';
+	SELECT_CIRCUIT,
+	STEP_BACK_BREADCRUMB,
+	STEP_INTO_CIRCUIT
+} from './types';
 
-//Landing reducers
+// Landing reducers
 export const fetchCircuitList = () => async dispatch => {
 	const res = await axios.get('/v1/circuits');
 	dispatch({ type: FETCH_CIRCUIT_LIST, payload: res.data.list });
@@ -25,7 +24,7 @@ export const selectCircuit = circuitKey => dispatch => {
 	dispatch({ type: SELECT_CIRCUIT, payload: circuitKey });
 };
 
-//circuitReducer
+// circuitReducer
 export const fetchCircuit = cid => async dispatch => {
 	const url = `/v1/circuit/${cid}`;
 	const res = await axios.get(url);
@@ -36,7 +35,7 @@ export const changeInputs = obj => dispatch => {
 	dispatch({ type: CHANGE_INPUTS, payload: obj });
 };
 
-//breadcrumbsReducer
+// breadcrumbsReducer
 export const initBreadcrumb = name => dispatch => {
 	dispatch({ type: INIT_BREADCRUMB, payload: name });
 }

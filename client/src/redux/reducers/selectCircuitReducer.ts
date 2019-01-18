@@ -1,6 +1,6 @@
 import { SELECT_CIRCUIT  } from '../types';
 
-export default function(state = null, action) {
+export default (state = null, action) => {
 	switch (action.type) {
 		
 		case SELECT_CIRCUIT:
