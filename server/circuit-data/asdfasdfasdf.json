@@ -83,43 +83,43 @@
         {
             "coord": [350, 100],
             "input": "G1",
-            "type": "OUTPUT",
+            "type": "SINGLE_OUTPUT",
             "label": "O\u2080"
         },
         {
             "coord": [350, 200],
             "input": "G2",
-            "type": "OUTPUT",
+            "type": "SINGLE_OUTPUT",
             "label": "O\u2081"
         },
         {
             "coord": [350, 300],
             "input": "G3",
-            "type": "OUTPUT",
+            "type": "SINGLE_OUTPUT",
             "label": "O\u2082"
         },
         {
             "coord": [350, 400],
             "input": "G4",
-            "type": "OUTPUT",
+            "type": "SINGLE_OUTPUT",
             "label": "O\u2083"
         },
         {
             "coord": [350, 500],
             "input": "G5",
-            "type": "OUTPUT",
+            "type": "SINGLE_OUTPUT",
             "label": "O\u2084"
         },
         {
             "coord": [350, 600],
             "input": "G6",
-            "type": "OUTPUT",
+            "type": "SINGLE_OUTPUT",
             "label": "O\u2085"
         },
         {
             "coord": [350, 700],
             "input": "G7",
-            "type": "OUTPUT",
+            "type": "SINGLE_OUTPUT",
             "label": "O\u2086"
         }
     ]

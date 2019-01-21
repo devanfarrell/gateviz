@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import * as React from 'react';
+import { Nav, Navbar, NavItem } from 'react-bootstrap';
 
-class Header extends Component {
-	render() {
+class Header extends React.Component {
+	public render() {
 		return (
-				<Navbar fixedTop collapseOnSelect>
+				<Navbar fixedTop={true} collapseOnSelect={true}>
 					<Navbar.Header>
 						<Navbar.Brand>
 							<a href="/">GateViz</a>
@@ -12,7 +12,7 @@ class Header extends Component {
 						<Navbar.Toggle />
 					</Navbar.Header>
 					<Navbar.Collapse>
-						<Nav pullRight>
+						<Nav pullRight={true}>
 							<NavItem href="/" />
 						</Nav>
 					</Navbar.Collapse>

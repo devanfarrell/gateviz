@@ -1,9 +1,9 @@
-import svgjs from 'svgjs';
-import { stepIntoCircuit } from '../../redux/actions';
+import * as svgjs from 'svgjs';
 import { store } from '../../';
-import { trueColor, falseColor, componentFillColor, getTypeData } from './constants';
+import { stepIntoCircuit } from '../../redux/actions';
+import { componentFillColor, falseColor, getTypeData, SINGLE_OUTPUT_TYPE, trueColor } from './constants';
 
-function colorHelper(state) {
+const colorHelper = (state) => {
 	if (state) {
 		return trueColor;
 	} else {
@@ -17,13 +17,12 @@ function internalCircuitclickEvent(obj, id, name) {
 	});
 }
 
-function staggerInput(numPorts, position, heightOfObject) {
-
-	var midpoint = heightOfObject / 2;
-	var segment = heightOfObject / numPorts
-	var unmodPosition = segment * (position);
-	var moddedPosition = unmodPosition + segment / 2
-	var variation = moddedPosition - midpoint
+const staggerInput = (numPorts, position, heightOfObject) => {
+	const midpoint = heightOfObject / 2;
+	const segment = heightOfObject / numPorts
+	const unmodPosition = segment * position;
+	const moddedPosition = unmodPosition + segment / 2
+	const variation = moddedPosition - midpoint
 	return variation;
 }
 
@@ -157,7 +156,7 @@ export function render(canvas, fullCircuit, breadcrumbs) {
 		var axis = circuit.output[i].axis;
 
 		// CASE 1: ALL - OUTPUT
-		if (circuit.output[i].type === 'OUTPUT') {
+		if (circuit.output[i].type === SINGLE_OUTPUT_TYPE) {
 			destinationX = circuit.output[i].coord[0];
 			destinationY = circuit.output[i].coord[1] + getTypeData(circuit.output[i].type).height / 2;
 

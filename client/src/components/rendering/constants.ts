@@ -57,16 +57,28 @@ const NOT: PartDrawing = {
     width: 30
 };
 
+
+export const SINGLE_INPUT_TYPE = 'SINGLE_INPUT';
+export const SINGLE_OUTPUT_TYPE = 'SINGLE_OUTPUT';
+export const AND_TYPE = 'AND';
+export const NAND_TYPE = 'NAND';
+export const OR_TYPE = 'OR';
+export const NOR_TYPE = 'NOR';
+export const XOR_TYPE = 'XOR';
+export const NOT_TYPE = 'NOT';
+
+
+
 export const getTypeData = (type) : PartDrawing | null => {
     switch (type) {
-        case 'SINGLE_INPUT': return INPUT;
-        case 'OUTPUT': return INPUT;
-        case 'AND': return AND;
-        case 'NAND': return NAND;
-        case 'OR': return OR;
-        case 'NOR': return NOR;
-        case 'XOR': return XOR;
-        case 'NOT': return NOT;
+        case SINGLE_INPUT_TYPE: return INPUT;
+        case SINGLE_OUTPUT_TYPE: return INPUT;
+        case AND_TYPE: return AND;
+        case NAND_TYPE: return NAND;
+        case OR_TYPE: return OR;
+        case NOR_TYPE: return NOR;
+        case XOR_TYPE: return XOR;
+        case NOT_TYPE: return NOT;
         default: return null;
     }
 }

@@ -122,44 +122,44 @@
                     {
                         "coord": [450, 157.5],
                         "input": "G3",
-                        "type": "OUTPUT",
+                        "type": "SINGLE_OUTPUT",
                         "label": "O\u2080"
                     },
                     {
                         "coord": [450, 217.5],
                         "input": "G4",
-                        "type": "OUTPUT",
+                        "type": "SINGLE_OUTPUT",
                         "label": "O\u2081"
                     },
                     {
                         "coord": [450, 277.5],
                         "input": "G5",
-                        "type": "OUTPUT",
+                        "type": "SINGLE_OUTPUT",
                         "label": "O\u2082"
                     },
                     {
                         "coord": [450, 337.5],
                         "input": "I3",
-                        "type": "OUTPUT",
+                        "type": "SINGLE_OUTPUT",
                         "label": "O\u2083",
                         "axis": 0.678
                     },
                     {
                         "coord": [450, 397.5],
                         "input": "G6",
-                        "type": "OUTPUT",
+                        "type": "SINGLE_OUTPUT",
                         "label": "O\u2084"
                     },
                     {
                         "coord": [450, 457.5],
                         "input": "G7",
-                        "type": "OUTPUT",
+                        "type": "SINGLE_OUTPUT",
                         "label": "O\u2085"
                     },
                     {
                         "coord": [450, 517.5],
                         "input": "G8",
-                        "type": "OUTPUT",
+                        "type": "SINGLE_OUTPUT",
                         "label": "O\u2086"
                     }
                 ]
@@ -170,48 +170,48 @@
         {
             "coord": [350, 167.5],
             "input": "C1:0",
-            "type": "OUTPUT",
+            "type": "SINGLE_OUTPUT",
             "axis": 0.2,
             "label": "O\u2080"
         },
         {
             "coord": [350, 217.5],
             "input": "C1:1",
-            "type": "OUTPUT",
+            "type": "SINGLE_OUTPUT",
             "axis": 0.3,
             "label": "O\u2081"
         },
         {
             "coord": [350, 267.5],
             "input": "C1:2",
-            "type": "OUTPUT",
+            "type": "SINGLE_OUTPUT",
             "axis": 0.4,
             "label": "O\u2082"
         },
         {
             "coord": [350, 317.5],
             "input": "C1:3",
-            "type": "OUTPUT",
+            "type": "SINGLE_OUTPUT",
             "label": "O\u2083"
         },
         {
             "coord": [350, 367.5],
             "input": "C1:4",
-            "type": "OUTPUT",
+            "type": "SINGLE_OUTPUT",
             "axis": 0.4,
             "label": "O\u2084"
         },
         {
             "coord": [350, 417.5],
             "input": "C1:5",
-            "type": "OUTPUT",
+            "type": "SINGLE_OUTPUT",
             "axis": 0.3,
             "label": "O\u2085"
         },
         {
             "coord": [350, 467.5],
             "input": "C1:6",
-            "type": "OUTPUT",
+            "type": "SINGLE_OUTPUT",
             "axis": 0.2,
             "label": "O\u2086"
         }

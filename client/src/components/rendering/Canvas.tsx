@@ -28,7 +28,6 @@ export default class Canvas extends React.PureComponent<CanvasProps>{
 		}
 		// if the circuit has been built
 		else {
-			console.log(this.props.breadcrumbs)
 			return (
 				<div>
 					<div ref={ref => this.startRenderEngine(ref)} className="circuitCanvas" />
