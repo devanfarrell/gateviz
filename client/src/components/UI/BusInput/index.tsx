@@ -5,9 +5,9 @@ import { FormControl, FormGroup, InputGroup } from 'react-bootstrap';
 /* tslint:disable:jsx-no-lambda */
 
 interface BusProps {
-    lable: string;
+    label: string;
     numInputs: number;
-    onInputChange(event: any): void;
+    onChange(event: any): void;
 }
 
 interface BusState {
@@ -66,6 +66,7 @@ export default class BusInput extends React.Component<BusProps, BusState> {
 
         if (validInput) {
             this.setState({ input, hex: this.state.hex });
+            this.props.onChange(input.split(""));
         }
     }
 }

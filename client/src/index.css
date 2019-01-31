@@ -107,3 +107,13 @@ height: 1000px;
   padding: 10px 20px;
   padding-bottom: 0.1px;
 }
+
+.evaluation-label {
+  color: #e6e6e6;
+  font-size: 18px;
+  border: 0px;
+  border-bottom: 1px;
+  border-color: #e6e6e6;
+  border-style: solid;
+  margin-bottom: 8px;
+}

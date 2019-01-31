@@ -11,7 +11,7 @@ const colorHelper = (state) => {
 	}
 }
 
-function internalCircuitclickEvent(obj, id, name) {
+const internalCircuitclickEvent = (obj, id, name) => {
 	obj.click(() => {
 		store.dispatch(stepIntoCircuit({ id, name }));
 	});
@@ -27,11 +27,11 @@ const staggerInput = (numPorts, position, heightOfObject) => {
 }
 
 
-export function initialize(ref) {
+export const initialize = (ref) => {
 	return svgjs(ref).size(1000, 1000);
 }
 
-function traverseCircuit(id, circuit) {
+const traverseCircuit = (id, circuit) => {
 	for (var i = 0; i < circuit.parts.length; i++) {
 		if (id === circuit.parts[i].id) {
 			return circuit.parts[i].circuit
@@ -41,7 +41,7 @@ function traverseCircuit(id, circuit) {
 	return circuit
 }
 
-export function render(canvas, fullCircuit, breadcrumbs) {
+export const render = (canvas, fullCircuit, breadcrumbs) => {
 
 	var circuit = fullCircuit
 	const preparedBreadcrumbs = breadcrumbs.shift().toJS();

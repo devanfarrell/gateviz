@@ -1,0 +1,208 @@
+{
+    "cid": "vq8ev7ga2",
+    "name": "thermometer abstracted",
+    "description": "A simple three input thermometer circuit, abstracted",
+    "path": "M52.707,0.5l0,47l-52.207,0l0,-47l52.207,0Z",
+    "height": 50,
+    "width": 50,
+    "input": [
+        {
+            "id": "I1",
+            "label": "ABC",
+            "type": "MULTIPLE_INPUT",
+            "coord": [50, 325],
+            "size": 3
+        }
+    ],
+    "parts": [
+        {
+            "id": "C1",
+            "label": "thermometer",
+            "coord": [200, 300],
+            "type": "CIRCUIT",
+            "input": ["I1:0", "I1:1", "I1:2"],
+            "circuit": {
+                "cid": "vq8ev7ga",
+                "name": "thermometer",
+                "description": "A simple three input thermometer circuit",
+                "path": "M52.707,0.5l0,47l-52.207,0l0,-47l52.207,0Z",
+                "height": 50,
+                "width": 50,
+                "input": [
+                    {
+                        "id": "I1",
+                        "label": "A",
+                        "type": "SINGLE_INPUT",
+                        "coord": [10, 200]
+                    },
+                    {
+                        "id": "I2",
+                        "label": "B",
+                        "type": "SINGLE_INPUT",
+                        "coord": [10, 300]
+                    },
+                    {
+                        "id": "I3",
+                        "label": "C",
+                        "type": "SINGLE_INPUT",
+                        "coord": [10, 400]
+                    }
+                ],
+                "parts": [
+                    {
+                        "id": "G1",
+                        "type": "OR",
+                        "label": "a + b",
+                        "coord": [150, 160],
+                        "input": ["I1", "I2"],
+                        "axis": [0.5, 0.7]
+                    },
+                    {
+                        "id": "G2",
+                        "type": "AND",
+                        "label": "ab",
+                        "coord": [150, 247.5],
+                        "input": ["I1", "I2"],
+                        "axis": [0.5, 0.7]
+                    },
+                    {
+                        "id": "G3",
+                        "type": "OR",
+                        "coord": [350, 140],
+                        "input": ["G1", "I3"],
+                        "axis": [0.66, 0.9]
+                    },
+                    {
+                        "id": "G4",
+                        "type": "OR",
+                        "coord": [350, 200],
+                        "input": ["I2", "I3"],
+                        "axis": [0.66, 0.9]
+                    },
+                    {
+                        "id": "G5",
+                        "type": "OR",
+                        "coord": [350, 260],
+                        "input": ["G2", "I3"],
+                        "axis": [0.66, 0.9]
+                    },
+                    {
+                        "id": "G6",
+                        "type": "AND",
+                        "coord": [350, 380],
+                        "input": ["G1", "I3"],
+                        "axis": [0.66, 0.9]
+                    },
+                    {
+                        "id": "G7",
+                        "type": "AND",
+                        "coord": [350, 440],
+                        "input": ["I2", "I3"],
+                        "axis": [0.66, 0.9]
+                    },
+                    {
+                        "id": "G8",
+                        "type": "AND",
+                        "coord": [350, 500],
+                        "input": ["G2", "I3"]
+                    }
+                ],
+                "output": [
+                    {
+                        "coord": [450, 157.5],
+                        "input": "G3",
+                        "type": "SINGLE_OUTPUT",
+                        "label": "O\u2080"
+                    },
+                    {
+                        "coord": [450, 217.5],
+                        "input": "G4",
+                        "type": "SINGLE_OUTPUT",
+                        "label": "O\u2081"
+                    },
+                    {
+                        "coord": [450, 277.5],
+                        "input": "G5",
+                        "type": "SINGLE_OUTPUT",
+                        "label": "O\u2082"
+                    },
+                    {
+                        "coord": [450, 337.5],
+                        "input": "I3",
+                        "type": "SINGLE_OUTPUT",
+                        "label": "O\u2083",
+                        "axis": 0.678
+                    },
+                    {
+                        "coord": [450, 397.5],
+                        "input": "G6",
+                        "type": "SINGLE_OUTPUT",
+                        "label": "O\u2084"
+                    },
+                    {
+                        "coord": [450, 457.5],
+                        "input": "G7",
+                        "type": "SINGLE_OUTPUT",
+                        "label": "O\u2085"
+                    },
+                    {
+                        "coord": [450, 517.5],
+                        "input": "G8",
+                        "type": "SINGLE_OUTPUT",
+                        "label": "O\u2086"
+                    }
+                ]
+            }
+        }
+    ],
+    "output": [
+        {
+            "coord": [350, 167.5],
+            "input": "C1:0",
+            "type": "SINGLE_OUTPUT",
+            "axis": 0.2,
+            "label": "O\u2080"
+        },
+        {
+            "coord": [350, 217.5],
+            "input": "C1:1",
+            "type": "SINGLE_OUTPUT",
+            "axis": 0.3,
+            "label": "O\u2081"
+        },
+        {
+            "coord": [350, 267.5],
+            "input": "C1:2",
+            "type": "SINGLE_OUTPUT",
+            "axis": 0.4,
+            "label": "O\u2082"
+        },
+        {
+            "coord": [350, 317.5],
+            "input": "C1:3",
+            "type": "SINGLE_OUTPUT",
+            "label": "O\u2083"
+        },
+        {
+            "coord": [350, 367.5],
+            "input": "C1:4",
+            "type": "SINGLE_OUTPUT",
+            "axis": 0.4,
+            "label": "O\u2084"
+        },
+        {
+            "coord": [350, 417.5],
+            "input": "C1:5",
+            "type": "SINGLE_OUTPUT",
+            "axis": 0.3,
+            "label": "O\u2085"
+        },
+        {
+            "coord": [350, 467.5],
+            "input": "C1:6",
+            "type": "SINGLE_OUTPUT",
+            "axis": 0.2,
+            "label": "O\u2086"
+        }
+    ]
+}
