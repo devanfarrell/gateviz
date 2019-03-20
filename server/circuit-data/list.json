@@ -12,6 +12,11 @@
             "description": "A simple three input thermometer circuit"
         },
         {
+            "name": "Thermometer abstracted bus",
+            "cid": "vq8ev7ga3",
+            "description": "A simple three input thermometer circuit with a bus"
+        },
+        {
             "name": "Gates Demo",
             "cid": "asdfasdfasdf",
             "description": "An example of gate functionality"

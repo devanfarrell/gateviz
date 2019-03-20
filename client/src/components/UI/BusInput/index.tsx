@@ -5,9 +5,10 @@ import { FormControl, FormGroup, InputGroup } from 'react-bootstrap';
 /* tslint:disable:jsx-no-lambda */
 
 interface BusProps {
-    lable: string;
+    label: string;
     numInputs: number;
-    onInputChange(event: any): void;
+    id: number;
+    onChange(event: any, id: number): void;
 }
 
 interface BusState {
@@ -24,26 +25,25 @@ export default class BusInput extends React.Component<BusProps, BusState> {
             hex: false,
             input: ''
         };
-        this.onInputChange = this.onInputChange.bind(this)
     }
 
     public render() {
         return (
-        <FormGroup>
-            <InputGroup>
-                <FormControl
-                    type="text"
-                    value={this.state.input}
-                    onChange={event => this.onInputChange((event.target as HTMLInputElement).value)}
-                    placeholder="Input"
-                    style={{ width: 'auto' }}
-                />
-            </InputGroup>
-        </FormGroup>
+            <FormGroup id={this.props.id.toString()}>
+                <InputGroup>
+                    <FormControl
+                        type="text"
+                        value={this.state.input}
+                        onChange={event => this.onInputChange((event.target as HTMLInputElement).value)}
+                        placeholder="Input"
+                        style={{ width: 'auto' }}
+                    />
+                </InputGroup>
+            </FormGroup>
         )
     }
 
-    private onInputChange(input) {
+    private onInputChange = (input) => {
         let regexRules: RegExp = /^[0-9\b]+$/;
         let validInput = true;
         // establish regex rules
@@ -66,6 +66,23 @@ export default class BusInput extends React.Component<BusProps, BusState> {
 
         if (validInput) {
             this.setState({ input, hex: this.state.hex });
+            this.props.onChange(convertStringToBoolArray(input, this.props.numInputs), this.props.id);
         }
     }
+}
+
+const convertStringToBoolArray = (array, length) => {
+    const boolArray = new Array();
+    const stringArray = array.split("");
+    for (let i = 0; i < length - stringArray.length; i++) {
+        boolArray.push(false);
+    }
+    stringArray.map(value => {
+        if (value === "0") {
+            boolArray.push(false);
+        } else {
+            boolArray.push(true);
+        }
+    })
+    return boolArray.reverse();
 }

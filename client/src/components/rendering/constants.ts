@@ -59,7 +59,9 @@ const NOT: PartDrawing = {
 
 
 export const SINGLE_INPUT_TYPE = 'SINGLE_INPUT';
+export const MULTIPLE_INPUT_TYPE = 'MULTIPLE_INPUT';
 export const SINGLE_OUTPUT_TYPE = 'SINGLE_OUTPUT';
+export const MULTIPLE_OUTPUT_TYPE = "MULTIPLE_OUTPUT";
 export const AND_TYPE = 'AND';
 export const NAND_TYPE = 'NAND';
 export const OR_TYPE = 'OR';
@@ -72,6 +74,7 @@ export const NOT_TYPE = 'NOT';
 export const getTypeData = (type) : PartDrawing | null => {
     switch (type) {
         case SINGLE_INPUT_TYPE: return INPUT;
+        case MULTIPLE_INPUT_TYPE: return INPUT;
         case SINGLE_OUTPUT_TYPE: return INPUT;
         case AND_TYPE: return AND;
         case NAND_TYPE: return NAND;

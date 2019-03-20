@@ -13,7 +13,7 @@ class Circuit extends Component {
 	}
 
 	componentDidMount() {
-		var uid = this.props.location.pathname
+		const uid = this.props.location.pathname
 		this.props.fetchCircuit(uid.replace("/circuit/", ""));
 	}
 	
@@ -46,7 +46,7 @@ class Circuit extends Component {
 }
 
 function mapStateToProps({ circuit, breadcrumbs }, ownprops) {
-	var div = null
+	let div = null
 	if(circuit){
 		div = <Canvas circuit={circuit} breadcrumbs={breadcrumbs}/>;
 	}
