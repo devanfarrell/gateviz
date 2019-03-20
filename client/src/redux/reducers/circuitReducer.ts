@@ -8,9 +8,6 @@ export default function (state = null, action) {
 	switch (action.type) {
 		case FETCH_CIRCUIT:
 			let temp = buildCircuit(action.payload);
-			for (let i = 0; i < temp.input.length; i++) {
-				temp.input[i].output = 0;
-			}
 			evaluateCircuit(temp);
 			const fetchedCircuit = Map({ input: temp.input, inputLength: temp.input.length, parts: temp.parts, output: temp.output, name: temp.name });
 			return fetchedCircuit.toObject() || false;

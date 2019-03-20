@@ -3,7 +3,7 @@ import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { changeInputs } from '../../../redux/actions';
-import {MULTIPLE_INPUT_TYPE, SINGLE_INPUT_TYPE} from '../../rendering/constants';
+import { MULTIPLE_INPUT_TYPE, SINGLE_INPUT_TYPE } from '../../rendering/constants';
 import Bus from '../BusInput';
 import Toggle from '../toggle';
 
@@ -19,8 +19,8 @@ interface SidebarProps {
 
 interface SidebarState {
     // eventually, there will be a prop that defines whether or not a circuit can be automatically evaluated which will remove the option from the UI
-    autoEval: any
-    localInputs: boolean[]
+    autoEval: boolean;
+    localInputs: any; // boolean[] | boolean[][]
 }
 
 class Sidebar extends React.Component<SidebarProps, SidebarState> {
@@ -29,12 +29,22 @@ class Sidebar extends React.Component<SidebarProps, SidebarState> {
         super(props);
         this.handleEvaluationModeChange = this.handleEvaluationModeChange.bind(this);
         this.handleToggleChange = this.handleToggleChange.bind(this);
-        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleBusChange = this.handleBusChange.bind(this);
         this.handleEvaluation = this.handleEvaluation.bind(this);
-        const initializedArray = new Array(props.circuit.input.length);
-        for (let i = 0; i < props.circuit.input.length; i++) {
-            initializedArray[i] = false;
-        }
+        const initializedArray = new Array();
+
+        props.circuit.input.map(input => {
+            if (input.type === SINGLE_INPUT_TYPE) {
+                initializedArray.push(false);
+            } else if (input.type === MULTIPLE_INPUT_TYPE) {
+                const partArray = new Array();
+                for (let i = 0; i < input.size; i++) {
+                    partArray.push(false);
+                }
+                initializedArray.push(partArray);
+            }
+        });
+
         this.state = {
             autoEval: true,
             localInputs: initializedArray
@@ -42,7 +52,6 @@ class Sidebar extends React.Component<SidebarProps, SidebarState> {
     }
 
     public render() {
-        console.log(this.props)
         return (
             <>
                 <div className="sideBar">
@@ -94,8 +103,17 @@ class Sidebar extends React.Component<SidebarProps, SidebarState> {
         }
     }
 
-    private handleInputChange(input) {
-        console.log("BUSSSSS", input);
+    private handleBusChange(input: boolean[], id: number) {
+        const copy = this.state.localInputs;
+        copy[id] = input;
+        this.setState({
+            autoEval: this.state.autoEval,
+            localInputs: copy
+        })
+
+        if (!!this.props.canAutoEval && this.state.autoEval) {
+            this.handleEvaluation();
+        }
     }
 
     private handleEvaluation() {
@@ -106,7 +124,7 @@ class Sidebar extends React.Component<SidebarProps, SidebarState> {
         // iterator has to start at -1 so that array starts at 0
         let iterator = -1;
         return this.props.circuit.input.map(input => {
-            iterator++; 
+            iterator++;
             if (input.type === SINGLE_INPUT_TYPE) {
                 return (
                     <div key={input.id} className="toggle">
@@ -118,15 +136,14 @@ class Sidebar extends React.Component<SidebarProps, SidebarState> {
                         />
                     </div>
                 )
-            } else if (input.type === MULTIPLE_INPUT_TYPE){
-                console.log("dat sweet sweet input", input)
+            } else if (input.type === MULTIPLE_INPUT_TYPE) {
                 return (
                     <div key={input.id}>
-                        <Bus label={input.label} numInputs={input.size} onChange={this.handleInputChange}/>
+                        <Bus label={input.label} id={iterator} numInputs={input.size} onChange={this.handleBusChange} />
                     </div>);
             } else {
-                console.log("This is probably a multi-input error");
-                return (<div> something bad happened </div>);
+                console.log("This is neither a single or multi input. What's up?");
+                return (<div className="evaluation-label"> something bad happened </div>);
             }
         })
     }
