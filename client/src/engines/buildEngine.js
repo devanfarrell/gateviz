@@ -1,56 +1,6 @@
+import getEvaluationMethod from './evaluationMethods';
+
 const DEFAULT_AXIS = 0.5;
-
-const AND = input => {
-	// TODO: Error handling if there is no input
-	let counter = 0;
-	for (let i = 0; i < input.length; i++) {
-		if (input[i]) {
-			counter++;
-		}
-	}
-	return counter > 0 && counter === input.length;
-};
-
-const NAND = input => {
-	// TODO: Error handling if there is no input
-	let counter = 0;
-	for (let i = 0; i < input.length; i++) {
-		if (input[i]) {
-			counter++;
-		}
-	}
-	return !(counter > 0 && counter === input.length);
-};
-
-const OR = input => {
-	// TODO: Error handling if there is no input
-	for (let i = 0; i < input.length; i++) {
-		if (input[i]) {
-			return true;
-		}
-	}
-	return false;
-};
-
-const NOR = input => {
-	// TODO: Error handling if there is no input
-	for (let i = 0; i < input.length; i++) {
-		if (input[i]) {
-			return false;
-		}
-	}
-	return true;
-};
-
-const NOT = input => {
-	// TODO: Error handling if there is no input or more than 1 input
-	return !input;
-};
-
-const XOR = input => {
-	// TODO: Error handling if there is not exactly 2 inputs
-	return input[0] !== input[1];
-};
 
 const getRef = (circuit, id) => {
 	for (let i = 0; i < circuit.input.length; i++) {
@@ -163,85 +113,58 @@ const initCircuit = circuitData => {
 };
 
 const deserializeCircuit = circuit => {
-	//deserialize parts
-	for (let i = 0; i < circuit.parts.length; i++) {
-		//get reference for each input
-
-		for (let j = 0; j < circuit.parts[i].input.length; j++) {
-			// the input ID
-			const input = circuit.parts[i].input[j];
+	circuit.parts.forEach(part => {
+		part.input = part.input.map(inputString => {
+			const input = {};
 			let parsedInputID = '';
-			// if the gate's input is a component or a bus the output will need to be selected
-			const divider = input.indexOf(':');
+			const divider = inputString.indexOf(':');
 			if (divider === -1) {
-				parsedInputID = input;
-				circuit.parts[i].input[j] = {};
-				circuit.parts[i].input[j].pin = null;
+				parsedInputID = inputString;
+				input.pin = null;
 			} else {
-				parsedInputID = input.substring(0, divider);
-				// get the string version of input pin and convert to digit
-				circuit.parts[i].input[j] = {};
-				circuit.parts[i].input[j].pin = parseInt(input.substring(divider + 1, input.length), 10);
+				parsedInputID = inputString.substring(0, divider);
+				input.pin = parseInt(inputString.substring(divider + 1, inputString.length), 10);
 			}
-			circuit.parts[i].input[j].ref = getRef(circuit, parsedInputID);
-		}
-		let evaluationMethod = null;
-		switch (circuit.parts[i].type) {
-			case 'AND':
-				evaluationMethod = AND;
-				break;
-			case 'NAND':
-				evaluationMethod = NAND;
-				break;
-			case 'OR':
-				evaluationMethod = OR;
-				break;
-			case 'NOR':
-				evaluationMethod = NOR;
-				break;
-			case 'XOR':
-				evaluationMethod = XOR;
-				break;
-			case 'NOT':
-				evaluationMethod = NOT;
-				break;
-			case 'CIRCUIT':
-				circuit.parts[i].cid = circuit.parts[i].circuit.cid;
-				circuit.parts[i].name = circuit.parts[i].circuit.name;
-				circuit.parts[i].description = circuit.parts[i].circuit.description;
-				circuit.parts[i].path = circuit.parts[i].circuit.path;
-				circuit.parts[i].height = circuit.parts[i].circuit.height;
-				circuit.parts[i].width = circuit.parts[i].circuit.width;
-				circuit.parts[i].circuit = initCircuit(circuit.parts[i].circuit);
-				solderOutputPins(circuit.parts[i], circuit.parts[i].circuit);
-				solderInputPins(circuit.parts[i], circuit.parts[i].circuit);
-				evaluationMethod = () =>
-					console.log('evaluate called on a circuit, type must be declared in uppercase: CIRCUIT');
-				break;
-			default:
-				console.log('something has done broke');
-		}
-		circuit.parts[i].evaluate = evaluationMethod;
-	}
-	//deserialize outputs
-	for (let i = 0; i < circuit.output.length; i++) {
-		let input = circuit.output[i].input;
-		let parsedInputID = '';
+			input.ref = getRef(circuit, parsedInputID);
+			return input;
+		});
 
-		// if the gate's input is a component or a bus the output will need to be selected
+		if (part.type !== 'CIRCUIT') {
+			part.evaluate = getEvaluationMethod(part.type);
+		} else {
+			part.cid = part.circuit.cid;
+			part.name = part.circuit.name;
+			part.description = part.circuit.description;
+			part.path = part.circuit.path;
+			part.height = part.circuit.height;
+			part.width = part.circuit.width;
+			// Make recursive call
+			part.circuit = initCircuit(part.circuit);
+			solderOutputPins(part, part.circuit);
+			solderInputPins(part, part.circuit);
+			part.evaluate = () =>
+				console.log('evaluate called on a circuit, type must be declared in uppercase: CIRCUIT');
+		}
+		return part;
+	});
+
+	circuit.output = circuit.output.map(output => {
+		let input = output.input;
+		let parsedInputID = '';
 		let divider = input.indexOf(':');
+
 		if (divider === -1) {
 			parsedInputID = input;
-			circuit.output[i].input = {};
-			circuit.output[i].input.pin = null;
+			output.input = {};
+			output.input.pin = null;
 		} else {
 			parsedInputID = input.substring(0, divider);
-			// get the string version of input pin and convert to digit
-			circuit.output[i].input = {};
-			circuit.output[i].input.pin = parseInt(input.substring(divider + 1, input.length), 10);
+			output.input = {};
+			output.input.pin = parseInt(input.substring(divider + 1, input.length), 10);
 		}
-		circuit.output[i].input.ref = getRef(circuit, parsedInputID);
-	}
+		output.input.ref = getRef(circuit, parsedInputID);
+		return output;
+	});
 };
 
 export default circuitData => {
