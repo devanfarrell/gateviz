@@ -21,95 +21,69 @@ const solderInputPins = (board, circuit) => {
 	if (board.input.length !== circuit.input.length) {
 		console.log('circuit input is not soldered properly: ', circuit);
 	}
-	for (let i = 0; i < board.input.length; i++) {
-		circuit.input[i].ref = board.input[i].ref;
-		if (!(board.input[i].pin === null || board.input[i].pin === undefined)) {
-			circuit.input[i].pin = board.input[i].pin;
+	board.input.map((input, i) => {
+		circuit.input[i].ref = input.ref;
+		if (!(input.pin === null || input.pin === undefined)) {
+			circuit.input[i].pin = input.pin;
 		}
-	}
+	});
 };
 
 const solderOutputPins = (board, circuit) => {
-	for (let i = 0; i < circuit.output.length; i++) {
-		board.output[i] = circuit.output[i];
-	}
+	circuit.output.map((output, i) => {
+		board.output[i] = output;
+	});
 };
 
 const initializeOutput = rawInput => {
-	if (rawInput.type === 'SINGLE_INPUT') {
-		return false;
-	} else {
-		return Array(rawInput.size).fill(false);
-	}
+	return rawInput.type === 'SINGLE_INPUT' ? false : Array(rawInput.size).fill(false);
 };
 
 const initCircuit = circuitData => {
-	const tempCircuit = {};
+	const circuit = {};
 	//build step
-	tempCircuit.input = [];
-	for (let i = 0; i < circuitData.input.length; i++) {
-		tempCircuit.input[i] = circuitData.input[i];
-		tempCircuit.input[i].output = initializeOutput(circuitData.input[i]);
-		tempCircuit.input[i].type = circuitData.input[i].type;
-	}
+	circuit.input = circuitData.input.map(input => {
+		const obj = input;
+		obj.output = initializeOutput(input);
+		return obj;
+	});
 
-	tempCircuit.parts = [];
-	for (let i = 0; i < circuitData.parts.length; i++) {
-		tempCircuit.parts[i] = circuitData.parts[i];
+	circuit.parts = circuitData.parts.map(partData => {
+		const part = partData;
+		// Set outputs
+		part.output = partData.type !== 'CIRCUIT' ? false : circuitData.output.map(() => ({ output: false }));
 
-		if (tempCircuit.parts[i].type !== 'CIRCUIT') {
-			//TODO:default state should also be definable for dependant logic
-			tempCircuit.parts[i].output = false;
-		} else {
-			tempCircuit.parts[i].output = [];
-			for (let j = 0; j < circuitData.output.length; j++) {
-				tempCircuit.parts[i].output[j] = {};
-				tempCircuit.parts[i].output[j].output = false;
-			}
-		}
-
-		if (circuitData.parts[i].hasOwnProperty('axis')) {
-			if (Array.isArray(circuitData.parts[i].axis)) {
-				if (circuitData.parts[i].axis.length === circuitData.parts[i].input.length) {
-					tempCircuit.parts[i].axis = circuitData.parts[i].axis;
+		// set axis
+		if (!!partData.axis) {
+			if (Array.isArray(partData.axis)) {
+				if (partData.axis.length === partData.input.length) {
+					part.axis = partData.axis;
 				} else {
-					// axis is an array but not of the correct length
-					tempCircuit.parts[i].axis = circuitData.parts[i].axis;
-					for (let j = tempCircuit.parts[i].axis.length; j < circuitData.parts[i].input.length; j++) {
-						tempCircuit.parts[i].axis.push(DEFAULT_AXIS);
-					}
+					part.axis = partData.axis.concat(
+						Array(partData.input.length - partData.axis.length).fill(DEFAULT_AXIS)
+					);
 				}
 			} else {
-				// axis exists but isn't an array
-				const carriedPivotPoint = circuitData.parts[i].axis;
-				tempCircuit.parts[i].axis = [];
-				tempCircuit.parts[i].axis[0] = carriedPivotPoint;
-				for (let j = 1; j < circuitData.parts[i].input.length; j++) {
-					tempCircuit.parts[i].axis.push(DEFAULT_AXIS);
+				if (!!Number(partData.axis)) {
+					part.axis = Array(partData.input.length).fill(partData.axis);
+				} else {
+					part.axis = Array(partData.input.length).fill(DEFAULT_AXIS);
 				}
 			}
 		} else {
-			tempCircuit.parts[i].axis = [];
-			for (let j = 0; j < circuitData.parts[i].input.length; j++) {
-				tempCircuit.parts[i].axis.push(DEFAULT_AXIS);
-			}
+			part.axis = Array(partData.input.length).fill(DEFAULT_AXIS);
 		}
-	}
+		return part;
+	});
 
-	tempCircuit.output = [];
-
-	for (let i = 0; i < circuitData.output.length; i++) {
-		tempCircuit.output[i] = circuitData.output[i];
-		tempCircuit.output[i].type = circuitData.output[i].type;
-		if (circuitData.output[i].hasOwnProperty('axis')) {
-			tempCircuit.output[i].axis = circuitData.output[i].axis;
-		} else {
-			tempCircuit.output[i].axis = DEFAULT_AXIS;
-		}
-		tempCircuit.output[i].output = false;
-	}
-	deserializeCircuit(tempCircuit);
-	return tempCircuit;
+	circuit.output = circuitData.output.map(outputData => {
+		const obj = outputData;
+		obj.axis = !!outputData.axis ? outputData.axis : DEFAULT_AXIS
+		obj.output = false;
+		return obj;
+	});
+	deserializeCircuit(circuit);
+	return circuit;
 };
 
 const deserializeCircuit = circuit => {
@@ -168,7 +142,7 @@ const deserializeCircuit = circuit => {
 };
 
 export default circuitData => {
-	const temp = initCircuit(circuitData);
-	temp.name = circuitData.name;
-	return temp;
+	const completeCircuit = initCircuit(circuitData);
+	completeCircuit.name = circuitData.name;
+	return completeCircuit;
 };

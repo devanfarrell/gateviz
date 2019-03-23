@@ -7,9 +7,6 @@ import { MULTIPLE_INPUT_TYPE, SINGLE_INPUT_TYPE } from '../../rendering/constant
 import Bus from '../BusInput';
 import Toggle from '../toggle';
 
-// Lambda used because cost is negligable and more readable
-/* tslint:disable:jsx-no-lambda */
-
 interface SidebarProps {
     // eventually, there will be a prop that defines whether or not a circuit can be automatically evaluated which will remove the option from the UI
     changeInputs: any
@@ -37,10 +34,7 @@ class Sidebar extends React.Component<SidebarProps, SidebarState> {
             if (input.type === SINGLE_INPUT_TYPE) {
                 initializedArray.push(false);
             } else if (input.type === MULTIPLE_INPUT_TYPE) {
-                const partArray = new Array();
-                for (let i = 0; i < input.size; i++) {
-                    partArray.push(false);
-                }
+                const partArray = new Array(input.size).fill(false);
                 initializedArray.push(partArray);
             }
         });
