@@ -1,40 +1,35 @@
 export const evaluateCircuit = circuit => {
-	for (let i = 0; i < circuit.input.length; i++) {
-		const pin = circuit.input[i].pin;
-		// if there is no selected output pin for this particular input
-		if (!(pin === null || pin === undefined)) {			
-			circuit.input[i].output = circuit.input[i].ref.output[pin];
-		} else if (circuit.input[i].hasOwnProperty('ref')){
-			circuit.input[i].output = circuit.input[i].ref.output;
+	circuit.input.map(input => {
+		if (!(input.pin === null || input.pin === undefined)) {
+			input.output = input.ref.output[input.pin];
+		} else if (!!input.ref) {
+			input.output = input.ref.output;
 		}
-	}
+	});
 
-	for (let i = 0; i < circuit.parts.length; i++) {
-		if (circuit.parts[i].type !== 'CIRCUIT') {
+	circuit.parts.map(part => {
+		if (part.type !== 'CIRCUIT') {
 			let inputValues = [];
-			for (let j = 0; j < circuit.parts[i].input.length; j++) {
-				const pin = circuit.parts[i].input[j].pin;
-				if (pin === null) {
-					inputValues[j] = circuit.parts[i].input[j].ref.output;
+			part.input.map(input => {
+				if (input.pin === null) {
+					inputValues.push(input.ref.output);
 				} else {
-					//busses and circuits as input
-					inputValues[j] = circuit.parts[i].input[j].output[pin].output;
+					inputValues.push(input.ref.output[input.pin].output);
 				}
-			}
-
-			circuit.parts[i].output = circuit.parts[i].evaluate(inputValues);
+			});
+			part.output = part.evaluate(inputValues);
 		} else {
-			evaluateCircuit(circuit.parts[i].circuit);
+			evaluateCircuit(part.circuit);
 		}
-	}
-	// evauate outputs
-	for (let i = 0; i < circuit.output.length; i++) {
-		const pin = circuit.output[i].input.pin;
+	});
+
+	circuit.output.map(output => {
+		const pin = output.input.pin;
 		// if there is no selected output pin for this particular input
 		if (pin === null) {
-			circuit.output[i].output = circuit.output[i].input.ref.output;
+			output.output = output.input.ref.output;
 		} else {
-			circuit.output[i].output = circuit.output[i].input.ref.output[pin].output;
+			output.output = output.input.ref.output[pin].output;
 		}
-	}
+	});
 };

@@ -1,56 +1,6 @@
+import getEvaluationMethod from './evaluationMethods';
+
 const DEFAULT_AXIS = 0.5;
-
-const AND = input => {
-	// TODO: Error handling if there is no input
-	let counter = 0;
-	for (let i = 0; i < input.length; i++) {
-		if (input[i]) {
-			counter++;
-		}
-	}
-	return counter > 0 && counter === input.length;
-};
-
-const NAND = input => {
-	// TODO: Error handling if there is no input
-	let counter = 0;
-	for (let i = 0; i < input.length; i++) {
-		if (input[i]) {
-			counter++;
-		}
-	}
-	return !(counter > 0 && counter === input.length);
-};
-
-const OR = input => {
-	// TODO: Error handling if there is no input
-	for (let i = 0; i < input.length; i++) {
-		if (input[i]) {
-			return true;
-		}
-	}
-	return false;
-};
-
-const NOR = input => {
-	// TODO: Error handling if there is no input
-	for (let i = 0; i < input.length; i++) {
-		if (input[i]) {
-			return false;
-		}
-	}
-	return true;
-};
-
-const NOT = input => {
-	// TODO: Error handling if there is no input or more than 1 input
-	return !input;
-};
-
-const XOR = input => {
-	// TODO: Error handling if there is not exactly 2 inputs
-	return input[0] !== input[1];
-};
 
 const getRef = (circuit, id) => {
 	for (let i = 0; i < circuit.input.length; i++) {
@@ -71,181 +21,128 @@ const solderInputPins = (board, circuit) => {
 	if (board.input.length !== circuit.input.length) {
 		console.log('circuit input is not soldered properly: ', circuit);
 	}
-	for (let i = 0; i < board.input.length; i++) {
-		circuit.input[i].ref = board.input[i].ref;
-		if (!(board.input[i].pin === null || board.input[i].pin === undefined)) {
-			circuit.input[i].pin = board.input[i].pin;
+	board.input.map((input, i) => {
+		circuit.input[i].ref = input.ref;
+		if (!(input.pin === null || input.pin === undefined)) {
+			circuit.input[i].pin = input.pin;
 		}
-	}
+	});
 };
 
 const solderOutputPins = (board, circuit) => {
-	for (let i = 0; i < circuit.output.length; i++) {
-		board.output[i] = circuit.output[i];
-	}
+	circuit.output.map((output, i) => {
+		board.output[i] = output;
+	});
 };
 
 const initializeOutput = rawInput => {
-	if (rawInput.type === 'SINGLE_INPUT') {
-		return false;
-	} else {
-		return Array(rawInput.size).fill(false);
-	}
+	return rawInput.type === 'SINGLE_INPUT' ? false : Array(rawInput.size).fill(false);
 };
 
 const initCircuit = circuitData => {
-	const tempCircuit = {};
+	const circuit = {};
 	//build step
-	tempCircuit.input = [];
-	for (let i = 0; i < circuitData.input.length; i++) {
-		tempCircuit.input[i] = circuitData.input[i];
-		tempCircuit.input[i].output = initializeOutput(circuitData.input[i]);
-		tempCircuit.input[i].type = circuitData.input[i].type;
-	}
+	circuit.input = circuitData.input.map(input => {
+		const obj = input;
+		obj.output = initializeOutput(input);
+		return obj;
+	});
 
-	tempCircuit.parts = [];
-	for (let i = 0; i < circuitData.parts.length; i++) {
-		tempCircuit.parts[i] = circuitData.parts[i];
+	circuit.parts = circuitData.parts.map(partData => {
+		const part = partData;
+		// Set outputs
+		part.output = partData.type !== 'CIRCUIT' ? false : circuitData.output.map(() => ({ output: false }));
 
-		if (tempCircuit.parts[i].type !== 'CIRCUIT') {
-			//TODO:default state should also be definable for dependant logic
-			tempCircuit.parts[i].output = false;
-		} else {
-			tempCircuit.parts[i].output = [];
-			for (let j = 0; j < circuitData.output.length; j++) {
-				tempCircuit.parts[i].output[j] = {};
-				tempCircuit.parts[i].output[j].output = false;
-			}
-		}
-
-		if (circuitData.parts[i].hasOwnProperty('axis')) {
-			if (Array.isArray(circuitData.parts[i].axis)) {
-				if (circuitData.parts[i].axis.length === circuitData.parts[i].input.length) {
-					tempCircuit.parts[i].axis = circuitData.parts[i].axis;
+		// set axis
+		if (!!partData.axis) {
+			if (Array.isArray(partData.axis)) {
+				if (partData.axis.length === partData.input.length) {
+					part.axis = partData.axis;
 				} else {
-					// axis is an array but not of the correct length
-					tempCircuit.parts[i].axis = circuitData.parts[i].axis;
-					for (let j = tempCircuit.parts[i].axis.length; j < circuitData.parts[i].input.length; j++) {
-						tempCircuit.parts[i].axis.push(DEFAULT_AXIS);
-					}
+					part.axis = partData.axis.concat(
+						Array(partData.input.length - partData.axis.length).fill(DEFAULT_AXIS)
+					);
 				}
 			} else {
-				// axis exists but isn't an array
-				const carriedPivotPoint = circuitData.parts[i].axis;
-				tempCircuit.parts[i].axis = [];
-				tempCircuit.parts[i].axis[0] = carriedPivotPoint;
-				for (let j = 1; j < circuitData.parts[i].input.length; j++) {
-					tempCircuit.parts[i].axis.push(DEFAULT_AXIS);
+				if (!!Number(partData.axis)) {
+					part.axis = Array(partData.input.length).fill(partData.axis);
+				} else {
+					part.axis = Array(partData.input.length).fill(DEFAULT_AXIS);
 				}
 			}
 		} else {
-			tempCircuit.parts[i].axis = [];
-			for (let j = 0; j < circuitData.parts[i].input.length; j++) {
-				tempCircuit.parts[i].axis.push(DEFAULT_AXIS);
-			}
+			part.axis = Array(partData.input.length).fill(DEFAULT_AXIS);
 		}
-	}
+		return part;
+	});
 
-	tempCircuit.output = [];
-
-	for (let i = 0; i < circuitData.output.length; i++) {
-		tempCircuit.output[i] = circuitData.output[i];
-		tempCircuit.output[i].type = circuitData.output[i].type;
-		if (circuitData.output[i].hasOwnProperty('axis')) {
-			tempCircuit.output[i].axis = circuitData.output[i].axis;
-		} else {
-			tempCircuit.output[i].axis = DEFAULT_AXIS;
-		}
-		tempCircuit.output[i].output = false;
-	}
-	deserializeCircuit(tempCircuit);
-	return tempCircuit;
+	circuit.output = circuitData.output.map(outputData => {
+		const obj = outputData;
+		obj.axis = !!outputData.axis ? outputData.axis : DEFAULT_AXIS
+		obj.output = false;
+		return obj;
+	});
+	deserializeCircuit(circuit);
+	return circuit;
 };
 
 const deserializeCircuit = circuit => {
-	//deserialize parts
-	for (let i = 0; i < circuit.parts.length; i++) {
-		//get reference for each input
-
-		for (let j = 0; j < circuit.parts[i].input.length; j++) {
-			// the input ID
-			const input = circuit.parts[i].input[j];
+	circuit.parts.forEach(part => {
+		part.input = part.input.map(inputString => {
+			const input = {};
 			let parsedInputID = '';
-			// if the gate's input is a component or a bus the output will need to be selected
-			const divider = input.indexOf(':');
+			const divider = inputString.indexOf(':');
 			if (divider === -1) {
-				parsedInputID = input;
-				circuit.parts[i].input[j] = {};
-				circuit.parts[i].input[j].pin = null;
+				parsedInputID = inputString;
+				input.pin = null;
 			} else {
-				parsedInputID = input.substring(0, divider);
-				// get the string version of input pin and convert to digit
-				circuit.parts[i].input[j] = {};
-				circuit.parts[i].input[j].pin = parseInt(input.substring(divider + 1, input.length), 10);
+				parsedInputID = inputString.substring(0, divider);
+				input.pin = parseInt(inputString.substring(divider + 1, inputString.length), 10);
 			}
-			circuit.parts[i].input[j].ref = getRef(circuit, parsedInputID);
-		}
-		let evaluationMethod = null;
-		switch (circuit.parts[i].type) {
-			case 'AND':
-				evaluationMethod = AND;
-				break;
-			case 'NAND':
-				evaluationMethod = NAND;
-				break;
-			case 'OR':
-				evaluationMethod = OR;
-				break;
-			case 'NOR':
-				evaluationMethod = NOR;
-				break;
-			case 'XOR':
-				evaluationMethod = XOR;
-				break;
-			case 'NOT':
-				evaluationMethod = NOT;
-				break;
-			case 'CIRCUIT':
-				circuit.parts[i].cid = circuit.parts[i].circuit.cid;
-				circuit.parts[i].name = circuit.parts[i].circuit.name;
-				circuit.parts[i].description = circuit.parts[i].circuit.description;
-				circuit.parts[i].path = circuit.parts[i].circuit.path;
-				circuit.parts[i].height = circuit.parts[i].circuit.height;
-				circuit.parts[i].width = circuit.parts[i].circuit.width;
-				circuit.parts[i].circuit = initCircuit(circuit.parts[i].circuit);
-				solderOutputPins(circuit.parts[i], circuit.parts[i].circuit);
-				solderInputPins(circuit.parts[i], circuit.parts[i].circuit);
-				evaluationMethod = () =>
-					console.log('evaluate called on a circuit, type must be declared in uppercase: CIRCUIT');
-				break;
-			default:
-				console.log('something has done broke');
-		}
-		circuit.parts[i].evaluate = evaluationMethod;
-	}
-	//deserialize outputs
-	for (let i = 0; i < circuit.output.length; i++) {
-		let input = circuit.output[i].input;
-		let parsedInputID = '';
+			input.ref = getRef(circuit, parsedInputID);
+			return input;
+		});
 
-		// if the gate's input is a component or a bus the output will need to be selected
+		if (part.type !== 'CIRCUIT') {
+			part.evaluate = getEvaluationMethod(part.type);
+		} else {
+			part.cid = part.circuit.cid;
+			part.name = part.circuit.name;
+			part.description = part.circuit.description;
+			part.path = part.circuit.path;
+			part.height = part.circuit.height;
+			part.width = part.circuit.width;
+			// Make recursive call
+			part.circuit = initCircuit(part.circuit);
+			solderOutputPins(part, part.circuit);
+			solderInputPins(part, part.circuit);
+			part.evaluate = () =>
+				console.log('evaluate called on a circuit, type must be declared in uppercase: CIRCUIT');
+		}
+		return part;
+	});
+
+	circuit.output = circuit.output.map(output => {
+		let input = output.input;
+		let parsedInputID = '';
 		let divider = input.indexOf(':');
+
 		if (divider === -1) {
 			parsedInputID = input;
-			circuit.output[i].input = {};
-			circuit.output[i].input.pin = null;
+			output.input = {};
+			output.input.pin = null;
 		} else {
 			parsedInputID = input.substring(0, divider);
-			// get the string version of input pin and convert to digit
-			circuit.output[i].input = {};
-			circuit.output[i].input.pin = parseInt(input.substring(divider + 1, input.length), 10);
+			output.input = {};
+			output.input.pin = parseInt(input.substring(divider + 1, input.length), 10);
 		}
-		circuit.output[i].input.ref = getRef(circuit, parsedInputID);
-	}
+		output.input.ref = getRef(circuit, parsedInputID);
+		return output;
+	});
 };
 
 export default circuitData => {
-	const temp = initCircuit(circuitData);
-	temp.name = circuitData.name;
-	return temp;
+	const completeCircuit = initCircuit(circuitData);
+	completeCircuit.name = circuitData.name;
+	return completeCircuit;
 };
