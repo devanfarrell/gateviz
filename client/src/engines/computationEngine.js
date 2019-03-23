@@ -1,23 +1,22 @@
 export const evaluateCircuit = circuit => {
 	circuit.input.map(input => {
 		if (!(input.pin === null || input.pin === undefined)) {
-			input.output = input.ref.output[input.pin];
+			input.state = input.ref.state[input.pin];
 		} else if (!!input.ref) {
-			input.output = input.ref.output;
+			input.state = input.ref.state;
 		}
 	});
 
 	circuit.parts.map(part => {
 		if (part.type !== 'CIRCUIT') {
-			let inputValues = [];
-			part.input.map(input => {
+			const inputValues = part.input.map(input => {
 				if (input.pin === null) {
-					inputValues.push(input.ref.output);
+					return input.ref.state
 				} else {
-					inputValues.push(input.ref.output[input.pin].output);
+					return input.ref.state[input.pin];
 				}
 			});
-			part.output = part.evaluate(inputValues);
+			part.state = part.evaluate(inputValues);
 		} else {
 			evaluateCircuit(part.circuit);
 		}
@@ -27,9 +26,9 @@ export const evaluateCircuit = circuit => {
 		const pin = output.input.pin;
 		// if there is no selected output pin for this particular input
 		if (pin === null) {
-			output.output = output.input.ref.output;
+			output.state = output.input.ref.state;
 		} else {
-			output.output = output.input.ref.output[pin].output;
+			output.state = output.input.ref.output[pin].state;
 		}
 	});
 };
