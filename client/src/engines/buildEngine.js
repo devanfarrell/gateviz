@@ -29,9 +29,9 @@ const solderInputPins = (board, circuit) => {
 	});
 };
 
-const solderOutputPins = (board, circuit) => {
-	circuit.output.map((output, i) => {
-		board.output[i] = output;
+const solderOutputPins = (circuit, part) => {
+	part.output.map((output, i) => {
+		circuit.output[i] = output;
 	});
 };
 
@@ -44,14 +44,19 @@ const initCircuit = circuitData => {
 	//build step
 	circuit.input = circuitData.input.map(input => {
 		const obj = input;
-		obj.output = initializeOutput(input);
+		obj.state = initializeOutput(input);
 		return obj;
 	});
 
 	circuit.parts = circuitData.parts.map(partData => {
 		const part = partData;
 		// Set outputs
-		part.output = partData.type !== 'CIRCUIT' ? false : circuitData.output.map(() => ({ output: false }));
+		if(partData.type !== 'CIRCUIT') {
+			part.state = false;
+		} else {
+			// TODO: figure out... why...
+			part.output = Array(circuitData.output.length).fill({ output: false })
+		}
 
 		// set axis
 		if (!!partData.axis) {
@@ -78,8 +83,8 @@ const initCircuit = circuitData => {
 
 	circuit.output = circuitData.output.map(outputData => {
 		const obj = outputData;
-		obj.axis = !!outputData.axis ? outputData.axis : DEFAULT_AXIS
-		obj.output = false;
+		obj.axis = !!outputData.axis ? outputData.axis : DEFAULT_AXIS;
+		obj.state = false;
 		return obj;
 	});
 	deserializeCircuit(circuit);

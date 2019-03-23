@@ -1,36 +1,36 @@
-const AND = input => {
-	for (let i = 0; i < input.length; i++) {
-		if (!input[i]) {
+const AND = state => {
+	for (let i = 0; i < state.length; i++) {
+		if (!state[i]) {
 			return false;
 		}
 	}
 	return true;
 };
 
-const NAND = input => {
-	return !AND(input);
+const NAND = state => {
+	return !AND(state);
 };
 
-const OR = input => {
-	for (let i = 0; i < input.length; i++) {
-		if (input[i]) {
+const OR = state => {
+	for (let i = 0; i < state.length; i++) {
+		if (state[i]) {
 			return true;
 		}
 	}
 	return false;
 };
 
-const NOR = input => {
-	return !OR(input);
+const NOR = state => {
+	return !OR(state);
 };
 
-const NOT = input => {
-	return !input;
+const NOT = state => {
+	return !state;
 };
 
-const XOR = input => {
+const XOR = state => {
 	// TODO: Error handling if there is not exactly 2 inputs
-	return input[0] !== input[1];
+	return state[0] !== state[1];
 };
 
 const getEvaluationMethod = type => {

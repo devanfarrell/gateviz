@@ -63,7 +63,7 @@ export const render = (canvas, circuit, breadcrumbs) => {
 		path.size(partDrawingInput.width, partDrawingInput.height);
 
 		if (input.type === 'SINGLE_INPUT') {
-			path.fill(colorHelper(input.output));
+			path.fill(colorHelper(input.state));
 		} else {
 			path.fill(componentFillColor);
 		}
@@ -101,7 +101,7 @@ export const render = (canvas, circuit, breadcrumbs) => {
 		path.size(renderSpecs.width, renderSpecs.height);
 
 		if (part.type !== 'CIRCUIT') {
-			path.fill(colorHelper(part.output));
+			path.fill(colorHelper(part.state));
 		} else {
 			part.localRef = path;
 			internalCircuitclickEvent(part.localRef, part.id, part.name);
@@ -120,7 +120,7 @@ export const render = (canvas, circuit, breadcrumbs) => {
 			width: 2
 		});
 		path.size(partDrawingOutput.width, partDrawingOutput.height);
-		path.fill(colorHelper(output.output));
+		path.fill(colorHelper(output.state));
 	});
 
 	// edges from parts to outputs
@@ -152,10 +152,10 @@ export const render = (canvas, circuit, breadcrumbs) => {
 						(destinationX - originX) * axis},${destinationY}  ${destinationX},${destinationY}`
 				)
 				.fill('none')
-				.stroke({ width: 2, color: colorHelper(output.output) });
+				.stroke({ width: 2, color: colorHelper(output.state) });
 			// CASE 2: ALL - OUTPUT_BUS
 		} else {
-			console.debug('CASE 2: ALL - OUTPUT_BUS');
+			console.log('CASE 2: ALL - OUTPUT_BUS');
 		}
 	});
 
@@ -180,7 +180,7 @@ export const render = (canvas, circuit, breadcrumbs) => {
 						destinationY + staggerInput(part.input.length, j, getTypeData(part.type).height);
 					originX = input.ref.coord[0] + getTypeData(input.ref.type).width;
 					originY = input.ref.coord[1] + getTypeData(input.ref.type).height / 2;
-					outputState = input.ref.output;
+					outputState = input.ref.state;
 
 					//CASE 1.2 COMPLEX - SIMPLE
 				} else {
@@ -188,7 +188,7 @@ export const render = (canvas, circuit, breadcrumbs) => {
 					originY = input.ref.coord[1] + circuit.output[i].input[j].ref.height / 2;
 					const pin = input.pin;
 					originY = originY + staggerInput(input.ref.output.length, pin, input.ref.height);
-					outputState = circuit.output[i].input.ref.output[pin].output;
+					outputState = circuit.output[i].input.ref.output[pin].state;
 				}
 				const path = canvas
 					.polyline(
@@ -209,13 +209,13 @@ export const render = (canvas, circuit, breadcrumbs) => {
 					destinationY = destinationY + staggerInput(part.input.length, j, part.height);
 					originX = input.ref.coord[0] + getTypeData(input.ref.type).width;
 					originY = input.ref.coord[1] + getTypeData(input.ref.type).height / 2;
-					outputState = input.ref.output;
+					outputState = input.ref.state;
 					//CASE 2.1 COMPLEX - COMPLEX
 				} else {
 					destinationY = destinationY + staggerInput(part.input.length, j, part.height);
 					originX = input.ref.coord[0] + getTypeData(input.ref.type).width;
 					originY = input.ref.coord[1] + getTypeData(input.ref.type).height / 2;
-					outputState = input.ref.output[input.pin];
+					outputState = input.ref.state[input.pin];
 				}
 				const path = canvas
 					.polyline(

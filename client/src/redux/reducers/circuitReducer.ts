@@ -15,7 +15,7 @@ export default function (state = null, action) {
 		case CHANGE_INPUTS:
 			temp = action.payload.circuit;
 			for (let i = 0; i < action.payload.input.length; i++) {
-				temp.input[i].output = action.payload.input[i];
+				temp.input[i].state = action.payload.input[i];
 			}
 			evaluateCircuit(temp);
 			const changedCircuit = Map({ input: temp.input, inputLength: temp.input.length, parts: temp.parts, output: temp.output, name: temp.name });
