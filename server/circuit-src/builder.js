@@ -73,8 +73,8 @@ class Builder {
 		return this;
 	}
 
-	addCoord(x, y) {
-		this.lastPiece.coord = [x, y];
+	addCoord(coords) {
+		this.lastPiece.coord = coords;
 		return this;
 	}
 
@@ -90,13 +90,20 @@ class Builder {
 
 	wireToInput(input, optionalPin) {
 		const selectedInput = !optionalPin ? input : `${input}:${optionalPin}`;
-		this.lastPiece.input.push(selectedInput);
+		if (this.lastPiece.type === outputs.single) {
+			this.lastPiece.input = selectedInput;
+		} else {
+			this.lastPiece.input.push(selectedInput);
+		}
 		return this;
 	}
 
 	build() {
 		return {
 			cid: this.cid,
+			name: this.name ? this.name : undefined,
+			path: this.path ? this.path : undefined,
+			description: this.description ? this.description : undefined,
 			input: this.input,
 			parts: this.parts,
 			output: this.outputs
