@@ -55,8 +55,10 @@ class Builder {
 		return this;
 	}
 
-	addCircuit() {
-		//TODO
+	addCircuit(circuit) {
+		this.parts.push(circuit);
+		this.lastPiece = this.parts[this.parts.length - 1];
+		return this;
 	}
 
 	addOutput() {
