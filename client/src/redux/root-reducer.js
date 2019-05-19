@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux-immutable';
 import breadcrumbReducer, { key as breadcrumbKey } from './breadcrumbs/reducer';
 import circuitListReducer, { key as circuitListKey } from './circuitlist/reducer';
+import circuitReducer, { key as circuitKey } from './circuit/reducer';
 
 export default combineReducers({
 	[breadcrumbKey]: breadcrumbReducer,
-	[circuitListKey]: circuitListReducer
+	[circuitListKey]: circuitListReducer,
+	[circuitKey]: circuitReducer
 });

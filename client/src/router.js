@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-// import Circuit from './Circuit';
+import Circuit from 'views/circuit';
 // import Header from './Header';
 import Landing from './views/landing';
-import { initialize } from './redux/circuitlist/actions';
+import { initialize } from 'redux/circuitlist/actions';
 import { bindActionCreators } from 'redux';
 import { actionTypes } from 'redux/utils';
 
@@ -21,7 +21,7 @@ class Router extends Component {
 						{/* <Header /> */}
 						<div>
 							<Route exact={true} path="/" component={Landing} />
-							{/* <Route path="/circuit/" component={Circuit} /> */}
+							<Route path="/circuit/:cid" component={Circuit} />
 						</div>
 					</div>
 				</BrowserRouter>

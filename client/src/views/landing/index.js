@@ -1,19 +1,18 @@
-import React, { Component } from 'react';
-// import CircuitList from './Circuit_List';
+import React from 'react';
+import CircuitList from './circuitlist';
 // import SearchBar from './Search_Bar';
 import { connect } from 'react-redux';
 import { selectCircuitList } from 'redux/circuitlist/selectors';
 
-const Landing = props => {
-	console.debug(props);
+const Landing = ({ circuitList }) => {
 	return (
-		<div className="landing container">
+		<div id="landing">
 			<div className="hero centerallthethings">
 				<h1 className="heroPrimary"> GateViz </h1>
 				<h2 className="heroSecondary"> a combinational logic education tool </h2>
 			</div>
 			{/* <SearchBar /> */}
-			{/* <CircuitList circuitList={props.circuitList} /> */}
+			<CircuitList circuitList={circuitList} />
 		</div>
 	);
 };

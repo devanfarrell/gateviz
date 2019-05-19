@@ -6,5 +6,6 @@ export const initializeName = requestType =>
 
 export const initialize = (requestType, data) => ({
 	type: initializeName(requestType),
+	key,
 	payload: data
 });
