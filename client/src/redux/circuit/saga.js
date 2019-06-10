@@ -1,16 +1,14 @@
 import { takeLatest, put } from 'redux-saga/effects';
-import { fetchCircuitName, fetchCircuit } from './actions';
+import { FETCH_CIRCUIT_REQUEST, fetchCircuitSuccess } from './actions';
 import { fetchCircuitRequest } from 'api/gateviz';
 import processor from './processor';
-import { actionTypes } from 'redux/utils';
 
-function* fetchCircuitSaga(action) {
+function* fetchCircuitHandler(action) {
 	const { data } = yield fetchCircuitRequest(action.payload);
-    const processedCircuit = yield processor(data);
-    console.debug(processedCircuit)
-	yield put(fetchCircuit(actionTypes.SUCCESS, { response: data }));
+	const processedCircuit = yield processor(data);
+	yield put(fetchCircuitSuccess({ response: data, parsedCircuit: processedCircuit }));
 }
 
 export default function* saga() {
-	yield takeLatest(fetchCircuitName(actionTypes.REQUEST), fetchCircuitSaga);
+	yield takeLatest(FETCH_CIRCUIT_REQUEST, fetchCircuitHandler);
 }

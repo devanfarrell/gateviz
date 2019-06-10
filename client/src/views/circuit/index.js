@@ -1,56 +1,20 @@
-import React, { Component } from 'react';
-// import CircuitUI from './UI/CircuitUI';
-// import Canvas from './rendering/Canvas';
-import { connect } from 'react-redux';
-import { fetchCircuit } from 'redux/circuit/actions';
-import { actionTypes } from 'redux/utils';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import Canvas from './canvas';
+import { fetchCircuitRequest } from 'redux/circuit/actions';
 
-class Circuit extends Component {
-	constructor(props) {
-		super(props);
-		this.canvas = this.refs.ref;
-	}
+const CircuitView = props => {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		const cid = props.match.params.cid;
+		dispatch(fetchCircuitRequest(cid));
+	}, []);
 
-	componentDidMount() {
-		const cid = this.props.match.params.cid;
-		this.props.fetchCircuit(actionTypes.REQUEST, cid);
-	}
+	return (
+		<div className="UI">
+			<Canvas />
+		</div>
+	);
+};
 
-	renderCanvas() {
-		if (this.props.canvas) {
-			return this.props.canvas;
-		} else {
-			return null;
-		}
-	}
-
-	render() {
-		// if the circuit has not been fetched
-		if (!this.props.circuit) {
-			return <div> Loading Circuit!!!! </div>;
-		}
-		// if the circuit has been built
-		else {
-			return (
-				<div className="UI">
-					<span>YOOOO</span>
-					{/* <CircuitUI name={this.props.circuit.name} />
-					<div className="canvas">{this.renderCanvas()}</div> */}
-				</div>
-			);
-		}
-	}
-}
-
-// const mapState = ({ circuit, breadcrumbs }) => {
-// 	let div = null;
-// 	if (circuit) {
-// 		div = <Canvas circuit={circuit} breadcrumbs={breadcrumbs} />;
-// 	}
-// 	return { circuit, canvas: div };
-// };
-
-export default connect(
-	null,
-	{ fetchCircuit }
-)(Circuit);
+export default CircuitView;

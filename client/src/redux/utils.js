@@ -17,5 +17,7 @@ export const generateEnforcedComplexAction = (key, name, type) => {
 	return generateAction(key, name, type);
 };
 
-export const generateAction = (key, name, type) =>
+export const generateActionOld = (key, name, type) =>
 	type ? `${key}/${name}/${type}` : `${key}/${name}`;
+
+export const generateAction = type => [type, payload => ({ type, payload })];

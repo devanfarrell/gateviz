@@ -1,15 +1,13 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
-import { initializeName } from './actions';
+import { FETCH_CIRCUIT_LIST_REQUEST, fetchCircuitListSuccess } from './actions';
 import { fetchCircuitList } from 'api/gateviz';
-import { actionTypes } from '../utils';
-import { initialize } from './actions';
 
-function* fetchCircuitListSaga() {
-	const list = yield call(fetchCircuitList);
-	yield console.debug(list);
-	yield put(initialize(actionTypes.SUCCESS, list.data.list));
+function* fetchCircuitListHandler() {
+	const request = yield call(fetchCircuitList);
+	yield console.debug(request);
+	yield put(fetchCircuitListSuccess(request.data.list));
 }
 
 export default function* circuitListSaga() {
-	yield takeLatest(initializeName(actionTypes.REQUEST), fetchCircuitListSaga);
+	yield takeLatest(FETCH_CIRCUIT_LIST_REQUEST, fetchCircuitListHandler);
 }

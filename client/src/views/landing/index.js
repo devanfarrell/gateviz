@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import CircuitList from './circuitlist';
 // import SearchBar from './Search_Bar';
-import { connect } from 'react-redux';
+import { fetchCircuitListRequest } from 'redux/circuitlist/actions';
 import { selectCircuitList } from 'redux/circuitlist/selectors';
 
-const Landing = ({ circuitList }) => {
+const Landing = props => {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(fetchCircuitListRequest());
+	}, []);
+	const circuitList = useSelector(selectCircuitList, shallowEqual);
 	return (
 		<div id="landing">
 			<div className="hero centerallthethings">
@@ -17,11 +23,4 @@ const Landing = ({ circuitList }) => {
 	);
 };
 
-const mapState = state => ({
-	circuitList: selectCircuitList(state)
-});
-
-export default connect(
-	mapState,
-	null
-)(Landing);
+export default Landing;

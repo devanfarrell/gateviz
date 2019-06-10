@@ -1,10 +1,4 @@
-import { key } from './reducer';
-import { generateEnforcedComplexAction } from '../utils';
+import { generateAction } from '../utils';
 
-export const fetchCircuitName = requestType =>
-	generateEnforcedComplexAction(key, 'fetchCircuit', requestType);
-export const fetchCircuit = (requestType, data) => ({
-	type: fetchCircuitName(requestType),
-	key,
-	payload: data
-});
+export const [FETCH_CIRCUIT_REQUEST, fetchCircuitRequest] = generateAction('CIRCUIT/FETCH_CIRCUIT_REQUEST');
+export const [FETCH_CIRCUIT_SUCCESS, fetchCircuitSuccess] = generateAction('CIRCUIT/FETCH_CIRCUIT_SUCCESS');

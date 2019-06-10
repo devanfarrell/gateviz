@@ -1,11 +1,8 @@
-import { generateEnforcedComplexAction } from 'redux/utils';
-import { key } from './reducer';
+import { generateAction } from 'redux/utils';
 
-export const initializeName = requestType =>
-	generateEnforcedComplexAction(key, 'initialize', requestType);
-
-export const initialize = (requestType, data) => ({
-	type: initializeName(requestType),
-	key,
-	payload: data
-});
+export const [FETCH_CIRCUIT_LIST_REQUEST, fetchCircuitListRequest] = generateAction(
+	'CIRCUIT_LIST/FETCH_CIRCUIT_LIST_REQUEST'
+);
+export const [FETCH_CIRCUIT_LIST_SUCCESS, fetchCircuitListSuccess] = generateAction(
+	'CIRCUIT_LIST/FETCH_CIRCUIT_LIST_SUCCESS'
+);

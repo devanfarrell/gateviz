@@ -1,6 +1,6 @@
 import * as svgjs from 'svgjs';
-import { store } from '../../';
-import { stepIntoCircuit } from '../../redux/actions';
+import { store } from 'redux/provider';
+import { stepIntoCircuit } from 'redux/breadcrumbs/actions';
 import {
 	componentFillColor,
 	falseColor,
@@ -38,20 +38,22 @@ const traverseCircuit = (id, circuit) => {
 			return circuit.parts[i].circuit;
 		}
 	}
-	console.log("Something is borked. Couldn't find ID from breadcrumb in render engine");
+	console.error("Something is borked. Couldn't find ID from breadcrumb in render engine");
 	return circuit;
 };
 
 export const render = (canvas, circuit, breadcrumbs) => {
-	const preparedBreadcrumbs = breadcrumbs.shift();
-	preparedBreadcrumbs.map(crumb => {
+	const preparedBreadcrumbs = breadcrumbs.length > 1 ? breadcrumbs.shift() : breadcrumbs;
+	console.debug('breadcrumbs', preparedBreadcrumbs, breadcrumbs);
+	preparedBreadcrumbs.forEach(crumb => {
 		circuit = traverseCircuit(crumb.id, circuit);
 	});
 
 	//clear here saves a redundant function and really doesn't affect performance
 	canvas.clear();
+	console.debug(circuit)
 	//inputs
-	circuit.input.map(input => {
+	circuit.input.forEach(input => {
 		const partDrawingInput = getTypeData(input.type);
 		const path = canvas.path(partDrawingInput.path).move(input.coord[0], input.coord[1]);
 		path.stroke({
@@ -78,7 +80,7 @@ export const render = (canvas, circuit, breadcrumbs) => {
 	});
 
 	// internal logic
-	circuit.parts.map(part => {
+	circuit.parts.forEach(part => {
 		let renderSpecs = {};
 		switch (part.type) {
 			case 'CIRCUIT':
@@ -110,7 +112,7 @@ export const render = (canvas, circuit, breadcrumbs) => {
 	});
 
 	//outputs
-	circuit.output.map(output => {
+	circuit.output.forEach(output => {
 		const partDrawingOutput = getTypeData(output.type);
 		const path = canvas.path(partDrawingOutput.path).move(output.coord[0], output.coord[1]);
 		path.stroke({
@@ -124,7 +126,7 @@ export const render = (canvas, circuit, breadcrumbs) => {
 	});
 
 	// edges from parts to outputs
-	circuit.output.map(output => {
+	circuit.output.forEach(output => {
 		let originX = null;
 		let originY = null;
 		let destinationX = null;
@@ -160,7 +162,7 @@ export const render = (canvas, circuit, breadcrumbs) => {
 	});
 
 	// edges from parts to parts
-	circuit.parts.map((part, i) => {
+	circuit.parts.forEach((part, i) => {
 		let originX = null;
 		let originY = null;
 		let destinationX = null;
@@ -169,7 +171,7 @@ export const render = (canvas, circuit, breadcrumbs) => {
 		// CASE 1: ALL - SIMPLE
 
 		if (part.type !== 'CIRCUIT') {
-			part.input.map((input, j) => {
+			part.input.forEach((input, j) => {
 				destinationX = part.coord[0];
 				destinationY = part.coord[1] + getTypeData(part.type).height / 2;
 				let outputState = null;
@@ -200,7 +202,7 @@ export const render = (canvas, circuit, breadcrumbs) => {
 			});
 			// CASE 2: ALL - COMPLEX
 		} else {
-			part.input.map((input, j) => {
+			part.input.forEach((input, j) => {
 				let outputState = null;
 				destinationX = part.coord[0];
 				destinationY = part.coord[1] + part.height / 2;
