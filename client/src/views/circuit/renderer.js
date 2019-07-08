@@ -29,7 +29,7 @@ const staggerInput = (numPorts, position, heightOfObject) => {
 };
 
 export const initialize = ref => {
-	return svgjs(ref).size(1000, 1000);
+	return svgjs(ref);
 };
 
 const traverseCircuit = (id, circuit) => {

@@ -24,11 +24,7 @@ class Canvas extends PureComponent {
 		}
 		// if the circuit has been built
 		else {
-			return (
-				<div>
-					<div ref={ref => this.startRenderEngine(ref)} className="circuitCanvas" />
-				</div>
-			);
+			return <div ref={ref => this.startRenderEngine(ref)} className="circuitCanvas" />;
 		}
 	}
 }
