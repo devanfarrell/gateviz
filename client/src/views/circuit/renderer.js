@@ -44,7 +44,6 @@ const traverseCircuit = (id, circuit) => {
 
 export const render = (canvas, circuit, breadcrumbs) => {
 	const preparedBreadcrumbs = breadcrumbs.length > 1 ? breadcrumbs.shift() : breadcrumbs;
-	console.debug('breadcrumbs', preparedBreadcrumbs, breadcrumbs);
 	preparedBreadcrumbs.forEach(crumb => {
 		circuit = traverseCircuit(crumb.id, circuit);
 	});
@@ -148,7 +147,7 @@ export const render = (canvas, circuit, breadcrumbs) => {
 				const pin = output.input.pin;
 				originY = originY + staggerInput(output.input.ref.output.length, pin, output.input.ref.height);
 			}
-			const path = canvas
+			canvas
 				.polyline(
 					`${originX},${originY} ${originX + (destinationX - originX) * axis},${originY} ${originX +
 						(destinationX - originX) * axis},${destinationY}  ${destinationX},${destinationY}`
@@ -192,7 +191,7 @@ export const render = (canvas, circuit, breadcrumbs) => {
 					originY = originY + staggerInput(input.ref.output.length, pin, input.ref.height);
 					outputState = circuit.output[i].input.ref.output[pin].state;
 				}
-				const path = canvas
+				canvas
 					.polyline(
 						`${originX},${originY} ${originX + (destinationX - originX) * axis[j]},${originY} ${originX +
 							(destinationX - originX) * axis[j]},${destinationY}  ${destinationX},${destinationY}`
@@ -219,7 +218,7 @@ export const render = (canvas, circuit, breadcrumbs) => {
 					originY = input.ref.coord[1] + getTypeData(input.ref.type).height / 2;
 					outputState = input.ref.state[input.pin];
 				}
-				const path = canvas
+				canvas
 					.polyline(
 						`${originX},${originY} ${originX + (destinationX - originX) * axis[j]},${originY} ${originX +
 							(destinationX - originX) * axis[j]},${destinationY}  ${destinationX},${destinationY}`

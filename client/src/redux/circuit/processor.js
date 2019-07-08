@@ -21,7 +21,7 @@ const solderInputPins = (board, circuit) => {
 	if (board.input.length !== circuit.input.length) {
 		console.log('circuit input is not soldered properly: ', circuit);
 	}
-	board.input.map((input, i) => {
+	board.input.forEach((input, i) => {
 		circuit.input[i].ref = input.ref;
 		if (!(input.pin === null || input.pin === undefined)) {
 			circuit.input[i].pin = input.pin;
@@ -30,7 +30,7 @@ const solderInputPins = (board, circuit) => {
 };
 
 const solderOutputPins = (circuit, part) => {
-	part.output.map((output, i) => {
+	part.output.forEach((output, i) => {
 		circuit.output[i] = output;
 	});
 };
@@ -51,11 +51,11 @@ const initCircuit = circuitData => {
 	circuit.parts = circuitData.parts.map(partData => {
 		const part = partData;
 		// Set outputs
-		if(partData.type !== 'CIRCUIT') {
+		if (partData.type !== 'CIRCUIT') {
 			part.state = false;
 		} else {
 			// TODO: figure out... why...
-			part.output = Array(circuitData.output.length).fill({ output: false })
+			part.output = Array(circuitData.output.length).fill({ output: false });
 		}
 
 		// set axis

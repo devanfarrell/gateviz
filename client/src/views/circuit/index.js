@@ -8,7 +8,7 @@ const CircuitView = props => {
 	useEffect(() => {
 		const cid = props.match.params.cid;
 		dispatch(fetchCircuitRequest(cid));
-	}, []);
+	}, [dispatch, props.match.params.cid]);
 
 	return (
 		<div className="UI">

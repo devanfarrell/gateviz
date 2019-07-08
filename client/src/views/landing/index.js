@@ -7,9 +7,10 @@ import { selectCircuitList } from 'redux/circuitlist/selectors';
 
 const Landing = props => {
 	const dispatch = useDispatch();
+
 	useEffect(() => {
 		dispatch(fetchCircuitListRequest());
-	}, []);
+	}, [dispatch]);
 	const circuitList = useSelector(selectCircuitList, shallowEqual);
 	return (
 		<div id="landing">
