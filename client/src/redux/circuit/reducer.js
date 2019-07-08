@@ -1,18 +1,18 @@
-import { fromJS } from 'immutable';
 import { FETCH_CIRCUIT_SUCCESS } from './actions';
+import produce from 'immer';
 
 export const key = 'circuit';
 
 // This reducer will keep track of where we are in the circuit by a push breadcrumb style
-export default (state = fromJS({ response: {}, parsedCircuit: null }), action) => {
-	let s = state;
+export default produce((draft = { response: {}, parsedCircuit: null }, action) => {
 	switch (action.type) {
 		case FETCH_CIRCUIT_SUCCESS: {
 			const { response, parsedCircuit } = action.payload;
-			s = state.setIn(['parsedCircuit'], fromJS(parsedCircuit));
-			return s.setIn(['response'], fromJS(response));
+			draft.parsedCircuit = parsedCircuit;
+			draft.response = response;
+			return draft;
 		}
 		default:
-			return state;
+			return draft;
 	}
-};
+});

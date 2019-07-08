@@ -23,10 +23,7 @@
     "url": "https://github.com/devanfarrell/gateviz-new/issues"
   },
   "homepage": "https://github.com/devanfarrell/gateviz-new#readme",
-  "dependencies": {
-    "immer": "^3.1.3",
-    "react-router-dom": "^5.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "concurrently": "^4.1.0",
     "nodemon": "^1.18.10"

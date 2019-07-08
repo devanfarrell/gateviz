@@ -1,8 +1,12 @@
 import { createSelector } from 'reselect';
 import { key } from './reducer';
 
-const selectParsedCircuitImmutable = state => state.getIn([key, 'parsedCircuit'], null);
+const selectCircuit = createSelector(
+	state => state[key],
+	data => data || {}
+);
+
 export const selectParsedCircuit = createSelector(
-	selectParsedCircuitImmutable,
-	circuit => circuit && circuit.toJS()
+	selectCircuit,
+	circuit => (circuit && circuit.parsedCircuit) || null
 );

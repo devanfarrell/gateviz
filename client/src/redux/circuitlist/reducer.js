@@ -1,13 +1,13 @@
-import { fromJS } from 'immutable';
 import { FETCH_CIRCUIT_LIST_SUCCESS } from './actions';
-
+import produce from 'immer';
 export const key = 'circuit-list';
 
-export default (state = fromJS([]), action) => {
+export default produce((draft = [], action) => {
 	switch (action.type) {
 		case FETCH_CIRCUIT_LIST_SUCCESS:
-			return fromJS(action.payload);
+			draft = action.payload;
+			return draft;
 		default:
-			return state;
+			return draft;
 	}
-};
+});

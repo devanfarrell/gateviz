@@ -1,20 +1,21 @@
-import { fromJS } from 'immutable';
 import { INIT_BREADCRUMB, STEP_INTO_CIRCUIT, STEP_BACK } from './actions';
+import produce from 'immer';
 
 export const key = 'breadcrumbs';
 
 // This reducer will keep track of where we are in the circuit by a push breadcrumb style
-export default (state = fromJS([]), action) => {
+export default produce((draft = [], action) => {
 	switch (action.type) {
 		case INIT_BREADCRUMB:
-			return fromJS([{ name: action.payload, id: 'top', depth: 0 }]);
+			draft = [{ name: action.payload, id: 'top', depth: 0 }];
+			return draft;
 		case STEP_BACK:
-			return state.setSize(action.payload.depth + 1);
+			draft.length = action.payload.depth + 1;
+			return draft;
 		case STEP_INTO_CIRCUIT:
-			return state.push(
-				fromJS({ name: action.payload.name, id: action.payload.id, depth: state.size })
-			);
+			draft.push({ name: action.payload.name, id: action.payload.id, depth: draft.length });
+			return draft;
 		default:
-			return state;
+			return draft;
 	}
-};
+});
