@@ -1,6 +1,5 @@
 import { fromJS } from 'immutable';
 import { FETCH_CIRCUIT_SUCCESS } from './actions';
-import { actionTypes } from '../utils';
 
 export const key = 'circuit';
 
