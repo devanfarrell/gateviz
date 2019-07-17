@@ -5,8 +5,7 @@ export const key = 'circuit-list';
 export default produce((draft, action) => {
 	switch (action.type) {
 		case FETCH_CIRCUIT_LIST_SUCCESS:
-			draft = action.payload;
-			return;
+			return action.payload;
 		default:
 			return;
 	}
