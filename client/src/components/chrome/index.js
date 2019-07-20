@@ -3,7 +3,6 @@ import posed from 'react-pose';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import colors from 'styles/colors';
-import Toggle from 'components/toggle';
 
 const expanded = 'expanded';
 const condensed = 'condensed';
@@ -18,15 +17,6 @@ const Chrome = props => {
 		>
 			<ProjectName to="/">GateViz</ProjectName>
 			<Line pose={stateString} />
-			<Toggle
-				id="bob"
-				onChange={() => {
-					console.debug('you did so good!');
-				}}
-				handleToggle={() => {
-					console.debug('you did so good!');
-				}}
-			/>
 		</Drawer>
 	);
 };
@@ -38,6 +28,7 @@ const DrawerPosedDiv = posed.div({
 
 const Drawer = styled(DrawerPosedDiv)`
 	display: flex;
+	flex: 0 1 auto;
 	background-color: ${colors.grey.veryDark};
 	color: ${colors.grey.veryLight};
 	flex-direction: column;
