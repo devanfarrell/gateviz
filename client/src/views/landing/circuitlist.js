@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import styled from '@emotion/styled';
 
 const CircuitList = ({ circuitList }) => {
 	return (
@@ -18,13 +19,23 @@ const CircuitList = ({ circuitList }) => {
 
 const CircuitCard = props => {
 	return (
-		<div className="circuit-card">
+		<CircuitCardWapper>
 			<Link to={`circuit/${props.cid}`}>
 				<div className="title">{props.name}</div>
 				<div className="description">{props.description}</div>
 			</Link>
-		</div>
+		</CircuitCardWapper>
 	);
 };
+
+const CircuitCardWapper = styled.div`
+	display: inline-flex;
+	width: 280px;
+	height: 280px;
+	padding: 10px;
+	background-color: white;
+	border-radius: 5px;
+	margin: 10px;
+`;
 
 export default CircuitList;

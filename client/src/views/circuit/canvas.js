@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import styled from '@emotion/styled';
 import * as renderEngine from './renderer';
 import { connect } from 'react-redux';
 import { selectParsedCircuit } from 'redux/circuit/selectors';
@@ -24,10 +25,15 @@ class Canvas extends PureComponent {
 		}
 		// if the circuit has been built
 		else {
-			return <div ref={ref => this.startRenderEngine(ref)} className="circuitCanvas" />;
+			return <CircuitCanvas ref={ref => this.startRenderEngine(ref)} />;
 		}
 	}
 }
+
+const CircuitCanvas = styled.div`
+	width: 100%;
+	height: 100%;
+`;
 
 const mapState = state => ({
 	circuit: selectParsedCircuit(state),

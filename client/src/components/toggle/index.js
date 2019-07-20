@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactToggle from 'react-toggle'
+import './style.css';
 
 const Toggle = props => {
     return (

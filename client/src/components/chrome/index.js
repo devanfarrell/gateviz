@@ -1,19 +1,12 @@
 import React, { useState } from 'react';
 import posed from 'react-pose';
 import { Link } from 'react-router-dom';
-import Inputs from './inputs';
+import styled from '@emotion/styled';
+import colors from 'styles/colors';
+import Toggle from 'components/toggle';
 
 const expanded = 'expanded';
 const condensed = 'condensed';
-
-const Drawer = posed.div({
-	[expanded]: { width: '500px' },
-	[condensed]: { width: '115px' }
-});
-const Line = posed.line({
-	[expanded]: { width: '420px', height: '2px', background: '#969697' },
-	[condensed]: { width: '100px', height: '2px', background: '#969697' }
-});
 
 const Chrome = props => {
 	const [expandedState, setExpanded] = useState(false);
@@ -21,16 +14,51 @@ const Chrome = props => {
 	return (
 		<Drawer
 			pose={stateString}
-			className="chrome"
-			onClick={!expandedState ? () => setExpanded(true) : null}
+			onClick={!expandedState ? () => setExpanded(true) : () => setExpanded(false)}
 		>
-			<Link to="/" className="project-name">
-				GateViz
-			</Link>
+			<ProjectName to="/">GateViz</ProjectName>
 			<Line pose={stateString} />
-			<Inputs stateString={stateString} />
+			<Toggle
+				id="bob"
+				onChange={() => {
+					console.debug('you did so good!');
+				}}
+				handleToggle={() => {
+					console.debug('you did so good!');
+				}}
+			/>
 		</Drawer>
 	);
 };
 
+const DrawerPosedDiv = posed.div({
+	[expanded]: { width: '500px' },
+	[condensed]: { width: '115px' }
+});
+
+const Drawer = styled(DrawerPosedDiv)`
+	display: flex;
+	background-color: ${colors.grey.veryDark};
+	color: ${colors.grey.veryLight};
+	flex-direction: column;
+`;
+
+const LinePosed = posed.line({
+	[expanded]: { width: '420px' },
+	[condensed]: { width: '115px' }
+});
+
+const Line = styled(LinePosed)`
+	height: 2px;
+	background: ${colors.grey.light};
+`;
+
+const ProjectName = styled(Link)`
+	color: ${colors.grey.light};
+	text-decoration: none;
+	font-size: 24px;
+	margin-top: 15px;
+	margin-left: 20px;
+	margin-bottom: 2px;
+`;
 export default Chrome;
