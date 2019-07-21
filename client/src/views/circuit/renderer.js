@@ -50,7 +50,6 @@ export const render = (canvas, circuit, breadcrumbs) => {
 
 	//clear here saves a redundant function and really doesn't affect performance
 	canvas.clear();
-	console.debug(circuit)
 	//inputs
 	circuit.input.forEach(input => {
 		const partDrawingInput = getTypeData(input.type);

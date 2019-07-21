@@ -1,5 +1,4 @@
 import React from 'react';
-import posed from 'react-pose';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import colors from 'styles/colors';
@@ -23,11 +22,8 @@ const Drawer = styled.div`
 	flex-direction: column;
 `;
 
-const Line = styled(
-	posed.line({
-		default: { width: '420px' }
-	})
-)`
+const Line = styled.div`
+	width: 420px;
 	height: 2px;
 	background: ${colors.grey.extraLight};
 `;

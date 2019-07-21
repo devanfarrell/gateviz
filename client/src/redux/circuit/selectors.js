@@ -10,3 +10,8 @@ export const selectParsedCircuit = createSelector(
 	selectCircuit,
 	circuit => (circuit && circuit.parsedCircuit) || null
 );
+
+export const selectInputs = createSelector(
+	[selectParsedCircuit],
+	circuit => (circuit && circuit.input) || null
+);

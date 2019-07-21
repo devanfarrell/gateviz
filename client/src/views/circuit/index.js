@@ -5,6 +5,7 @@ import { fetchCircuitRequest } from 'redux/circuit/actions';
 import styled from '@emotion/styled';
 import Chrome from 'components/chrome';
 import Card from 'components/card';
+import Inputs from './inputs';
 
 const CircuitView = props => {
 	const dispatch = useDispatch();
@@ -16,7 +17,9 @@ const CircuitView = props => {
 	return (
 		<>
 			<Chrome>
-				<Card title="Inputs">yo</Card>
+				<Card title="Inputs">
+					<Inputs />
+				</Card>
 			</Chrome>
 			<UI>
 				<Canvas />
