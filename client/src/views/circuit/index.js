@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import Canvas from './canvas';
 import { fetchCircuitRequest } from 'redux/circuit/actions';
 import styled from '@emotion/styled';
+import Chrome from 'components/chrome';
+import Card from 'components/card';
 
 const CircuitView = props => {
 	const dispatch = useDispatch();
@@ -12,9 +14,14 @@ const CircuitView = props => {
 	}, [dispatch, props.match.params.cid]);
 
 	return (
-		<UI>
-			<Canvas />
-		</UI>
+		<>
+			<Chrome>
+				<Card title="Inputs">yo</Card>
+			</Chrome>
+			<UI>
+				<Canvas />
+			</UI>
+		</>
 	);
 };
 

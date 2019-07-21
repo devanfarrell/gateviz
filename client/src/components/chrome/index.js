@@ -1,32 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import posed from 'react-pose';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import colors from 'styles/colors';
 
-const expanded = 'expanded';
-const condensed = 'condensed';
-
 const Chrome = props => {
-	const [expandedState, setExpanded] = useState(false);
-	const stateString = expandedState ? expanded : condensed;
 	return (
-		<Drawer
-			pose={stateString}
-			onClick={!expandedState ? () => setExpanded(true) : () => setExpanded(false)}
-		>
+		<Drawer>
 			<ProjectName to="/">GateViz</ProjectName>
-			<Line pose={stateString} />
+			<Line />
+			{props.children}
 		</Drawer>
 	);
 };
 
-const DrawerPosedDiv = posed.div({
-	[expanded]: { width: '500px' },
-	[condensed]: { width: '115px' }
-});
-
-const Drawer = styled(DrawerPosedDiv)`
+const Drawer = styled.div`
+	width: 500px;
 	display: flex;
 	flex: 0 1 auto;
 	background-color: ${colors.grey.veryDark};
@@ -34,18 +23,17 @@ const Drawer = styled(DrawerPosedDiv)`
 	flex-direction: column;
 `;
 
-const LinePosed = posed.line({
-	[expanded]: { width: '420px' },
-	[condensed]: { width: '115px' }
-});
-
-const Line = styled(LinePosed)`
+const Line = styled(
+	posed.line({
+		default: { width: '420px' }
+	})
+)`
 	height: 2px;
-	background: ${colors.grey.light};
+	background: ${colors.grey.extraLight};
 `;
 
 const ProjectName = styled(Link)`
-	color: ${colors.grey.light};
+	color: ${colors.grey.extraLight};
 	text-decoration: none;
 	font-size: 24px;
 	margin-top: 15px;
