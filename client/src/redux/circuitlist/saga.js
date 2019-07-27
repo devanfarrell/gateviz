@@ -4,7 +4,6 @@ import { fetchCircuitList } from 'api/gateviz';
 
 function* fetchCircuitListHandler() {
 	const request = yield call(fetchCircuitList);
-	yield console.debug(request);
 	yield put(fetchCircuitListSuccess(request.data.list));
 }
 

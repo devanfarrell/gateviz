@@ -8,7 +8,7 @@ const Toggle = props => {
 			<ReactToggle
 				id={props.id.toString()}
 				defaultChecked={props.checked}
-				onChange={() => props.handleToggle(props.id)}
+				onChange={e => props.handleToggle(e.target.checked)}
 				icons={{
 					checked: (
 						<div

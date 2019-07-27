@@ -15,3 +15,8 @@ export const selectInputs = createSelector(
 	[selectParsedCircuit],
 	circuit => (circuit && circuit.input) || null
 );
+
+export const selectAutoEvaluate = createSelector(
+	selectCircuit,
+	circuit => (circuit && circuit.autoEvaluate) || null
+);
