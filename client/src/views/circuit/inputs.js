@@ -149,7 +149,7 @@ const Inputs = props => {
 const BaseSelection = styled.div`
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;
-	border-left: solid 1px hotpink;
+	border-left: solid 1px ${colors.grey.dark};
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;

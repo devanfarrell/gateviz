@@ -10,7 +10,7 @@ export default produce((draft, action) => {
 			draft = [{ name: action.payload, id: 'top', depth: 0 }];
 			return;
 		case STEP_BACK:
-			draft.length = action.payload.depth + 1;
+			draft.length = action.payload;
 			return;
 		case STEP_INTO_CIRCUIT:
 			draft.push({ name: action.payload.name, id: action.payload.id, depth: draft.length });

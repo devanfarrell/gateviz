@@ -3,12 +3,17 @@ import { key } from './reducer';
 
 const selectCircuit = createSelector(
 	state => state[key],
-	data => data || {}
+	data => data || null
 );
 
 export const selectParsedCircuit = createSelector(
 	selectCircuit,
 	circuit => (circuit && circuit.parsedCircuit) || null
+);
+
+const selectCircuitReponse = createSelector(
+	selectCircuit,
+	circuit => (circuit && circuit.response) || null
 );
 
 export const selectInputs = createSelector(
@@ -19,4 +24,9 @@ export const selectInputs = createSelector(
 export const selectAutoEvaluate = createSelector(
 	selectCircuit,
 	circuit => (circuit && circuit.autoEvaluate) || null
+);
+
+export const selectTopLevelCircuitDiscriptors = createSelector(
+	selectCircuitReponse,
+	reponse => ({ name: reponse.name, description: reponse.description })
 );

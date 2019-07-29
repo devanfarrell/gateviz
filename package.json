@@ -23,7 +23,11 @@
     "url": "https://github.com/devanfarrell/gateviz-new/issues"
   },
   "homepage": "https://github.com/devanfarrell/gateviz-new#readme",
-  "dependencies": {},
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.19",
+    "@fortawesome/free-solid-svg-icons": "^5.9.0",
+    "@fortawesome/react-fontawesome": "^0.1.4"
+  },
   "devDependencies": {
     "concurrently": "^4.1.1",
     "nodemon": "^1.19.1"

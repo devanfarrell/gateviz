@@ -6,6 +6,7 @@ import styled from '@emotion/styled';
 import Chrome from 'components/chrome';
 import Card from 'components/card';
 import Inputs from './inputs';
+import Breadcrumbs from './breadcrumbs';
 
 const CircuitView = props => {
 	const dispatch = useDispatch();
@@ -19,6 +20,9 @@ const CircuitView = props => {
 			<Chrome>
 				<Card title="Inputs">
 					<Inputs />
+				</Card>
+				<Card title="Traversal">
+					<Breadcrumbs />
 				</Card>
 			</Chrome>
 			<UI>
