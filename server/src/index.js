@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import api from './api/index';
 
 require('dotenv').config();
@@ -11,6 +12,11 @@ app.use(
 	})
 );
 app.use(bodyParser.json());
+app.use(
+	cors({
+		origin: 'http://www.gateviz.com'
+	})
+);
 
 api(app);
 
