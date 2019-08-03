@@ -1,0 +1,13 @@
+#root {
+    display: flex;
+    height: 100vh;
+    position: relative;
+    width: 100%;
+    flex-direction: row;
+    font-family: 'Roboto Condensed', sans-serif;
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+}
