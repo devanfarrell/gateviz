@@ -1,4 +1,3 @@
-import * as svgjs from 'svgjs';
 import { store } from 'redux/provider';
 import { stepIntoCircuit } from 'redux/breadcrumbs/actions';
 import {
