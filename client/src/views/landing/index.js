@@ -15,15 +15,32 @@ const Landing = props => {
 
 	return (
 		<LandingWrapper>
-			<div className="hero centerallthethings">
-				<h1 className="heroPrimary"> GateViz </h1>
-				<h2 className="heroSecondary"> a combinational logic education tool </h2>
-			</div>
-			{/* <SearchBar /> */}
+			<Hero>
+				<HeroPrimary>GateViz</HeroPrimary>
+				<HeroSecondary>A combinational logic education tool</HeroSecondary>
+			</Hero>
 			<CircuitList circuitList={circuitList} />
 		</LandingWrapper>
 	);
 };
+
+const Hero = styled.div`
+	padding-top: 50px;
+	font-size: 1.5em;
+	line-height: 0.8em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+`;
+
+const HeroPrimary = styled.h1`
+	color: white;
+`;
+
+const HeroSecondary = styled.h2`
+	color: white;
+`;
 
 const LandingWrapper = styled.div`
 	width: 100%;
