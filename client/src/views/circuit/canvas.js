@@ -1,9 +1,11 @@
 import React, { PureComponent } from 'react';
 import styled from '@emotion/styled';
-import * as renderEngine from './renderer';
+import renderCircuit from './renderer';
 import { connect } from 'react-redux';
 import { selectParsedCircuit } from 'redux/circuit/selectors';
 import { selectBreadcrumbs } from 'redux/breadcrumbs/selectors';
+import colors from 'styles/colors';
+import * as svgjs from 'svgjs';
 
 class Canvas extends PureComponent {
 	constructor(props) {
@@ -13,9 +15,9 @@ class Canvas extends PureComponent {
 
 	startRenderEngine = ref => {
 		if (!this.canvas) {
-			this.canvas = renderEngine.initialize(ref);
+			this.canvas = svgjs(ref).viewbox({ x: 0, y: 0, width: 800, height: 800 });
 		}
-		renderEngine.render(this.canvas, this.props.circuit, this.props.breadcrumbs);
+		renderCircuit(this.canvas, this.props.circuit, this.props.breadcrumbs);
 	};
 
 	render() {
@@ -33,6 +35,12 @@ class Canvas extends PureComponent {
 const CircuitCanvas = styled.div`
 	width: 100%;
 	height: 100%;
+	background-color: ${colors.grey.extraLight};
+
+	svg {
+		width: 100%;
+		height: 100%;
+	}
 `;
 
 const mapState = state => ({

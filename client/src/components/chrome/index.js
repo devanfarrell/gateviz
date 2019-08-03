@@ -20,6 +20,7 @@ const Drawer = styled.div`
 	background-color: ${colors.grey.veryDark};
 	color: ${colors.grey.veryLight};
 	flex-direction: column;
+	overflow-y: auto;
 `;
 
 const Line = styled.div`

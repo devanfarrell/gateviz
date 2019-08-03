@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectParsedCircuit, selectTopLevelCircuitDiscriptors } from 'redux/circuit/selectors';
+import { selectTopLevelCircuitDiscriptors } from 'redux/circuit/selectors';
 import { selectBreadcrumbs } from 'redux/breadcrumbs/selectors';
 import colors from 'styles/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -48,8 +48,8 @@ const TopLevelCircuitName = styled.div`
 	color: ${colors.grey.extraLight};
 	font-size: 16px;
 	font-weight: light;
-    padding: 5px 5px;
-    cursor: pointer;
+	padding: 5px 5px;
+	cursor: pointer;
 `;
 
 const Icon = styled(FontAwesomeIcon)`

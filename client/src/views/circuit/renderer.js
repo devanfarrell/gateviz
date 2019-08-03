@@ -28,10 +28,6 @@ const staggerInput = (numPorts, position, heightOfObject) => {
 	return variation;
 };
 
-export const initialize = ref => {
-	return svgjs(ref);
-};
-
 const traverseCircuit = (id, circuit) => {
 	for (let i = 0; i < circuit.parts.length; i++) {
 		if (id === circuit.parts[i].id) {
@@ -42,7 +38,7 @@ const traverseCircuit = (id, circuit) => {
 	return circuit;
 };
 
-export const render = (canvas, circuit, breadcrumbs) => {
+const render = (canvas, circuit, breadcrumbs) => {
 	const preparedBreadcrumbs = breadcrumbs.length > 1 ? breadcrumbs.shift() : breadcrumbs;
 	preparedBreadcrumbs.forEach(crumb => {
 		circuit = traverseCircuit(crumb.id, circuit);
@@ -228,3 +224,5 @@ export const render = (canvas, circuit, breadcrumbs) => {
 		}
 	});
 };
+
+export default render;
