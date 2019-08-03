@@ -1,7 +1,10 @@
 import axios from 'axios';
 
-export const fetchCircuitList = async () => {
-	return await axios.get('/v1/circuit_list');
-};
+const getProductionPrefix = () =>
+	process.env.NODE_ENV === 'production' ? 'http://api.gateviz.com' : '';
 
-export const fetchCircuitRequest = async cid => await axios.get(`/v1/circuit/${cid}`);
+export const fetchCircuitList = async () =>
+	await axios.get(`${getProductionPrefix()}/v1/circuit_list`);
+
+export const fetchCircuitRequest = async cid =>
+	await axios.get(`${getProductionPrefix()}/v1/circuit/${cid}`);

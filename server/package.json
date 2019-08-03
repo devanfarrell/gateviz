@@ -2,9 +2,9 @@
   "name": "gateviz-server",
   "version": "0.4.0",
   "description": "A combinational logic education tool",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node --presets babel-preset-env index.js",
+    "start": "nodemon --exec babel-node --presets babel-preset-env src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
