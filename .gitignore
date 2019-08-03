@@ -59,12 +59,3 @@ typings/
 
 # next.js build output
 .next
-server/api/v1/controllers.js
-server/index.js
-server/expresstypeshelper.js
-server/api/v1/index.js
-server/api/v1/index.js
-server/api/index.js
-server/api/v1/api-doc.js
-server/api/v1/paths/circuits.js
-server/build
