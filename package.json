@@ -1,16 +1,13 @@
 {
-  "name": "gateviz-server",
-  "version": "0.3.0",
-  "description": "A web tool for learning about logic circuits",
-  "main": "index.js",
+  "name": "gateviz",
+  "version": "0.4.0",
+  "description": "A combinational logic education tool",
   "scripts": {
-    "quick": "npm run installs && npm run server:compile && npm start",
+    "quick": "npm run installs && npm start",
     "start": "concurrently \"npm run server:start \" \"npm run client:start \" ",
     "test": "echo \"Error: no test specified\" && exit 1",
     "client:start": "npm run start --prefix client",
     "server:start": "npm run start --prefix server",
-    "server:dev": "nodemon index.js --prefix server",
-    "server:compile": "tsc -p ./server/tsconfig.json",
     "installs": "npm install && npm install --prefix server && npm install --prefix client"
   },
   "repository": {
@@ -20,16 +17,11 @@
   "author": "Devan Farrell",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/devanfarrell/gateviz-new/issues"
+    "url": "https://github.com/devanfarrell/gateviz/issues"
   },
-  "homepage": "https://github.com/devanfarrell/gateviz-new#readme",
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.19",
-    "@fortawesome/free-solid-svg-icons": "^5.9.0",
-    "@fortawesome/react-fontawesome": "^0.1.4"
-  },
+  "homepage": "https://github.com/devanfarrell/gateviz#readme",
+  "dependencies": {},
   "devDependencies": {
-    "concurrently": "^4.1.1",
-    "nodemon": "^1.19.1"
+    "concurrently": "^4.1.1"
   }
 }
