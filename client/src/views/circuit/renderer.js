@@ -132,6 +132,7 @@ const render = (canvas, circuit, breadcrumbs) => {
 			destinationY = output.coord[1] + getTypeData(output.type).height / 2;
 			//CASE 1.1 SIMPLE - OUTPUT
 			if (output.input.pin == null) {
+				console.debug(output.input.ref);
 				originX = output.input.ref.coord[0] + getTypeData(output.input.ref.type).width;
 				originY = output.input.ref.coord[1] + getTypeData(output.input.ref.type).height / 2;
 				//CASE 1.2 COMPLEX - OUTPUT
@@ -205,12 +206,18 @@ const render = (canvas, circuit, breadcrumbs) => {
 					originX = input.ref.coord[0] + getTypeData(input.ref.type).width;
 					originY = input.ref.coord[1] + getTypeData(input.ref.type).height / 2;
 					outputState = input.ref.state;
-					//CASE 2.1 COMPLEX - COMPLEX
+					//CASE 2.2 COMPLEX - COMPLEX
 				} else {
 					destinationY = destinationY + staggerInput(part.input.length, j, part.height);
-					originX = input.ref.coord[0] + getTypeData(input.ref.type).width;
-					originY = input.ref.coord[1] + getTypeData(input.ref.type).height / 2;
-					outputState = input.ref.state[input.pin];
+					if (input.ref.type !== 'CIRCUIT') {
+						originX = input.ref.coord[0] + getTypeData(input.ref.type).width;
+						originY = input.ref.coord[1] + getTypeData(input.ref.type).height / 2;
+						outputState = input.ref.state[input.pin];
+					} else {
+						originX = input.ref.coord[0] + input.ref.width;
+						originY = input.ref.coord[1] + input.ref.height / 2;
+						outputState = input.ref.output[input.pin].state;
+					}
 				}
 				canvas
 					.polyline(

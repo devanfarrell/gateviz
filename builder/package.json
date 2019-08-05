@@ -1,0 +1,22 @@
+{
+  "name": "gateviz-builder",
+  "version": "0.4.0",
+  "description": "A combinational logic education tool",
+  "main": "index.js",
+  "scripts": {
+    "build": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devanfarrell/gateviz.git"
+  },
+  "author": "Devan Farrell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/devanfarrell/gateviz/issues"
+  },
+  "homepage": "https://github.com/devanfarrell/gateviz#readme",
+  "dependencies": {},
+  "devDependencies": {}
+}

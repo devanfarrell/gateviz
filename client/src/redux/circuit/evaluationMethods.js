@@ -20,13 +20,9 @@ const OR = state => {
 	return false;
 };
 
-const NOR = state => {
-	return !OR(state);
-};
+const NOR = state => !OR(state);
 
-const NOT = state => {
-	return !state;
-};
+const NOT = state => !state[0];
 
 const XOR = state => {
 	// TODO: Error handling if there is not exactly 2 inputs

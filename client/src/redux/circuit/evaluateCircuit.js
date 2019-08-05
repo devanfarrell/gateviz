@@ -1,7 +1,13 @@
 const evaluateCircuit = circuit => {
+	console.debug(circuit);
 	circuit.input.forEach(input => {
 		if (!(input.pin === null || input.pin === undefined)) {
-			input.state = input.ref.state[input.pin];
+			console.debug(input, input.pin);
+			if (input.ref.type !== 'CIRCUIT') {
+				input.state = input.ref.state[input.pin];
+			} else {
+				input.state = input.ref.output[input.pin].state;
+			}
 		} else if (!!input.ref) {
 			input.state = input.ref.state;
 		}
@@ -30,7 +36,7 @@ const evaluateCircuit = circuit => {
 		} else {
 			output.state = output.input.ref.output[pin].state;
 		}
-    });
+	});
 };
 
 export default evaluateCircuit;

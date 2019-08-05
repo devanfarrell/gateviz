@@ -13,6 +13,7 @@ import evaluateCircuit from './evaluateCircuit';
 function* fetchCircuitHandler(action) {
 	const { data } = yield fetchCircuitRequest(action.payload);
 	const processedCircuit = yield processor(data);
+	evaluateCircuit(processedCircuit);
 	yield put(fetchCircuitSuccess({ response: data, parsedCircuit: processedCircuit }));
 }
 
