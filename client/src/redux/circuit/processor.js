@@ -149,5 +149,6 @@ const deserializeCircuit = circuit => {
 export default circuitData => {
 	const completeCircuit = initCircuit(circuitData);
 	completeCircuit.name = circuitData.name;
+	completeCircuit.description = circuitData.description;
 	return completeCircuit;
 };

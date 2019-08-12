@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectInputs, selectParsedCircuit } from 'redux/circuit/selectors';
+import { selectInputs } from 'redux/circuit/selectors';
 import Toggle from 'components/toggle';
 import colors from 'styles/colors';
-import { changeInputsRequest as changeInputs } from 'redux/circuit/actions';
+import { changeInputs } from 'redux/circuit/actions';
 
 const baseRegex = {
 	'2': /^[0-1\b]+$/,
@@ -117,7 +117,7 @@ const SingleInput = ({ label, id, input, state, handleToggle }) => {
 const Inputs = props => {
 	const dispatch = useDispatch();
 	const inputList = useSelector(selectInputs);
-	const circuit = useSelector(selectParsedCircuit);
+	// const circuit = useSelector(selectParsedCircuit);
 	return (
 		<>
 			{inputList &&
@@ -129,7 +129,7 @@ const Inputs = props => {
 							input={input}
 							key={input.id}
 							state={input.state}
-							handleChange={(id, value) => dispatch(changeInputs({ id, value, circuit }))}
+							handleChange={(id, value) => dispatch(changeInputs({ id, value }))}
 						/>
 					) : (
 						<SingleInput
@@ -138,7 +138,7 @@ const Inputs = props => {
 							input={input}
 							key={input.id}
 							state={input.state}
-							handleToggle={(id, value) => dispatch(changeInputs({ id, value, circuit }))}
+							handleToggle={(id, value) => dispatch(changeInputs({ id, value }))}
 						/>
 					)
 				)}

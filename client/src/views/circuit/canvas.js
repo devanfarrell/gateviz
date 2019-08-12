@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import styled from '@emotion/styled';
 import renderCircuit from './renderer';
 import { connect } from 'react-redux';
-import { selectParsedCircuit } from 'redux/circuit/selectors';
+import { selectCircuit } from 'redux/circuit/selectors';
 import { selectBreadcrumbs } from 'redux/breadcrumbs/selectors';
 import colors from 'styles/colors';
 import * as svgjs from 'svgjs';
@@ -44,7 +44,7 @@ const CircuitCanvas = styled.div`
 `;
 
 const mapState = state => ({
-	circuit: selectParsedCircuit(state),
+	circuit: selectCircuit(state),
 	breadcrumbs: selectBreadcrumbs(state)
 });
 
