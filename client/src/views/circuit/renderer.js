@@ -114,6 +114,13 @@ const render = (canvas, circuit, breadcrumbs) => {
 			linejoin: 'round',
 			width: 2
 		});
+		if (!!output.label) {
+			const label = canvas.text(output.label);
+			label.move(output.coord[0], output.coord[1] - 20).font({
+				family: 'Helvetica',
+				fill: '#000'
+			});
+		}
 		path.size(partDrawingOutput.width, partDrawingOutput.height);
 		path.fill(colorHelper(output.state));
 	});
@@ -132,7 +139,6 @@ const render = (canvas, circuit, breadcrumbs) => {
 			destinationY = output.coord[1] + getTypeData(output.type).height / 2;
 			//CASE 1.1 SIMPLE - OUTPUT
 			if (output.input.pin == null) {
-				console.debug(output.input.ref);
 				originX = output.input.ref.coord[0] + getTypeData(output.input.ref.type).width;
 				originY = output.input.ref.coord[1] + getTypeData(output.input.ref.type).height / 2;
 				//CASE 1.2 COMPLEX - OUTPUT
@@ -170,15 +176,24 @@ const render = (canvas, circuit, breadcrumbs) => {
 				destinationY = part.coord[1] + getTypeData(part.type).height / 2;
 				let outputState = null;
 
-				//CASE 1.1 SIMPLE - SIMPLE
-				if (part.input.pin == null) {
+				//CASE 1.1 CIRCUIT - SIMPLE
+				if (input.ref.type === 'CIRCUIT') {
+					destinationY =
+						destinationY + staggerInput(part.input.length, j, getTypeData(part.type).height);
+					originX = input.ref.coord[0] + input.ref.width;
+					originY = input.ref.coord[1] + input.ref.height / 2;
+					outputState = input.ref.state;
+				}
+
+				//CASE 1.2 SIMPLE - SIMPLE
+				else if (part.input.pin == null) {
 					destinationY =
 						destinationY + staggerInput(part.input.length, j, getTypeData(part.type).height);
 					originX = input.ref.coord[0] + getTypeData(input.ref.type).width;
 					originY = input.ref.coord[1] + getTypeData(input.ref.type).height / 2;
 					outputState = input.ref.state;
 
-					//CASE 1.2 COMPLEX - SIMPLE
+					//CASE 1.2 BUS - SIMPLE
 				} else {
 					originX = input.ref.coord[0] + circuit.output[i].input[j].ref.width;
 					originY = input.ref.coord[1] + circuit.output[i].input[j].ref.height / 2;
