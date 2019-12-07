@@ -22,6 +22,10 @@ const circuits = [
 	{
 		destinationFileName: 'fullAdder',
 		orginFileName: 'fullAdder'
+	},
+	{
+		destinationFileName: 'alu',
+		orginFileName: 'alu'
 	}
 ];
 

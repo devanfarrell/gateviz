@@ -6,8 +6,8 @@ module.exports = id =>
 		.addDescription('A full adder with a carry in and out')
 		.addPath(
 			'M68,10c0.008,-0.666 0,40 0,40l-6.11,0l0,-5l0,5l-5,0l5,0l0,5l0,-5l6.11,0l0,40l-54.793,9l0,-42l39,-7l-39,-7l0,-42l54.793,9Z',
-			40,
-			20
+			60,
+			30
 		)
         .addName('Full Adder')
         
@@ -37,6 +37,7 @@ module.exports = id =>
 		.addGate('!b', gates.not)
 		.addCoord([60, 280])
 		.wireToInput('b')
+		
 
 		// gates
 		.addGate('and0', gates.and)
@@ -44,21 +45,21 @@ module.exports = id =>
 		.wireToInput('a')
 		.wireToInput('!b')
         .wireToInput('!carry')
-        .addAxis([0.5, 0.3, 0.5])
+        .addAxis([0.5, 0.2, 0.7])
 
 		.addGate('and1', gates.and)
 		.addCoord([300, 250])
 		.wireToInput('!a')
 		.wireToInput('b')
         .wireToInput('!carry')
-        .addAxis([0.5, 0.3, 0.5])
+        .addAxis([0.45, 0.3, 0.7])
 
 		.addGate('and2', gates.and)
 		.addCoord([300, 350])
 		.wireToInput('!a')
 		.wireToInput('!b')
         .wireToInput('carry')
-        .addAxis([0.5, 0.3, 0.7])
+        .addAxis([0.45, 0.2, 0.7])
 
 		.addGate('and3', gates.and)
 		.addCoord([300, 450])
@@ -86,7 +87,7 @@ module.exports = id =>
         .addAxis([0.5, 0.3])
 
 		.addGate('orSum', gates.or)
-		.addCoord([400, 250])
+		.addCoord([400, 256])
 		.wireToInput('and0')
 		.wireToInput('and1')
 		.wireToInput('and2')
@@ -103,10 +104,10 @@ module.exports = id =>
 		.addOutput()
 		.addLabel('out')
 		.wireToInput('orSum')
-		.addCoord([500, 250])
+		.addCoord([500, 273.5])
 
 		.addOutput()
 		.wireToInput('andCarryOut')
 		.addLabel('carry out')
-		.addCoord([500, 650])
+		.addCoord([500, 667.5])
 		.build();

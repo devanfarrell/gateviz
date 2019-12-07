@@ -1,5 +1,4 @@
 const evaluateCircuit = circuit => {
-	const startTime = new Date()
 	circuit.input.forEach(input => {
 		// Only evaluate inputs if it's a nested circuit
 		if (input.ref) {
@@ -39,8 +38,6 @@ const evaluateCircuit = circuit => {
 					console.warn('Still gotta implement this one');
 				}
 			}
-		} else {
-			// console.debug(input);
 		}
 	});
 
@@ -72,8 +69,6 @@ const evaluateCircuit = circuit => {
 			output.state = output.input.ref.output[pin].state;
 		}
 	});
-	const endTime = new Date();
-	
 };
 
 export default evaluateCircuit;

@@ -38,8 +38,7 @@ const traverseCircuit = (id, circuit) => {
 };
 
 const render = (canvas, circuit, breadcrumbs) => {
-	const preparedBreadcrumbs = breadcrumbs.length > 1 ? breadcrumbs.shift() : breadcrumbs;
-	preparedBreadcrumbs.forEach(crumb => {
+	breadcrumbs.forEach(crumb => {
 		circuit = traverseCircuit(crumb.id, circuit);
 	});
 

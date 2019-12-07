@@ -7,8 +7,10 @@ export const selectCircuit = createSelector(
 );
 
 export const selectInputs = createSelector(
-	[selectCircuit],
-	circuit => (circuit && circuit.input) || null
+	state => state[key],
+	circuit => {
+		return (circuit && circuit.input) || null;
+	}
 );
 
 export const selectoutput = createSelector(

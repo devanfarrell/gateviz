@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectInputs } from 'redux/circuit/selectors';
+import { selectCircuit } from 'redux/circuit/selectors';
 import Toggle from 'components/toggle';
 import colors from 'styles/colors';
 import { changeInputs } from 'redux/circuit/actions';
@@ -86,6 +86,7 @@ const TypedInput = ({ handleChange, state }) => {
 			handleChange(array);
 		}
 	};
+
 	const displayValue = convertBoolArrayToString(state, base);
 
 	return (
@@ -116,8 +117,8 @@ const SingleInput = ({ label, id, input, state, handleToggle }) => {
 
 const Inputs = props => {
 	const dispatch = useDispatch();
-	const inputList = useSelector(selectInputs);
-	// const circuit = useSelector(selectParsedCircuit);
+	const circuit = useSelector(selectCircuit);
+	const inputList = circuit && circuit.input;
 	return (
 		<>
 			{inputList &&
