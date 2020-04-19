@@ -2,12 +2,12 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectTopLevelCircuitDiscriptors } from 'redux/circuit/selectors';
-import { selectBreadcrumbs } from 'redux/breadcrumbs/selectors';
+import { selectBreadcrumbs } from 'redux/slices/breadcrumbs';
 import colors from 'styles/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { stepBack } from 'redux/breadcrumbs/actions';
+import { stepBack } from 'redux/slices/breadcrumbs';
 
-const Breadcrumbs = props => {
+export default function Breadcrumbs() {
 	const circuitDescriptors = useSelector(selectTopLevelCircuitDiscriptors);
 	const breadcrumbs = useSelector(selectBreadcrumbs);
 	const dispatch = useDispatch();
@@ -66,5 +66,3 @@ const SubLevelCircuitName = styled.div`
 	border-left: solid 2px ${colors.grey.extraLight};
 	margin-left: 10px;
 `;
-
-export default Breadcrumbs;

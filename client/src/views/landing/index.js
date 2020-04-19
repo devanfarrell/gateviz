@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import CircuitList from './circuitlist';
-import { fetchCircuitListRequest } from 'redux/circuitlist/actions';
-import { selectCircuitList } from 'redux/circuitlist/selectors';
+import { fetchCircuitListRequest, selectCircuitList } from 'redux/slices/circuitList';
 import styled from '@emotion/styled';
 
-const Landing = props => {
+export default function Landing(){
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -47,5 +46,3 @@ const LandingWrapper = styled.div`
 	height: 100vh;
 	background: linear-gradient(to bottom right, #5ad4ee, #81d677);
 `;
-
-export default Landing;
