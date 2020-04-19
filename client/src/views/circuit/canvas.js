@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import renderCircuit from './renderer';
 import { connect } from 'react-redux';
 import { selectCircuit } from 'redux/circuit/selectors';
-import { selectBreadcrumbs } from 'redux/breadcrumbs/selectors';
+import { selectBreadcrumbs } from 'redux/slices/breadcrumbs';
 import colors from 'styles/colors';
 import * as svgjs from 'svgjs';
 

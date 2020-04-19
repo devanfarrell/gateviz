@@ -1,5 +1,5 @@
 import { store } from 'redux/provider';
-import { stepIntoCircuit } from 'redux/breadcrumbs/actions';
+import { stepIntoCircuit } from 'redux/slices/breadcrumbs';
 import {
 	componentFillColor,
 	falseColor,

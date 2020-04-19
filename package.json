@@ -19,9 +19,16 @@
   "bugs": {
     "url": "https://github.com/devanfarrell/gateviz/issues"
   },
-  "homepage" : "http://www.gateviz.com/",
-  "dependencies": {},
+  "homepage": "http://www.gateviz.com/",
+  "dependencies": {
+    "@types/react-dom": "^16.9.6",
+    "redux-dogma": "^0.3.0"
+  },
   "devDependencies": {
-    "concurrently": "^4.1.1"
+    "@types/react": "^16.9.34",
+    "@types/react-redux": "^7.1.7",
+    "@types/redux": "^3.6.0",
+    "concurrently": "^4.1.1",
+    "gatevivTypes": "./types"
   }
 }

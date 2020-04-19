@@ -10,7 +10,7 @@ import { faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faTimes, faInfoCircle);
 
-ReactDOM.render(Provider(<Router />), document.getElementById('root'));
+ReactDOM.render(<Provider><Router /></Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
